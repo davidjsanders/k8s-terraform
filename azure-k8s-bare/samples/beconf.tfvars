@@ -1,0 +1,5 @@
+resource_group_name = "res-group-for-storing-state"
+storage_account_name = "the-storage-account-name"
+container_name = "the-container-in-the-sa"
+key = "the-key-in-the-container"
+access_key = "the-access-key-for-the-sa"

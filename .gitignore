@@ -1,9 +1,16 @@
 #  Local .terraform directories
 **/.terraform/*
+**/targets/*.secret
+**/targets/*-run
+**/targets/*.tfvars
+**/.DS_Store
+**/*.json
+**/*.tpl
+**/*.ini
+**/.vagrant
+**/.terraform
+**/*.retry
 
 # .tfstate files
 *.tfstate
 *.tfstate.*
-
-# .tfvars files
-*.tfvars

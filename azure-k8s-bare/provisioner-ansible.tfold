@@ -1,0 +1,135 @@
+resource "null_resource" "provisioner_ansible" {
+    triggers {
+        vm_master_1_id = "${module.vm-docker-manager-1.id}"
+#        vm_master_2_id = "${module.vm-docker-master-2.id}"
+#        vm_master_3_id = "${module.vm-docker-master-3.id}"
+        vm_worker_1_id = "${module.vm-docker-worker-1.id}"
+        vm_worker_2_id = "${module.vm-docker-worker-2.id}"
+    }
+
+    connection {
+        host        = "${module.pip-docker-master-1.ip_address}"
+        type        = "ssh"
+        user        = "azadmin"
+        private_key = "${file(local.l_pk_file)}"
+    }
+
+    provisioner "local-exec" {
+        command = "echo; echo '*** Sleeping for 10s to allow host to wake'; echo; sleep 10"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.ansible-inventory.rendered}"
+        destination = "/tmp/docker.ini"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.docker-daemon.rendered}"
+        destination = "/tmp/daemon.json"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.docker-hosts.rendered}"
+        destination = "/tmp/hosts.conf"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.docker-swarm-playbook.rendered}"
+        destination = "~/docker-swarm-playbook.yml"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.ssh-config.rendered}"
+        destination = "~/.ssh/config"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.node-exporter-service.rendered}"
+        destination = "/tmp/node_exporter.service"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.prometheus-service.rendered}"
+        destination = "/tmp/prometheus.service"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.prometheus-yml.rendered}"
+        destination = "/tmp/prometheus.yml"
+    }
+
+    provisioner "file" {
+        source = "${local.l_pk_file}"
+        destination = "~/.ssh/azure_pk"
+    }
+
+    provisioner "file" {
+        source = "${local.l_pk_file}.pub"
+        destination = "~/.ssh/azure_pk.pub"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.docker-keys-master-1.rendered}"
+        destination = "~/keyscript.sh"
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "sudo mv /tmp/docker.ini /etc/ansible/docker.ini",
+            "sudo mv /tmp/daemon.json /etc/docker/daemon.json",
+            "sudo mkdir -p /etc/systemd/system/docker.service.d",
+            "sudo mv /tmp/hosts.conf /etc/systemd/system/docker.service.d/",
+            "sudo mv /tmp/node_exporter.service /etc/systemd/system/",
+            "sudo mv /tmp/prometheus.service /etc/systemd/system/",
+            "chmod 0700 ~/keyscript.sh",
+            "chmod 0600 ~/.ssh/azure_pk",
+            "ansible -m ping docker_workers --inventory-file=/etc/ansible/docker.ini",
+            "ansible -m ping docker_masters --inventory-file=/etc/ansible/docker.ini",
+            "ansible -m ping docker_first_master --inventory-file=/etc/ansible/docker.ini",
+            "ansible-playbook --inventory-file=/etc/ansible/docker.ini ~/docker-swarm-playbook.yml",
+            "sudo mv /tmp/prometheus.yml /etc/prometheus/",
+            "echo ''",
+            "echo 'Starting certificate provisioning'",
+            "echo ''",
+            ". ~/keyscript.sh",
+            "sudo systemctl stop docker",
+            "sudo systemctl daemon-reload",
+            "sudo systemctl enable prometheus",
+            "sudo systemctl enable node_exporter",
+            "sudo systemctl start docker",
+            "sudo systemctl start prometheus",
+            "sudo systemctl start node_exporter",
+            "echo ''",
+            "echo 'Finished certificate provisioning'",
+            "echo ''"
+        ]
+    }
+
+    provisioner "local-exec" {
+        command = "rm -rf ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+    }
+
+    provisioner "local-exec" {
+        command = "mkdir -p ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+    }
+
+    provisioner "local-exec" {
+        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-docker-master-1.ip_address}:~/keys/key.pem ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+    }
+
+    provisioner "local-exec" {
+        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-docker-master-1.ip_address}:~/keys/ca.pem ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+    }
+
+    provisioner "local-exec" {
+        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-docker-master-1.ip_address}:~/keys/cert.pem ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+    }
+
+#    provisioner "local-exec" {
+#        command = "echo '${data.template_file.local-alias.rendered}' > ~/scratch/client/aliases.sh"
+#    }
+#
+    provisioner "local-exec" {
+        command = "printf \"${data.template_file.run-this.rendered}\n\""
+    }
+}

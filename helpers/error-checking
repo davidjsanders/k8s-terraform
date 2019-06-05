@@ -1,0 +1,12 @@
+if [[ "X"$1 == "X" ]]; then
+    echo "Error: An environment (with a matching target) must be provided."
+    exit 1
+fi
+if [ ! -f targets/$1.tfvars ]; then
+    echo "Error: The target variable file targets/$1.tfvars was not found"
+    exit 1
+fi
+if [ ! -f targets/credentials.secret ]; then
+    echo "Error: There is no credentials.secret file in the targets directory"
+    exit 1
+fi
