@@ -28,7 +28,7 @@ locals {
 }
 
 module "nsg-k8s" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg?ref=0.1.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg?ref=0.3.0"
   name                = "${local.l-nsg-name}"
   resource-group-name = "${module.resource-group.name}"
   location            = "${var.location}"

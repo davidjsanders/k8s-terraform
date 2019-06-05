@@ -21,7 +21,7 @@
 # -------------------------------------------------------------------
 
 module "nsg-Allow22" {
-  source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.1.0"
+  source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.3.0"
   name                        = "Allow22"
   resource-group-name         = "${module.resource-group.name}"
   network-security-group-name = "${module.nsg-k8s.name}"

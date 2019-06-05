@@ -7,7 +7,7 @@ locals {
 }
 
 module "pip-master-1" {
-  source                       = "git::https://github.com/dsandersAzure/terraform-library.git//modules/publicip?ref=0.1.0"
+  source                       = "git::https://github.com/dsandersAzure/terraform-library.git//modules/publicip?ref=0.3.0"
   name                         = "${local.l-pip-name-1}"
   resource-group-name          = "${module.resource-group.name}"
   public-ip-address-allocation = "static"
