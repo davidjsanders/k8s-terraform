@@ -54,17 +54,17 @@ echo "*** $(date) *** change config owner to $(id -u):$(id -g)"
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 sleep 2
 
-echo "*** $(date) *** taint master node"
-sleep 10
-kubectl taint \
-    nodes \
-    --all=true \
-    node-role.kubernetes.io/master-
-sleep 2
+# echo "*** $(date) *** taint master node"
+# sleep 10
+# kubectl taint \
+#     nodes \
+#     --all=true \
+#     node-role.kubernetes.io/master-
+# sleep 2
 
-echo "*** $(date) *** Show taints"
-kubectl describe nodes | grep Taint
-sleep 2
+# echo "*** $(date) *** Show taints"
+# kubectl describe nodes | grep Taint
+# sleep 2
 
 echo "*** $(date) *** Wait for master to become ready"
 while [ "$(kubectl get nodes -o wide | grep NotReady)X" != "X" ]

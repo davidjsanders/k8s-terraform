@@ -38,7 +38,7 @@ resource "null_resource" "k8s_master" {
         inline = [
             "chmod 0600 ~/.ssh/azure_pk",
             "chmod +x ~/master.sh",
-            "~/master.sh",
+            "~/master.sh | tee ~/master.log",
             "echo ''"
         ]
     }
