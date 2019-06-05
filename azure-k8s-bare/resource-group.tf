@@ -3,7 +3,7 @@ locals {
   l-rg-name       = "${format("RG-%s-%s%s", local.l-rg-temp-name, var.environ, local.l-random)}"
 }
 
-module "docker-resource-group" {
+module "resource-group" {
   source          = "git::https://github.com/dsandersAzure/terraform-library.git//modules/rg?ref=0.1.0"
   name            = "${local.l-rg-name}"
   location        = "${var.location}"

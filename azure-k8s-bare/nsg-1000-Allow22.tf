@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------
 #
 # Module:         terraform-reference-app/green
-# Submodule:      nsg-docker-rule-Allow22From10-62.tf
+# Submodule:      nsg-rule-Allow22From10-62.tf
 # Purpose:        Create a network security group rule to allow port 
 #                 22 traffic in the Docker NSG from 10.62.71.0/24.
 #
@@ -20,11 +20,11 @@
 #                                            | sample app.
 # -------------------------------------------------------------------
 
-module "nsg-docker-Allow22" {
+module "nsg-Allow22" {
   source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.1.0"
   name                        = "Allow22"
-  resource-group-name         = "${module.docker-resource-group.name}"
-  network-security-group-name = "${module.nsg-docker.name}"
+  resource-group-name         = "${module.resource-group.name}"
+  network-security-group-name = "${module.nsg-k8s.name}"
   priority                    = "1000"
   direction                   = "Inbound"
   access                      = "Allow"

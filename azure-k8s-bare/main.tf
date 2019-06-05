@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------
 #
 # Module:         terraform-reference-app
-# Submodule:      docker-engine/main.tf
+# Submodule:      engine/main.tf
 # Environment:    dev
 # Purpose:        .
 #

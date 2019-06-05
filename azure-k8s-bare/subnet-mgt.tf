@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------
 #
 # Module:         terraform-reference-app/green
-# Submodule:      subnet-docker.tf
+# Submodule:      subnet-k8s.tf
 # Purpose:        Create a subnet for docker resources.
 #
 # Created on:     22 August 2018
@@ -21,16 +21,16 @@
 # all start with a unique name for the module, the l-... text.
 #
 locals {
-  l-docker-mgt-snet-temp-name      = "${format("%s-%s%s", var.target, var.subnet-docker-mgt-name, local.l-dev)}"
-  l-docker-mgt-snet-name           = "${format("SNET-%s-%s%s", local.l-docker-mgt-snet-temp-name, var.environ, local.l-random)}"
-  l-docker-mgt-snet-address-prefix = "${replace(var.subnet-docker-mgt-cidr, "dc-prefix", var.dc-prefix)}"
+  l-mgt-snet-temp-name      = "${format("%s-%s%s", var.target, var.subnet-mgt-name, local.l-dev)}"
+  l-mgt-snet-name           = "${format("SNET-%s-%s%s", local.l-mgt-snet-temp-name, var.environ, local.l-random)}"
+  l-mgt-snet-address-prefix = "${replace(var.subnet-mgt-cidr, "dc-prefix", var.dc-prefix)}"
 }
 
-module "docker-mgt-subnet" {
+module "mgt-subnet" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.1.0"
-  name                = "${local.l-docker-mgt-snet-name}"
-  vnet-target-rg-name = "${data.azurerm_resource_group.vnet-resource-group.name}"
-  vnet-target-name    = "${data.azurerm_virtual_network.vnet.name}"
-  nsg-id              = "${module.nsg-docker.id}"
-  address-prefix      = "${local.l-docker-mgt-snet-address-prefix}"
+  name                = "${local.l-mgt-snet-name}"
+  vnet-target-rg-name = "${module.resource-group.name}"
+  vnet-target-name    = "${module.vnet-main.name}"
+  nsg-id              = "${module.nsg-k8s.id}"
+  address-prefix      = "${local.l-mgt-snet-address-prefix}"
 }

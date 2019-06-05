@@ -45,11 +45,12 @@ variable "resource-group-name" {}
 #
 variable "vnet-name" {}
 variable "vnet-resource-group" {}
-variable "subnet-docker-mgt-name" {}
-variable "subnet-docker-mgt-cidr" {}
-variable "subnet-docker-wrk-name" {}
-variable "subnet-docker-wrk-cidr" {}
-variable "nsg-docker-name" {}
+variable "vnet-cidr" {}
+variable "subnet-mgt-name" {}
+variable "subnet-mgt-cidr" {}
+variable "subnet-wrk-name" {}
+variable "subnet-wrk-cidr" {}
+variable "nsg-name" {}
 variable "dc-prefix" {}
 variable "public-dns-name" {}
 variable "elb-static-ip" {}
@@ -69,7 +70,7 @@ variable "lb-backend-port" {}
 #
 # Storage Account Variables
 #
-variable "sa-docker-name" {}
+variable "sa-name" {}
 variable "sa-persistent-name" {}
 
 #
@@ -87,13 +88,13 @@ variable "tags" {
 #
 # VM Variables
 #
-variable "docker-vm-name" {}
-variable "docker-image-name" {}
-variable "docker-image-version" {}
-variable "docker-vm-size" {}
-variable "docker-manager-vm-size" {}
-variable "docker-worker-vm-size" {}
-variable "docker-image-rg" {}
+variable "vm-name" {}
+variable "image-name" {}
+variable "image-version" {}
+variable "vm-size" {}
+variable "manager-vm-size" {}
+variable "worker-vm-size" {}
+variable "image-rg" {}
 variable "private-key" {}
 variable "delete-osdisk-on-termination" {}
 variable "delete-datadisk-on-termination" {}

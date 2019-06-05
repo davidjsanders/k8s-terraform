@@ -8,31 +8,31 @@ locals {
   l-pnic-master-3-ip  = "${replace(var.master-static-ip-3, "dc-prefix", var.dc-prefix)}"
 }
 
-module "nic-docker-master-1" {
+module "nic-master-1" {
   source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip"
   name                = "${local.l-pnic-master-1}"
-  resource-group-name = "${module.docker-resource-group.name}"
-  subnet-id           = "${module.docker-subnet.id}"
+  resource-group-name = "${module.resource-group.name}"
+  subnet-id           = "${module.subnet.id}"
   private-ip-address  = "${local.l-pnic-master-1-ip}"
   location            = "${var.location}"
   tags                = "${var.tags}"
 }
 
-module "nic-docker-master-2" {
+module "nic-master-2" {
   source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip"
   name                = "${local.l-pnic-master-2}"
-  resource-group-name = "${module.docker-resource-group.name}"
-  subnet-id           = "${module.docker-subnet.id}"
+  resource-group-name = "${module.resource-group.name}"
+  subnet-id           = "${module.subnet.id}"
   private-ip-address  = "${local.l-pnic-master-2-ip}"
   location            = "${var.location}"
   tags                = "${var.tags}"
 }
 
-module "nic-docker-master-3" {
+module "nic-master-3" {
   source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip"
   name                = "${local.l-pnic-master-3}"
-  resource-group-name = "${module.docker-resource-group.name}"
-  subnet-id           = "${module.docker-subnet.id}"
+  resource-group-name = "${module.resource-group.name}"
+  subnet-id           = "${module.subnet.id}"
   private-ip-address  = "${local.l-pnic-master-3-ip}"
   location            = "${var.location}"
   tags                = "${var.tags}"

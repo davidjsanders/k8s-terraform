@@ -11,14 +11,14 @@
 #          the ID for the SA to be used.
 #
 locals {
-  l-storage-account-name       = "${lower(format("sa%s%s%s", lower(var.target), var.sa-docker-name, random_integer.unique-sa-id.result))}"
+  l-storage-account-name       = "${lower(format("sa%s%s%s", lower(var.target), var.sa-name, random_integer.unique-sa-id.result))}"
   l-storage-account-persistent = "${lower(format("sa%s%s%s", lower(var.target), var.sa-persistent-name, random_integer.unique-sa-id.result))}"
 }
 
 module "sa-boot-diag" {
   source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/storage-account?ref=0.1.0"
   name                      = "${local.l-storage-account-name}"
-  resource-group-name       = "${module.docker-resource-group.name}"
+  resource-group-name       = "${module.resource-group.name}"
   account-tier              = "Standard"
   account-replication-type  = "LRS"
   enable-blob-encryption    = true
@@ -27,10 +27,10 @@ module "sa-boot-diag" {
   tags                      = "${var.tags}"
 }
 
-module "sa-docker4x-persistent" {
+module "sa-k8s4x-persistent" {
   source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/storage-account?ref=0.1.0"
   name                      = "${local.l-storage-account-persistent}"
-  resource-group-name       = "${module.docker-resource-group.name}"
+  resource-group-name       = "${module.resource-group.name}"
   account-tier              = "Standard"
   account-replication-type  = "LRS"
   enable-blob-encryption    = true

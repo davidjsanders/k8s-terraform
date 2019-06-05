@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------
 #
 # Module:         terraform-reference-app/green
-# Submodule:      nsg-docker.tf
+# Submodule:      nsg-k8s.tf
 # Purpose:        Create a network security group to be used 
 #                 on the Docker subnet to restrict traffic
 #                 flows inbound or outbound (E<>W).
@@ -23,14 +23,14 @@
 # all start with a unique name for the module, the l-... text.
 #
 locals {
-  l-nsg-docker-temp-name   = "${format("%s-%s%s", var.target, var.nsg-docker-name, local.l-dev)}"
-  l-nsg-docker-name        = "${format("NSG-%s-%s%s", local.l-nsg-docker-temp-name, var.environ, local.l-random)}"
+  l-nsg-temp-name   = "${format("%s-%s%s", var.target, var.nsg-name, local.l-dev)}"
+  l-nsg-name        = "${format("NSG-%s-%s%s", local.l-nsg-temp-name, var.environ, local.l-random)}"
 }
 
-module "nsg-docker" {
+module "nsg-k8s" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg?ref=0.1.0"
-  name                = "${local.l-nsg-docker-name}"
-  resource-group-name = "${module.docker-resource-group.name}"
+  name                = "${local.l-nsg-name}"
+  resource-group-name = "${module.resource-group.name}"
   location            = "${var.location}"
   tags                = "${var.tags}"
 }

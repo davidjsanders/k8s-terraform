@@ -1,14 +1,14 @@
 resource "null_resource" "provisioner_ansible" {
     triggers {
-        vm_master_1_id = "${module.vm-docker-manager-1.id}"
-#        vm_master_2_id = "${module.vm-docker-master-2.id}"
-#        vm_master_3_id = "${module.vm-docker-master-3.id}"
-        vm_worker_1_id = "${module.vm-docker-worker-1.id}"
-        vm_worker_2_id = "${module.vm-docker-worker-2.id}"
+        vm_master_1_id = "${module.vm-manager-1.id}"
+#        vm_master_2_id = "${module.vm-master-2.id}"
+#        vm_master_3_id = "${module.vm-master-3.id}"
+        vm_worker_1_id = "${module.vm-worker-1.id}"
+        vm_worker_2_id = "${module.vm-worker-2.id}"
     }
 
     connection {
-        host        = "${module.pip-docker-master-1.ip_address}"
+        host        = "${module.pip-master-1.ip_address}"
         type        = "ssh"
         user        = "azadmin"
         private_key = "${file(local.l_pk_file)}"
@@ -24,18 +24,18 @@ resource "null_resource" "provisioner_ansible" {
     }
 
     provisioner "file" {
-        content = "${data.template_file.docker-daemon.rendered}"
+        content = "${data.template_file.daemon.rendered}"
         destination = "/tmp/daemon.json"
     }
 
     provisioner "file" {
-        content = "${data.template_file.docker-hosts.rendered}"
+        content = "${data.template_file.hosts.rendered}"
         destination = "/tmp/hosts.conf"
     }
 
     provisioner "file" {
-        content = "${data.template_file.docker-swarm-playbook.rendered}"
-        destination = "~/docker-swarm-playbook.yml"
+        content = "${data.template_file.swarm-playbook.rendered}"
+        destination = "~/swarm-playbook.yml"
     }
 
     provisioner "file" {
@@ -69,7 +69,7 @@ resource "null_resource" "provisioner_ansible" {
     }
 
     provisioner "file" {
-        content = "${data.template_file.docker-keys-master-1.rendered}"
+        content = "${data.template_file.keys-master-1.rendered}"
         destination = "~/keyscript.sh"
     }
 
@@ -86,7 +86,7 @@ resource "null_resource" "provisioner_ansible" {
             "ansible -m ping docker_workers --inventory-file=/etc/ansible/docker.ini",
             "ansible -m ping docker_masters --inventory-file=/etc/ansible/docker.ini",
             "ansible -m ping docker_first_master --inventory-file=/etc/ansible/docker.ini",
-            "ansible-playbook --inventory-file=/etc/ansible/docker.ini ~/docker-swarm-playbook.yml",
+            "ansible-playbook --inventory-file=/etc/ansible/docker.ini ~/swarm-playbook.yml",
             "sudo mv /tmp/prometheus.yml /etc/prometheus/",
             "echo ''",
             "echo 'Starting certificate provisioning'",
@@ -106,23 +106,23 @@ resource "null_resource" "provisioner_ansible" {
     }
 
     provisioner "local-exec" {
-        command = "rm -rf ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+        command = "rm -rf ~/.docker/azure-${module.pip-master-1.ip_address}"
     }
 
     provisioner "local-exec" {
-        command = "mkdir -p ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+        command = "mkdir -p ~/.docker/azure-${module.pip-master-1.ip_address}"
     }
 
     provisioner "local-exec" {
-        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-docker-master-1.ip_address}:~/keys/key.pem ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-master-1.ip_address}:~/keys/key.pem ~/.docker/azure-${module.pip-master-1.ip_address}"
     }
 
     provisioner "local-exec" {
-        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-docker-master-1.ip_address}:~/keys/ca.pem ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-master-1.ip_address}:~/keys/ca.pem ~/.docker/azure-${module.pip-master-1.ip_address}"
     }
 
     provisioner "local-exec" {
-        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-docker-master-1.ip_address}:~/keys/cert.pem ~/.docker/azure-${module.pip-docker-master-1.ip_address}"
+        command = "scp -i ${var.private-key} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${var.vm-adminuser}@${module.pip-master-1.ip_address}:~/keys/cert.pem ~/.docker/azure-${module.pip-master-1.ip_address}"
     }
 
 #    provisioner "local-exec" {

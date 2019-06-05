@@ -1,8 +1,8 @@
-module "nsg-docker-Allow9090" {
+module "nsg-Allow9090" {
   source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.1.0"
   name                        = "Allow9090"
-  resource-group-name         = "${module.docker-resource-group.name}"
-  network-security-group-name = "${module.nsg-docker.name}"
+  resource-group-name         = "${module.resource-group.name}"
+  network-security-group-name = "${module.nsg-k8s.name}"
   priority                    = "150"
   direction                   = "Inbound"
   access                      = "Allow"

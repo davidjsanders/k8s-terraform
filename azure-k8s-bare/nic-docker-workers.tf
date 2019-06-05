@@ -6,21 +6,21 @@ locals {
   l-nic-worker-2-ip  = "${replace(var.worker-static-ip-2, "dc-prefix", var.dc-prefix)}"
 }
 
-module "nic-docker-worker-1" {
+module "nic-worker-1" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-static-ip"
   name                = "${local.l-nic-worker-1}"
-  resource-group-name = "${module.docker-resource-group.name}"
-  subnet-id           = "${module.docker-wrk-subnet.id}"
+  resource-group-name = "${module.resource-group.name}"
+  subnet-id           = "${module.wrk-subnet.id}"
   private-ip-address  = "${local.l-nic-worker-1-ip}"
   location            = "${var.location}"
   tags                = "${var.tags}"
 }
 
-module "nic-docker-worker-2" {
+module "nic-worker-2" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-static-ip"
   name                = "${local.l-nic-worker-2}"
-  resource-group-name = "${module.docker-resource-group.name}"
-  subnet-id           = "${module.docker-wrk-subnet.id}"
+  resource-group-name = "${module.resource-group.name}"
+  subnet-id           = "${module.wrk-subnet.id}"
   private-ip-address  = "${local.l-nic-worker-2-ip}"
   location            = "${var.location}"
   tags                = "${var.tags}"

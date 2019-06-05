@@ -4,13 +4,13 @@ locals {
   l-nic-elb-ip         = "${replace(var.elb-static-ip, "dc-prefix", var.dc-prefix)}"
 }
 
-module "nic-docker-elb" {
+module "nic-elb" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/public-nic"
   name                = "${local.l-nic-elb-name}"
-  resource-group-name = "${module.docker-resource-group.name}"
+  resource-group-name = "${module.resource-group.name}"
   allocation          = "Dynamic"
-  subnet-id           = "${module.docker-mgt-subnet.id}"
-  public-ip-id        = "${module.pip-docker-elb.id}"
+  subnet-id           = "${module.mgt-subnet.id}"
+  public-ip-id        = "${module.pip-elb.id}"
   private-ip-address  = "${local.l-nic-elb-ip}"
   location            = "${var.location}"
   tags                = "${var.tags}"

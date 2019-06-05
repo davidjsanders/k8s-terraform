@@ -1,11 +1,10 @@
-resource "null_resource" "provisioner_ansible" {
+resource "null_resource" "k8s_master" {
     triggers {
-        vm_master_1_id = "${module.vm-docker-manager-1.id}"
-        vm_worker_1_id = "${module.vm-docker-worker-1.id}"
+        vm_master_1_id = "${module.vm-manager-1.id}"
     }
 
     connection {
-        host        = "${module.pip-docker-master-1.ip_address}"
+        host        = "${module.pip-master-1.ip_address}"
         type        = "ssh"
         user        = "azadmin"
         private_key = "${file(local.l_pk_file)}"
