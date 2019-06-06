@@ -1,6 +1,7 @@
 # To Do
-1. Add jump box
-2. Tidy up NSG definitions
-3. Fix OS Disk sizes
-4. Add persistent disk for storage
-5. Add Azure storage class
+* Add jump box
+* Tidy up NSG definitions
+* Fix OS Disk sizes
+* Add persistent disk for storage
+* Add Azure storage class
+* Update README.md - provide instructions
