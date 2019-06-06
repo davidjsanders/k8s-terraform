@@ -27,14 +27,14 @@ module "sa-boot-diag" {
   tags                      = "${var.tags}"
 }
 
-module "sa-k8s4x-persistent" {
-  source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/storage-account?ref=0.3.0"
-  name                      = "${local.l-storage-account-persistent}"
-  resource-group-name       = "${module.resource-group.name}"
-  account-tier              = "Standard"
-  account-replication-type  = "LRS"
-  enable-blob-encryption    = true
-  enable-https-traffic-only = true
-  location                  = "${var.location}"
-  tags                      = "${var.tags}"
-}
+# module "sa-k8s4x-persistent" {
+#   source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/storage-account?ref=0.3.0"
+#   name                      = "${local.l-storage-account-persistent}"
+#   resource-group-name       = "${module.resource-group.name}"
+#   account-tier              = "Standard"
+#   account-replication-type  = "LRS"
+#   enable-blob-encryption    = true
+#   enable-https-traffic-only = true
+#   location                  = "${var.location}"
+#   tags                      = "${var.tags}"
+# }

@@ -14,6 +14,13 @@ data "template_file" "master-sh" {
   }
 }
 
+data "template_file" "worker-sh" {
+  template = "${file("templates/worker.sh")}"
+
+  vars {
+  }
+}
+
 data "template_file" "ssh-config" {
   template = "${file("templates/config")}"
 
