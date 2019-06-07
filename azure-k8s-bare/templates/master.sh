@@ -6,9 +6,7 @@ source k8s-scripts/install-docker.sh
 source k8s-scripts/apt-google-k8s-keys.sh
 source k8s-scripts/apt-updates.sh
 source k8s-scripts/install-k8s.sh
-
-echo "*** $(date) *** kubeadm init"
-sudo kubeadm init --kubernetes-version 1.14.1 --pod-network-cidr 192.168.0.0/16
+source k8s-scripts/kubeadm-init.sh
 
 echo "*** $(date) *** make .kube directory"
 mkdir -p $HOME/.kube
