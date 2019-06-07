@@ -1,43 +1,11 @@
 #!/bin/bash
-echo "*** $(date) *** apt-get update"
-sudo apt-get update
-sleep 2
-
-echo "*** $(date) *** apt-get upgrade --yes"
-sudo apt-get upgrade --yes
-sleep 2
-
-echo "*** $(date) *** apt-get dist-update --yes"
-sudo apt-get dist-upgrade --yes
-sleep 2
-
-echo "*** $(date) *** swap off"
-sudo swapoff -a
-sleep 2
-
-echo "*** $(date) *** apt-get install -y docker.io"
-sudo apt-get install -y docker.io
-sleep 2
-
-echo "*** $(date) *** systemctl enable docker"
-sudo systemctl enable docker.service
-sleep 2
-
-echo "*** $(date) *** add kubernetes to apt sources"
-sudo sh -c "echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' >> /etc/apt/sources.list.d/kubernetes.list"
-sleep 2
-
-echo "*** $(date) *** curl and add Google apt key"
-sudo sh -c "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
-sleep 2
-
-echo "*** $(date) *** apt-get update"
-sudo apt-get update
-sleep 2
-
-echo "*** $(date) *** apt-get install kubeadm, kubelet, kubectl - All 1.14.1-00"
-sudo apt-get install -y kubeadm=1.14.1-00 kubelet=1.14.1-00 kubectl=1.14.1-00
-sleep 2
+source k8s-scripts/apt-updates.sh
+source k8s-scripts/apt-upgrade.sh
+source k8s-scripts/swap-off.sh
+source k8s-scripts/install-docker.sh
+source k8s-scripts/apt-google-k8s-keys.sh
+source k8s-scripts/apt-updates.sh
+source k8s-scripts/install-k8s.sh
 
 echo "*** $(date) *** kubeadm init"
 sudo kubeadm init --kubernetes-version 1.14.1 --pod-network-cidr 192.168.0.0/16
@@ -72,7 +40,7 @@ sed -i -e "s?10.244.0.0/16?192.168.0.0/16?g" canal.yaml
 sleep 2
 
 echo "*** $(date) *** Apply calico-policy-only.yaml"
-sed -i -e "s?192.168.0.0/16?192.168.0.0/16?g" calico-policy-only.yaml
+kubectl apply -f calico-policy-only.yaml
 sleep 2
 
 echo "*** $(date) *** Apply canal.yaml"
