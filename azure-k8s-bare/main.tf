@@ -32,3 +32,7 @@ provider "random" {
 provider "template" {
   version = "1.0.0"
 }
+
+provider "null" {
+  version = "2.1"
+}
