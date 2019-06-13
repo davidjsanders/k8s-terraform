@@ -41,6 +41,13 @@ variable "location" {}
 variable "resource-group-name" {}
 
 #
+# Datadisk Variables
+#
+variable "disk-rg-name" {}
+variable "disk-master-name" {}
+
+
+#
 # Network Variables
 #
 variable "vnet-name" {}
@@ -59,6 +66,7 @@ variable "worker-static-ip-2" {}
 variable "master-static-ip-1" {}
 variable "master-static-ip-2" {}
 variable "master-static-ip-3" {}
+variable "jumpbox-static-ip" {}
 variable "nic-name" {}
 
 #
@@ -94,6 +102,7 @@ variable "image-version" {}
 variable "vm-size" {}
 variable "manager-vm-size" {}
 variable "worker-vm-size" {}
+variable "jumpbox-vm-size" {}
 variable "image-rg" {}
 variable "private-key" {}
 variable "delete-osdisk-on-termination" {}

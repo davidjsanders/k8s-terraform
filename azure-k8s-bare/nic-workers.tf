@@ -7,7 +7,7 @@ locals {
 }
 
 module "nic-worker-1" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-static-ip"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-static-ip?ref=0.5.2"
   name                = "${local.l-nic-worker-1}"
   resource-group-name = "${module.resource-group.name}"
   subnet-id           = "${module.wrk-subnet.id}"
@@ -17,7 +17,7 @@ module "nic-worker-1" {
 }
 
 module "nic-worker-2" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-static-ip"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-static-ip?ref=0.5.2"
   name                = "${local.l-nic-worker-2}"
   resource-group-name = "${module.resource-group.name}"
   subnet-id           = "${module.wrk-subnet.id}"

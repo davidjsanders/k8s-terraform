@@ -1,5 +1,5 @@
 module "nsg-Allow8080" {
-  source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.3.0"
+  source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.5.2"
   name                        = "Allow8080"
   resource-group-name         = "${module.resource-group.name}"
   network-security-group-name = "${module.nsg-k8s.name}"

@@ -5,7 +5,7 @@ locals {
 }
 
 module "nic-master-1" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/public-nic"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/public-nic?ref=0.5.2"
   name                = "${local.l-pnic-master-1}"
   resource-group-name = "${module.resource-group.name}"
   allocation          = "Static"
