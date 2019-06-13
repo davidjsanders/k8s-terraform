@@ -1,6 +1,9 @@
 resource "null_resource" "k8s_master" {
     triggers {
         vm_master_1_id = "${module.vm-jumpbox.id}"
+        vm_k8s_master_1_id = "${module.vm-manager-1.id}"
+        vm_k8s_worker_1_id = "${module.vm-worker-1.id}"
+        vm_k8s_worker_2_id = "${module.vm-worker-2.id}"
     }
 
     connection {
