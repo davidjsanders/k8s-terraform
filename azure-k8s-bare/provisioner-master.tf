@@ -74,7 +74,7 @@ resource "null_resource" "k8s_master" {
             "chmod +x /home/${var.vm-adminuser}/scripts/master.sh /home/${var.vm-adminuser}/scripts/worker.sh /home/${var.vm-adminuser}/scripts/scp-commands.sh /home/${var.vm-adminuser}/scripts/ssh-commands.sh",
             "mkdir /home/${var.vm-adminuser}/logs",
             "/home/${var.vm-adminuser}/scripts/scp-commands.sh | tee /home/${var.vm-adminuser}/logs/scp-commands.log",
-            "/home/${var.vm-adminuser}/scripts/ssh-commands.sh | tee /home/${var.vm-adminuser}/logs/ssh-commands.log",
+            "#/home/${var.vm-adminuser}/scripts/ssh-commands.sh | tee /home/${var.vm-adminuser}/logs/ssh-commands.log",
             "echo 'Done.'"
         ]
     }

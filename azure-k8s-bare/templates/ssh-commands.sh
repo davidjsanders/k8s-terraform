@@ -13,6 +13,21 @@ for master in $$masters
 do
     echo "Executing scripts on master at $${master}"
 
+    echo "Make /datadrive for mount"
+    ssh -i ~/.ssh/azure_pk \
+        ${admin}@$${master} \
+        "sudo mkdir /datadrive"
+
+    echo "Mount /dev/sdc1 to /datadrive"
+    ssh -i ~/.ssh/azure_pk \
+        ${admin}@$${master} \
+        "sudo mount /dev/sdc1 /datadrive"
+
+    echo "Ensure ownership of /datadrive/azadmin is set to ${admin}"
+    ssh -i ~/.ssh/azure_pk \
+        ${admin}@$${master} \
+        "sudo chown -R ${admin} /datadrive/azadmin"
+
     echo "Execute master.sh"
     ssh -i ~/.ssh/azure_pk \
         ${admin}@$${master} \

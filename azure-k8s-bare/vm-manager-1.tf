@@ -6,7 +6,7 @@ locals {
 }
 
 module "vm-manager-1" {
-  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-datadisk?ref=0.5.1"
+  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-datadisk?ref=0.5.2"
   name                             = "${local.l-manager-1-name-1}"
   location                         = "${var.location}"
   resource-group-name              = "${module.resource-group.name}"

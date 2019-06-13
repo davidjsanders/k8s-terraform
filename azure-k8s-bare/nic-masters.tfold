@@ -9,7 +9,7 @@ locals {
 }
 
 module "nic-master-1" {
-  source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip"
+  source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip?ref=0.5.2"
   name                = "${local.l-pnic-master-1}"
   resource-group-name = "${module.resource-group.name}"
   subnet-id           = "${module.subnet.id}"
@@ -19,7 +19,7 @@ module "nic-master-1" {
 }
 
 module "nic-master-2" {
-  source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip"
+  source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip?ref=0.5.2"
   name                = "${local.l-pnic-master-2}"
   resource-group-name = "${module.resource-group.name}"
   subnet-id           = "${module.subnet.id}"
@@ -29,7 +29,7 @@ module "nic-master-2" {
 }
 
 module "nic-master-3" {
-  source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip"
+  source              = "git@github.com:dsandersAzure/loblaw-infra.git//modules/private-nic-static-ip?ref=0.5.2"
   name                = "${local.l-pnic-master-3}"
   resource-group-name = "${module.resource-group.name}"
   subnet-id           = "${module.subnet.id}"
