@@ -6,7 +6,7 @@ locals {
 }
 
 module "vm-manager-1" {
-  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-no-datadisk?ref=0.3.0"
+  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-datadisk?ref=0.5.1"
   name                             = "${local.l-manager-1-name-1}"
   location                         = "${var.location}"
   resource-group-name              = "${module.resource-group.name}"
@@ -24,6 +24,11 @@ module "vm-manager-1" {
   os-disk-create-option            = "FromImage"
   os-disk-caching                  = "ReadWrite"
   os-disk-type                     = "${var.vm-osdisk-type}"
+  data-disk-name                   = "${data.azurerm_managed_disk.datasourcemd.name}"
+  data-disk-id                     = "${data.azurerm_managed_disk.datasourcemd.id}"
+  data-disk-create-option          = "Attach"
+  data-disk-lun                    = 0
+  data-disk-size                   = "${data.azurerm_managed_disk.datasourcemd.disk_size_gb}"
   adminuser                        = "${var.vm-adminuser}"
   adminpass                        = "${var.vm-adminpass}"
   ssh-key-path                     = "${local.l-manager-1-pk-file}"

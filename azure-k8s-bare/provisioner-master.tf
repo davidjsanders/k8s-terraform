@@ -48,6 +48,11 @@ resource "null_resource" "k8s_master" {
     }
 
     provisioner "file" {
+        content = "${data.template_file.hosts.rendered}"
+        destination = "/home/${var.vm-adminuser}/hosts"
+    }
+
+    provisioner "file" {
         source = "${local.l_pk_file}"
         destination = "/home/${var.vm-adminuser}/.ssh/azure_pk"
     }
@@ -64,6 +69,7 @@ resource "null_resource" "k8s_master" {
 
     provisioner "remote-exec" {
         inline = [
+            "cat /home/${var.vm-adminuser}/hosts | sudo tee -a /etc/hosts",
             "chmod 0600 /home/${var.vm-adminuser}/.ssh/azure_pk",
             "chmod +x /home/${var.vm-adminuser}/scripts/master.sh /home/${var.vm-adminuser}/scripts/worker.sh /home/${var.vm-adminuser}/scripts/scp-commands.sh /home/${var.vm-adminuser}/scripts/ssh-commands.sh",
             "mkdir /home/${var.vm-adminuser}/logs",

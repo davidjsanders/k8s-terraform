@@ -7,6 +7,11 @@
 #   resource_group_name  = "${var.vnet-resource-group}"
 # }
 
+data "azurerm_managed_disk" "datasourcemd" {
+  name                = "${var.disk-master-name}"
+  resource_group_name = "${var.disk-rg-name}"
+}
+
 data "template_file" "master-sh" {
   template = "${file("templates/master.sh")}"
 
@@ -20,6 +25,16 @@ data "template_file" "worker-sh" {
 
   vars {
     admin="${var.vm-adminuser}"
+  }
+}
+
+data "template_file" "hosts" {
+  template = "${file("templates/hosts")}"
+
+  vars {
+    master="${local.l-pnic-master-1-ip}"
+    worker1="${local.l-nic-worker-1-ip}"
+    worker2="${local.l-nic-worker-2-ip}"
   }
 }
 

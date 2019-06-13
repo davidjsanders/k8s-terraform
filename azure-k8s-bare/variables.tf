@@ -41,6 +41,13 @@ variable "location" {}
 variable "resource-group-name" {}
 
 #
+# Datadisk Variables
+#
+variable "disk-rg-name" {}
+variable "disk-master-name" {}
+
+
+#
 # Network Variables
 #
 variable "vnet-name" {}

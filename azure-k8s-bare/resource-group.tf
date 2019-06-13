@@ -4,7 +4,7 @@ locals {
 }
 
 module "resource-group" {
-  source          = "git::https://github.com/dsandersAzure/terraform-library.git//modules/rg?ref=0.3.0"
+  source          = "git::https://github.com/dsandersAzure/terraform-library.git//modules/rg?ref=0.5.1"
   name            = "${local.l-rg-name}"
   location        = "${var.location}"
   tags            = "${var.tags}"
