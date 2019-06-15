@@ -1,9 +1,9 @@
 output "fqdn" {
-    value = "${module.pip-master-1.fqdn}"
+    value = "${module.pip-elb.fqdn}"
 }
 
 output "IP-Address" {
-    value = "${module.pip-master-1.ip_address}"
+    value = "${module.pip-elb.ip_address}"
 }
 
 output "Jumpbox-IP-Address" {
@@ -11,9 +11,9 @@ output "Jumpbox-IP-Address" {
 }
 
 output "nginx-hosts-line" {
-    value = "${module.pip-master-1.ip_address}    nginx-frontend"
+    value = "${module.pip-elb.ip_address}    nginx-frontend"
 }
 
 output "traefik-hosts-line" {
-    value = "${module.pip-master-1.ip_address}    traefik-ui"
+    value = "${module.pip-elb.ip_address}    traefik-ui"
 }

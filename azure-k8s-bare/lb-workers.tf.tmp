@@ -1,0 +1,10 @@
+module "elb-web-l4-lb" {
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-with-pip?ref=0.5.2"
+  name                = "lb-web-tier"
+  frontend-name       = "fe-web-tier"
+  sku                 = "Standard"
+  public-ip-id        = "${module.pip-elb.id}"
+  resource-group-name = "${module.resource-group.name}"
+  location            = "${var.location}"
+  tags                = "${var.tags}"
+}
