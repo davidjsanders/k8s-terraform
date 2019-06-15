@@ -10,7 +10,11 @@ scripts=$scripts" /home/${admin}/scripts/k8s-scripts/install-k8s.sh"
 echo "Executing Worker scripts"
 for script in $scripts
 do
-    echo "Executing script: $script"
+    echo " "
+    echo "****************************"
+    echo "* Worker - Executing script: $script"
+    echo "****************************"
+    echo " "
     source $script
 done
 
