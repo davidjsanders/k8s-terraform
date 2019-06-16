@@ -23,9 +23,9 @@ done
 
 banner "ssh-commands.sh" "Execute ssh commands on master"
 master_commands="sudo mkdir /datadrive"
-master_commands="${master_commands};sudo mount /dev/sdc1 /datadrive"
-master_commands="${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
-master_commands="${master_commands};~/scripts/master.sh"
+master_commands="$${master_commands};sudo mount /dev/sdc1 /datadrive"
+master_commands="$${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
+master_commands="$${master_commands};~/scripts/master.sh"
 IFS=$" "
 for master in $$masters
 do
@@ -89,7 +89,7 @@ IFS=$" "
 while true
 do
     current_jobs=$(jobs)
-    if [ "${current_jobs}X" == "X" ]
+    if [ "$${current_jobs}X" == "X" ]
     then
         break;
     else
