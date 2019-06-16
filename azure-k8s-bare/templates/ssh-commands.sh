@@ -66,18 +66,13 @@ done
 
 banner "ssh-commands.sh" "Execute ssh commands on all workers"
 worker_commands="~/scripts/worker.sh"
-worker_commands="$worker_commands;sudo ~/scripts/kubeadm_join_cmd.sh"
 IFS=$" "
 for worker in $$workers
 do
-    IFS=$';'
-    for command in worker_commands
-    do
-        do_ssh \
-            "Executing $${command}" \
-            ${admin}@$${worker} \
-            $${command} &
-    done
+    do_ssh \
+        "Executing $${command}" \
+        ${admin}@$${worker} \
+        "~/scripts/worker.sh" &
 
     # do_ssh \
     #     "Execute worker.sh" \
