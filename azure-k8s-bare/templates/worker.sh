@@ -6,6 +6,8 @@ scripts=$scripts" /home/${admin}/scripts/k8s-scripts/install-docker.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/google-keys.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/install-k8s.sh"
+scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-updates.sh"
+scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 
 echo "Executing Worker scripts"
 for script in $scripts

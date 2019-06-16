@@ -110,5 +110,15 @@ do_ssh \
     ${admin}@$${master[0]} \
     "~/scripts/traefik/load-traefik.sh"
 
+banner "ssh-commands.sh" "Instruct all nodes to reboot"
+IFS=$" "
+for target in $$masters $$workers
+do
+    do_ssh \
+        "Set scripts to be executable on $${target}" \
+        ${admin}@$${target} \
+        "sudo reboot now"
+done
+
 banner "DONE ssh-commands.sh" "Completed all commands on all machines"
 IFS=$" "

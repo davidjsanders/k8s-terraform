@@ -12,10 +12,9 @@ scripts=$scripts" /home/${admin}/scripts/k8s-scripts/get-calico.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/get-canal.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/create-join-command.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/wait-master-ready.sh"
-#
-#scripts=$scripts" /home/${admin}/scripts/k8s-scripts/taint-master-ready.sh"
-#
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/autocomplete.sh"
+scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-updates.sh"
+scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 
 echo "Executing Master scripts"
 for script in $scripts
