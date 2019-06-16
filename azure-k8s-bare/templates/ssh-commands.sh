@@ -71,12 +71,12 @@ IFS=$" "
 for worker in $$workers
 do
     IFS=$';'
-    for command in master_commands
+    for command in worker_commands
     do
         do_ssh \
             "Executing $${command}" \
-            ${admin}@$${master} \
-            $${command}
+            ${admin}@$${worker} \
+            $${command} &
     done
 
     # do_ssh \
@@ -88,6 +88,19 @@ do
     #     "Execute kubeadm_join_cmd.sh" \
     #     ${admin}@$${worker} \
     #     "sudo ~/scripts/kubeadm_join_cmd.sh"
+done
+
+IFS=$" "
+while true
+do
+    current_jobs=$(jobs)
+    if [ "${current_jobs}X" == "X" ]
+    then
+        break;
+    else
+        echo "Background jobs still running: Sleeping for 30s"
+        sleep 30
+    fi
 done
 
 banner "ssh-commands.sh" "Execute load-traefik.sh on first master"

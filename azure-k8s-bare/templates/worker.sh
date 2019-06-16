@@ -18,4 +18,11 @@ do
     source $script
 done
 
+echo " "
+echo "****************************"
+echo "* Worker - Executing script: /home/${admin}/scripts/kubeadm_join_cmd.sh"
+echo "****************************"
+echo " "
+sudo /home/${admin}/scripts/kubeadm_join_cmd.sh
+
 echo "*** $(date) *** DONE"
