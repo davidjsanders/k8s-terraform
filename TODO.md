@@ -15,3 +15,4 @@
 * ~~Fix /home/azadmin/scripts/kubeadm_join_cmd.sh not found~~
 * ~~Do updates and reboot after provisioning and configuring~~
 * ~~Update outputs to include correct IPs~~
+* Update master.sh and worker.sh to use Banner
