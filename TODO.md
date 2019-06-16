@@ -9,3 +9,4 @@
   * provisioner_master into n units
   * provisioner_master to perform finall steps
   * split worker.sh into worker-init.sh and worker-final.sh
+* Fix /home/azadmin/scripts/kubeadm_join_cmd.sh not found
