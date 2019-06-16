@@ -1,3 +1,5 @@
 Host *
   StrictHostKeyChecking no
+  IdentitiesOnly yes
   IdentityFile ~/.ssh/azure_pk
+  ForwardAgent no
