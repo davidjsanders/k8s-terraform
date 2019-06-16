@@ -1,8 +1,12 @@
-output "fqdn" {
+output "LoadBalancer-fqdn" {
     value = "${module.pip-elb.fqdn}"
 }
 
-output "IP-Address" {
+output "Jumpbox-fqdn" {
+    value = "${module.pip-jumpbox.fqdn}"
+}
+
+output "LoadBalancer-IP-Address" {
     value = "${module.pip-elb.ip_address}"
 }
 
