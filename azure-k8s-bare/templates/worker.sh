@@ -25,6 +25,6 @@ echo "****************************"
 echo "* Worker - Executing script: /home/${admin}/scripts/kubeadm_join_cmd.sh"
 echo "****************************"
 echo " "
-sudo /home/${admin}/scripts/kubeadm_join_cmd.sh
+sudo /home/${admin}/kubeadm_join_cmd.sh
 
 echo "*** $(date) *** DONE"

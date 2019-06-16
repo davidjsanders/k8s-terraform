@@ -60,8 +60,8 @@ for worker in $$workers
 do
     do_scp \
         "Copy kubeadm_join_cmd.sh to $$worker" \
-        k8s-master:/home/${admin}/scripts/kubeadm_join_cmd.sh \
-        $$worker:/home/${admin}/scripts/kubeadm_join_cmd.sh
+        k8s-master:/home/${admin}/kubeadm_join_cmd.sh \
+        $$worker:/home/${admin}/kubeadm_join_cmd.sh
 done
 
 banner "ssh-commands.sh" "Execute ssh commands on all workers"
