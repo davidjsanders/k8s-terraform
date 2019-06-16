@@ -9,8 +9,13 @@ do
     echo "Copying files to $${target}"
 
     do_scp \
-        "Copying Azure Keys" \
-        ~/.ssh/azure_pk* \
+        "Copying Azure Private Key" \
+        ~/.ssh/azure_pk \
+        $${target}:~/.ssh/
+
+    do_scp \
+        "Copying Azure Public Key" \
+        ~/.ssh/azure_pk.pub \
         $${target}:~/.ssh/
 
     do_scp \
