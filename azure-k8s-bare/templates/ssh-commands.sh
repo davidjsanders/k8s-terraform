@@ -1,60 +1,101 @@
 #!/bin/bash
+source /home/${admin}/scripts/banner.sh
+source /home/${admin}/scripts/do-ssh.sh
+source /home/${admin}/scripts/do-scp.sh
+
 masters="${masters}"
 workers="${workers}"
+
+banner "ssh-commands.sh" "Set all scripts on all machines to be executable"
+executable_scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/master.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/worker.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/ssh-commands.sh"
+IFS=$" "
 for target in $$masters $$workers
 do
-    echo "Executing common files on master at ${admin}@$${target}"
-    ssh -i ~/.ssh/azure_pk \
+    do_ssh \
+        "Set scripts to be executable on $${target}" \
         ${admin}@$${target} \
-        chmod +x ~/scripts/master.sh ~/scripts/worker.sh ~/scripts/scp-commands.sh ~/scripts/ssh-commands.sh
+        "chmod +x $${executable_scripts}"
 done
 
+banner "ssh-commands.sh" "Execute ssh commands on master"
+master_commands="sudo mkdir /datadrive"
+master_commands="${master_commands};sudo mount /dev/sdc1 /datadrive"
+master_commands="${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
+master_commands="${master_commands};~/scripts/master.sh"
+IFS=$" "
 for master in $$masters
 do
-    echo "Executing scripts on master at $${master}"
+    IFS=$';'
+    for command in master_commands
+    do
+        do_ssh \
+            "Executing $${command}" \
+            ${admin}@$${master} \
+            $${command}
+    done
 
-    echo "Make /datadrive for mount"
-    ssh -i ~/.ssh/azure_pk \
-        ${admin}@$${master} \
-        "sudo mkdir /datadrive"
+    # do_ssh \
+    #     "Mount /dev/sdc1 to /datadrive" \
+    #     ${admin}@$${master} \
+    #     "sudo mount /dev/sdc1 /datadrive"
 
-    echo "Mount /dev/sdc1 to /datadrive"
-    ssh -i ~/.ssh/azure_pk \
-        ${admin}@$${master} \
-        "sudo mount /dev/sdc1 /datadrive"
+    # do_ssh \
+    #     "Ensure ownership of /datadrive/azadmin is set to ${admin}" \
+    #     ${admin}@$${master} \
+    #     "sudo chown -R ${admin} /datadrive/azadmin"
 
-    echo "Ensure ownership of /datadrive/azadmin is set to ${admin}"
-    ssh -i ~/.ssh/azure_pk \
-        ${admin}@$${master} \
-        "sudo chown -R ${admin} /datadrive/azadmin"
-
-    echo "Execute master.sh"
-    ssh -i ~/.ssh/azure_pk \
-        ${admin}@$${master} \
-        "~/scripts/master.sh"
+    # do_ssh \
+    #     "Execute master.sh" \
+    #     ${admin}@$${master} \
+    #     "~/scripts/master.sh"
 done
 
+banner "ssh-commands.sh" "Copy kubeadm_join_cmd.sh to all workers"
+IFS=$" "
 for worker in $$workers
 do
-    echo "Executing scripts on worker at $${worker}"
-
-    echo "Execute worker.sh"
-    ssh -i ~/.ssh/azure_pk \
-        ${admin}@$${worker} \
-        "~/scripts/worker.sh"
-
-    echo "Execute kubeadm_join_cmd.sh"
-    ssh -i ~/.ssh/azure_pk \
-        ${admin}@$${worker} \
-        "sudo ~/scripts/kubeadm_join_cmd.sh"
+    do_scp \
+        "Copy kubeadm_join_cmd.sh to $$worker" \
+        k8s-master:/home/${admin}/scripts/kubeadm_join_cmd.sh \
+        $$worker:/home/${admin}/scripts/kubeadm_join_cmd.sh
 done
 
-for master in $$masters
+banner "ssh-commands.sh" "Execute ssh commands on all workers"
+worker_commands="~/scripts/worker.sh"
+worker_commands="$worker_commands;sudo ~/scripts/kubeadm_join_cmd.sh"
+IFS=$" "
+for worker in $$workers
 do
-    echo "Executing final scripts on master at $${master}"
+    IFS=$';'
+    for command in master_commands
+    do
+        do_ssh \
+            "Executing $${command}" \
+            ${admin}@$${master} \
+            $${command}
+    done
 
-    echo "Execute load-traefik.sh"
-    ssh -i ~/.ssh/azure_pk \
-        ${admin}@$${master} \
-        "~/scripts/traefik/load-traefik.sh"
+    # do_ssh \
+    #     "Execute worker.sh" \
+    #     ${admin}@$${worker} \
+    #     "~/scripts/worker.sh"
+
+    # do_ssh \
+    #     "Execute kubeadm_join_cmd.sh" \
+    #     ${admin}@$${worker} \
+    #     "sudo ~/scripts/kubeadm_join_cmd.sh"
 done
+
+banner "ssh-commands.sh" "Execute load-traefik.sh on first master"
+master=(${masters})
+do_ssh \
+    "Execute load-traefik.sh" \
+    ${admin}@$${master[0]} \
+    "~/scripts/traefik/load-traefik.sh"
+
+banner "DONE ssh-commands.sh" "Completed all commands on all machines"
+IFS=$" "

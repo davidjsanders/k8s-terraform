@@ -42,6 +42,7 @@ data "template_file" "scp-commands-sh" {
   template = "${file("templates/scp-commands.sh")}"
 
   vars {
+    admin="${var.vm-adminuser}"
     copy_targets="${local.l-pnic-master-1-ip} ${local.l-nic-worker-1-ip} ${local.l-nic-worker-2-ip}"
   }
 }

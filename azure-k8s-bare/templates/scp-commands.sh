@@ -1,27 +1,31 @@
 #!/bin/bash
+source /home/${admin}/scripts/banner.sh
+source /home/${admin}/scripts/do-scp.sh
+
+banner "scp-commands.sh" "scp (secure copy)"
 targets="${copy_targets}"
 for target in $$targets
 do
     echo "Copying files to $${target}"
 
-    echo "Copying Azure Keys"
-    scp -r -i ~/.ssh/azure_pk \
+    do_scp \
+        "Copying Azure Keys" \
         ~/.ssh/azure_pk* \
         $${target}:~/.ssh/
 
-    echo "Copying SSH config"
-    scp -r -i ~/.ssh/azure_pk \
+    do_scp \
+        "Copying SSH config" \
         ~/.ssh/config \
         $${target}:~/.ssh/
 
-    echo "Copying hosts"
-    scp -r -i ~/.ssh/azure_pk \
+    do_scp \
+        "Copying hosts" \
         ~/hosts \
         $${target}:~/hosts
 
-    echo "Copying Scripts"
-    scp -r -i ~/.ssh/azure_pk \
+    do_scp \
+        "Copying Scripts" \
         ~/scripts \
         $${target}:~/
 done
-echo "Done."
+banner "DONE scp-commands.sh" "scp (secure copy)"
