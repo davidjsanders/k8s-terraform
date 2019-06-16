@@ -1,6 +1,7 @@
 #!/bin/bash
 source /home/${admin}/scripts/banner.sh
 source /home/${admin}/scripts/do-scp.sh
+source /home/${admin}/scripts/do-scp-recursive.sh
 
 banner "scp-commands.sh" "scp (secure copy)"
 targets="${copy_targets}"
@@ -28,7 +29,7 @@ do
         ~/hosts \
         $${target}:~/hosts
 
-    do_scp \
+    do_scp_recursive \
         "Copying Scripts" \
         ~/scripts \
         $${target}:~/

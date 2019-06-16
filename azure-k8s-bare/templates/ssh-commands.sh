@@ -30,7 +30,7 @@ IFS=$" "
 for master in $$masters
 do
     IFS=$';'
-    for command in master_commands
+    for command in $$master_commands
     do
         do_ssh \
             "Executing $${command}" \
@@ -85,18 +85,18 @@ do
     #     "sudo ~/scripts/kubeadm_join_cmd.sh"
 done
 
-IFS=$" "
-while true
-do
-    current_jobs=$(jobs)
-    if [ "$${current_jobs}X" == "X" ]
-    then
-        break;
-    else
-        echo "Background jobs still running: Sleeping for 30s"
-        sleep 30
-    fi
-done
+# IFS=$" "
+# while true
+# do
+#     current_jobs=$(jobs)
+#     if [ "$${current_jobs}X" == "X" ]
+#     then
+#         break;
+#     else
+#         echo "Background jobs still running: Sleeping for 30s"
+#         sleep 30
+#     fi
+# done
 
 banner "ssh-commands.sh" "Execute load-traefik.sh on first master"
 master=(${masters})
@@ -105,15 +105,15 @@ do_ssh \
     ${admin}@$${master[0]} \
     "~/scripts/traefik/load-traefik.sh"
 
-banner "ssh-commands.sh" "Instruct all nodes to reboot"
-IFS=$" "
-for target in $$masters $$workers
-do
-    do_ssh \
-        "Set scripts to be executable on $${target}" \
-        ${admin}@$${target} \
-        "sudo reboot now"
-done
+# banner "ssh-commands.sh" "Instruct all nodes to reboot"
+# IFS=$" "
+# for target in $$masters $$workers
+# do
+#     do_ssh \
+#         "Reboot node $${target}" \
+#         ${admin}@$${target} \
+#         "sudo reboot now"
+# done
 
 banner "DONE ssh-commands.sh" "Completed all commands on all machines"
 IFS=$" "
