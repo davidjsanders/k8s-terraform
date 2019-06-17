@@ -23,7 +23,7 @@ sudo /home/${admin}/kubeadm_join_cmd.sh
 
 banner "worker.sh" "Copy done files to worker"
 IFS=$" "
-for worker in ${workers}
+for worker in $workers
 do
     ssh -i ~/.ssh/azure_pk ${admin}@k8s-jumpbox "touch ~/$(hostname).done"
 done
