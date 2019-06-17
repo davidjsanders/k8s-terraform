@@ -19,11 +19,6 @@ scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 echo "Executing Master scripts"
 for script in $scripts
 do
-    echo " "
-    echo "****************************"
-    echo "* Master - Executing script: $script"
-    echo "****************************"
-    echo " "
     source $script
 done
 

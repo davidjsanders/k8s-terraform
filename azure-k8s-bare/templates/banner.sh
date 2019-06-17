@@ -1,10 +1,10 @@
 function banner() {
     echo 
     echo "***********************************************"
-    echo "* HOST: $(hostname)"
-    echo "* SCRIPT: ${1}"
+    echo "* HOST   : $(hostname)"
+    echo "* SCRIPT : ${1}"
     echo "***********************************************"
-    echo "* ACTION: ${2}"
+    echo "* ACTION : ${2}"
     echo "***********************************************"
     echo 
 }
