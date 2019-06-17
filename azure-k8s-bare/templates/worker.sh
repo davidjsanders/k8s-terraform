@@ -1,6 +1,6 @@
 #!/bin/bash
 source ~/scripts/banner.sh
-banner "master.sh" "Perform configuration steps for master(s)"
+banner "worker.sh" "Perform configuration steps for worker(s)"
 
 scripts="/home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
@@ -12,18 +12,18 @@ scripts=$scripts" /home/${admin}/scripts/k8s-scripts/install-k8s.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 
-echo "Executing Worker scripts"
+banner "worker.sh" "Executing Worker scripts"
 for script in $scripts
 do
     source $script
 done
 
-banner "master.sh" "Execute kubeadm_join_cmd.sh script"
+banner "worker.sh" "Execute kubeadm_join_cmd.sh script"
 sudo /home/${admin}/kubeadm_join_cmd.sh
 
-banner "master.sh" "Copy done files to master"
+banner "worker.sh" "Copy done files to worker"
 IFS=$" "
-for master in ${masters}
+for worker in ${workers}
 do
     ssh -i ~/.ssh/azure_pk ${admin}@k8s-jumpbox "touch ~/$(hostname).done"
 done

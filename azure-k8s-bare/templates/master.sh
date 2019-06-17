@@ -19,7 +19,7 @@ scripts=$scripts" /home/${admin}/scripts/k8s-scripts/autocomplete.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 
-echo "Executing Master scripts"
+banner "master.sh" "Executing Master scripts"
 for script in $scripts
 do
     source $script
