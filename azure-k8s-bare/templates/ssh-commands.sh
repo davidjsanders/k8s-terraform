@@ -20,6 +20,11 @@ do
         "Set scripts to be executable on $${target}" \
         ${admin}@$${target} \
         "chmod +x $${executable_scripts}"
+
+    do_ssh \
+        "Setup hosts file on $${target}" \
+        ${admin}@$${target} \
+        "cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
 done
 
 banner "ssh-commands.sh" "Execute ssh commands on master"
@@ -66,11 +71,6 @@ worker_commands="~/scripts/worker.sh"
 IFS=$" "
 for worker in $$workers
 do
-    do_ssh \
-        "Setup hosts file" \
-        ${admin}@$${worker} \
-        "cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
-
     do_ssh_nohup \
         "Executing $${command}" \
         ${admin}@$${worker} \
