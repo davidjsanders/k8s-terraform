@@ -24,6 +24,7 @@ module "vm-manager-1" {
   os-disk-create-option            = "FromImage"
   os-disk-caching                  = "ReadWrite"
   os-disk-type                     = "${var.vm-osdisk-type}"
+  os-disk-size-gb                  = "32"
   data-disk-name                   = "${data.azurerm_managed_disk.datasourcemd.name}"
   data-disk-id                     = "${data.azurerm_managed_disk.datasourcemd.id}"
   data-disk-create-option          = "Attach"
