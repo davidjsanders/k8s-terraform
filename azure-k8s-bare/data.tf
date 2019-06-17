@@ -36,6 +36,7 @@ data "template_file" "hosts" {
     master="${local.l-pnic-master-1-ip}"
     worker1="${local.l-nic-worker-1-ip}"
     worker2="${local.l-nic-worker-2-ip}"
+    jumpbox="${local.l-pnic-jumpbox-1-ip}"
   }
 }
 
