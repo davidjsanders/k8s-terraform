@@ -1,4 +1,7 @@
 #!/bin/bash
+source ~/scripts/banner.sh
+banner "master.sh" "Perform configuration steps for master(s)"
+
 scripts="/home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 scripts=$scripts" /home/${admin}/scripts/k8s-scripts/swap-off.sh"
