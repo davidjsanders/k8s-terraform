@@ -26,6 +26,7 @@ banner "ssh-commands.sh" "Execute ssh commands on master"
 master_commands="sudo mkdir /datadrive"
 master_commands="$${master_commands};sudo mount /dev/sdc1 /datadrive"
 master_commands="$${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
+master_commands="$${master_commands};cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
 master_commands="$${master_commands};~/scripts/master.sh"
 IFS=$" "
 for master in $$masters
@@ -65,6 +66,11 @@ worker_commands="~/scripts/worker.sh"
 IFS=$" "
 for worker in $$workers
 do
+    do_ssh \
+        "Setup hosts file" \
+        ${admin}@$${worker} \
+        "cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
+
     do_ssh_nohup \
         "Executing $${command}" \
         ${admin}@$${worker} \
