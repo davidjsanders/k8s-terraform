@@ -1,5 +1,5 @@
 module "elb-web-l4-lb" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-with-pip?ref=0.5.2"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-with-pip?ref=0.6.0"
   name                = "lb-web-tier"
   frontend-name       = "fe-web-tier"
   sku                 = "Standard"

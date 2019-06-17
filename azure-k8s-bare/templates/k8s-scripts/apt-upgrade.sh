@@ -1,4 +1,7 @@
 #!/bin/bash
+source ~/scripts/banner.sh
+banner "apt-upgrades.sh" "Do apt-get upgrade (non-interactive)"
+
 echo "*** $(date) *** apt-get upgrade --yes"
 sudo DEBIAN_FRONTEND=noninteractive \
         apt-get -o Dpkg::Options::="--force-confold" \

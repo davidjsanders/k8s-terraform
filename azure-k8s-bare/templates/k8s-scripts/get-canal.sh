@@ -1,3 +1,6 @@
+source ~/scripts/banner.sh
+banner "get-canal.sh" "Download, setup and install Canal"
+
 echo "*** $(date) *** Get canal"
 curl https://docs.projectcalico.org/v3.7/manifests/canal.yaml -O
 sleep 2

@@ -1,4 +1,7 @@
 #!/bin/bash
+source ~/scripts/banner.sh
+banner "apt-google-k8s-keys.sh" "Get Google and Kubernetes APT keys"
+
 echo "*** $(date) *** add kubernetes to apt sources"
 sudo sh -c "echo 'deb http://apt.kubernetes.io/ kubernetes-xenial main' >> /etc/apt/sources.list.d/kubernetes.list"
 sleep 2

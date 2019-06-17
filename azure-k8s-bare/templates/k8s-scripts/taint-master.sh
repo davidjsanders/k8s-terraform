@@ -1,3 +1,6 @@
+source ~/scripts/banner.sh
+banner "taint-master.sh" "Remove taints from master to enable scheduling"
+
 echo "*** $(date) *** taint master node"
 sleep 10
 kubectl taint \

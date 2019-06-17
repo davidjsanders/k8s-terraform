@@ -5,7 +5,7 @@ locals {
 }
 
 module "vm-worker-2" {
-  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-no-datadisk?ref=0.5.2"
+  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-no-datadisk?ref=0.6.0"
   name                             = "${local.l-worker-2-name-1}"
   location                         = "${var.location}"
   resource-group-name              = "${module.resource-group.name}"

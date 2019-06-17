@@ -5,7 +5,7 @@ locals {
 }
 
 module "nic-jumpbox-1" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/public-nic?ref=0.5.2"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/public-nic?ref=0.6.0"
   name                = "${local.l-pnic-jumpbox-1}"
   resource-group-name = "${module.resource-group.name}"
   allocation          = "Static"
