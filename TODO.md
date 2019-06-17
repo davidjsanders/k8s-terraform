@@ -5,7 +5,7 @@
 * Add instructions to create permanent data disk
 * Add automounting of /datadrive in a script on master
   * `uuid=$(sudo -i blkid | grep /dev/sdc1 | awk '{print $2}' | sed -e 's/UUID="\(.*\)\"/\1/')`
-  * `echo "UUID=${uuid}   /datadrive   ext4   defaults,nofail   1   2"`
+  * `echo "UUID=${uuid}   /datadrive   ext4   defaults,nofail   1   2" | sudo tee -a /etc/fstab`
 * ~~Add jump box~~
 * ~~Tidy up NSG definitions~~
 * ~~Add persistent disk for storage~~
