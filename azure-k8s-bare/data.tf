@@ -25,6 +25,7 @@ data "template_file" "worker-sh" {
 
   vars {
     admin="${var.vm-adminuser}"
+    masters="${local.l-pnic-master-1-ip}"
   }
 }
 

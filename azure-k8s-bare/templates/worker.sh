@@ -27,4 +27,15 @@ echo "****************************"
 echo " "
 sudo /home/${admin}/kubeadm_join_cmd.sh
 
+echo " "
+echo "****************************"
+echo "* Worker - Copy done file to masters
+echo "****************************"
+echo " "
+IFS=$" "
+for master in ${masters}
+do
+    ssh -i ~/.ssh/azure_pk "touch ~/$(hostname).done"
+done
+
 echo "*** $(date) *** DONE"

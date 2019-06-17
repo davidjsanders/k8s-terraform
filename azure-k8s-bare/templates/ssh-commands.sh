@@ -1,6 +1,7 @@
 #!/bin/bash
 source /home/${admin}/scripts/banner.sh
 source /home/${admin}/scripts/do-ssh.sh
+source /home/${admin}/scripts/do-ssh-nohup.sh
 source /home/${admin}/scripts/do-scp.sh
 
 masters="${masters}"
@@ -37,21 +38,6 @@ do
             ${admin}@$${master} \
             $${command}
     done
-
-    # do_ssh \
-    #     "Mount /dev/sdc1 to /datadrive" \
-    #     ${admin}@$${master} \
-    #     "sudo mount /dev/sdc1 /datadrive"
-
-    # do_ssh \
-    #     "Ensure ownership of /datadrive/azadmin is set to ${admin}" \
-    #     ${admin}@$${master} \
-    #     "sudo chown -R ${admin} /datadrive/azadmin"
-
-    # do_ssh \
-    #     "Execute master.sh" \
-    #     ${admin}@$${master} \
-    #     "~/scripts/master.sh"
 done
 
 banner "ssh-commands.sh" "Copy kubeadm_join_cmd.sh to all workers"
@@ -64,39 +50,58 @@ do
         $$worker:/home/${admin}/kubeadm_join_cmd.sh
 done
 
+banner "ssh-commands.sh" "Instruct masters to reboot"
+IFS=$" "
+for target in $$masters
+do
+    do_ssh \
+        "Reboot node $${target}" \
+        ${admin}@$${target} \
+        "sudo reboot now"
+done
+
 banner "ssh-commands.sh" "Execute ssh commands on all workers"
 worker_commands="~/scripts/worker.sh"
+IFS=$" "
+for worker in $$workers
+do
+    do_ssh_nohup \
+        "Executing $${command}" \
+        ${admin}@$${worker} \
+        "~/scripts/worker.sh"
+done
+
+banner "ssh-commands.sh" "Wait for workers to complete"
+worker_array=(${workers})
+sleep_time=30
+IFS=$" "
+while true
+do
+    files=$(ls -m *.done)
+    done_files=(`echo $files`)
+
+    echo "Done notices : $${#done_files[@]}"
+    echo "Workers      : $${#worker_array[@]}"
+
+    if [ "$${#done_files[@]}" == "$${#worker_array[@]}" ]
+    then
+        echo "Staus        : All workers report done."
+        break;
+    else
+        echo "Status       : Jobs still running; sleeping for $${sleep_time}s"
+        sleep $${sleep_time}
+    fi
+done
+
+banner "ssh-commands.sh" "Reboot all workers"
 IFS=$" "
 for worker in $$workers
 do
     do_ssh \
         "Executing $${command}" \
         ${admin}@$${worker} \
-        "~/scripts/worker.sh" &
-
-    # do_ssh \
-    #     "Execute worker.sh" \
-    #     ${admin}@$${worker} \
-    #     "~/scripts/worker.sh"
-
-    # do_ssh \
-    #     "Execute kubeadm_join_cmd.sh" \
-    #     ${admin}@$${worker} \
-    #     "sudo ~/scripts/kubeadm_join_cmd.sh"
+        "sudo reboot now"
 done
-
-# IFS=$" "
-# while true
-# do
-#     current_jobs=$(jobs)
-#     if [ "$${current_jobs}X" == "X" ]
-#     then
-#         break;
-#     else
-#         echo "Background jobs still running: Sleeping for 30s"
-#         sleep 30
-#     fi
-# done
 
 banner "ssh-commands.sh" "Execute load-traefik.sh on first master"
 master=(${masters})
@@ -104,16 +109,6 @@ do_ssh \
     "Execute load-traefik.sh" \
     ${admin}@$${master[0]} \
     "~/scripts/traefik/load-traefik.sh"
-
-# banner "ssh-commands.sh" "Instruct all nodes to reboot"
-# IFS=$" "
-# for target in $$masters $$workers
-# do
-#     do_ssh \
-#         "Reboot node $${target}" \
-#         ${admin}@$${target} \
-#         "sudo reboot now"
-# done
 
 banner "DONE ssh-commands.sh" "Completed all commands on all machines"
 IFS=$" "
