@@ -1,3 +1,6 @@
+source ~/scripts/banner.sh
+banner "kube-config.sh" "Setup k8s configuration"
+
 echo "*** $(date) *** make .kube directory"
 mkdir -p $HOME/.kube
 sleep 2

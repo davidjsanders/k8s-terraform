@@ -1,3 +1,6 @@
+source ~/scripts/banner.sh
+banner "get-calico.sh" "Download, setup and install Calico (policy only)"
+
 echo "*** $(date) *** Get calico policy only (v3.7)"
 curl https://docs.projectcalico.org/v3.7/manifests/calico-policy-only.yaml -O
 sleep 2

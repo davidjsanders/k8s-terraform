@@ -1,3 +1,6 @@
+source ~/scripts/banner.sh
+banner "install-docker.sh" "Install Docker CE (latest)"
+
 echo "*** $(date) *** apt-get install -y docker.io"
 sudo DEBIAN_FRONTEND=noninteractive \
         apt-get -o Dpkg::Options::="--force-confold" \

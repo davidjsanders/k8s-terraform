@@ -35,7 +35,7 @@ echo " "
 IFS=$" "
 for master in ${masters}
 do
-    ssh -i ~/.ssh/azure_pk "touch ~/$(hostname).done"
+    ssh -i ~/.ssh/azure_pk ${admin}@k8s-jumpbox "touch ~/$(hostname).done"
 done
 
 echo "*** $(date) *** DONE"
