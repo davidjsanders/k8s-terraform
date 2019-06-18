@@ -17,6 +17,16 @@ There are four helper scripts included in the repo which abstract terraform comm
 * helpers/apply.sh
 * helpers/destroy.sh
 
+## Required Azure Resources
+The following Azure resources need to be created in advance of running the scripts:
+
+* `RG-TFSTATE` - A resource group for containing state objects
+  * `terraformstate` - A Storage Account in RG-TFSTATE used to contain blobs for state
+* `RG-K8S-PERSISTENT` - A resource group for containing persistent objects
+  * `K8S-MASTER-DATA-DISK` - A managed disk which can be used for persistent storage; note, this should be 
+> NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
+* 
+
 ## Required Files
 In the azure-k8s-bare directory, there is a sub-directory called *targets*; this directory needs to contain the following files:
 
