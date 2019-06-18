@@ -74,7 +74,6 @@ resource "null_resource" "k8s_master" {
         inline = [
             "cat /home/${var.vm-adminuser}/hosts | sudo tee -a /etc/hosts",
             "chmod 0600 /home/${var.vm-adminuser}/.ssh/azure_pk",
-            "chmod +x /home/${var.vm-adminuser}/scripts/traefik/load-traefik.sh /home/${var.vm-adminuser}/scripts/master.sh /home/${var.vm-adminuser}/scripts/worker.sh /home/${var.vm-adminuser}/scripts/scp-commands.sh /home/${var.vm-adminuser}/scripts/ssh-commands.sh",
             "mkdir /home/${var.vm-adminuser}/logs",
             "/home/${var.vm-adminuser}/scripts/scp-commands.sh | tee /home/${var.vm-adminuser}/logs/scp-commands.log",
             "/home/${var.vm-adminuser}/scripts/ssh-commands.sh | tee /home/${var.vm-adminuser}/logs/ssh-commands.log",
@@ -82,3 +81,4 @@ resource "null_resource" "k8s_master" {
         ]
     }
 }
+#            "chmod +x /home/${var.vm-adminuser}/scripts/traefik/load-traefik.sh /home/${var.vm-adminuser}/scripts/master.sh /home/${var.vm-adminuser}/scripts/worker.sh /home/${var.vm-adminuser}/scripts/scp-commands.sh /home/${var.vm-adminuser}/scripts/ssh-commands.sh",

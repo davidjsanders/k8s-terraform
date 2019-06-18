@@ -13,6 +13,7 @@ executable_scripts="$executable_scripts /home/${admin}/scripts/master.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/worker.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/ssh-commands.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/datadrive.sh"
 IFS=$" "
 for target in $$masters $$workers
 do
@@ -115,6 +116,12 @@ do_ssh \
     "Execute load-traefik.sh" \
     ${admin}@$${master[0]} \
     "~/scripts/traefik/load-traefik.sh"
+
+banner "ssh-commands.sh" "Execute datadrive.sh on first master"
+do_ssh \
+    "Execute load-traefik.sh" \
+    ${admin}@$${master[0]} \
+    "~/scripts/datadrive.sh"
 
 banner "DONE ssh-commands.sh" "Completed all commands on all machines"
 IFS=$" "
