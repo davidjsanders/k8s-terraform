@@ -8,7 +8,7 @@
 #
 # Created on:     22 August 2018
 # Created by:     David Sanders
-# Creator email:  david.sanders2@loblaw.ca
+# Creator email:  dsanderscanada@gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
