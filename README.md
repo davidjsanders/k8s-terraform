@@ -17,6 +17,17 @@ There are four helper scripts included in the repo which abstract terraform comm
 * helpers/apply.sh
 * helpers/destroy.sh
 
+## Required Azure Resources
+The following Azure resources need to be created in advance of running the scripts:
+
+* An Azure subscription
+* `RG-TFSTATE` - A resource group for containing state objects
+  * `terraformstate` - A Storage Account in RG-TFSTATE used to contain blobs for state
+> NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
+* `RG-K8S-PERSISTENT` - A resource group for containing persistent objects
+  * `K8S-MASTER-DATA-DISK` - A managed disk which can be used for persistent storage; note, this can be ssd or hdd BUT must be in the same location as the VMs, e.g. East US.
+> NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
+
 ## Required Files
 In the azure-k8s-bare directory, there is a sub-directory called *targets*; this directory needs to contain the following files:
 
@@ -24,7 +35,7 @@ In the azure-k8s-bare directory, there is a sub-directory called *targets*; this
 * credentials.secret
 * dev.tfvars
 
-Instructions on how to set these up are shown below.
+Instructions on how to set these up are shown below and samples are in the samples directory.
 
 ## Running the script
 After forking and cloning the repo and populating the azure-k8s-bare/targets directory, you can deploy the script as follows:
