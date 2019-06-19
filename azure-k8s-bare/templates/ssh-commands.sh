@@ -33,7 +33,9 @@ master_commands="sudo mkdir /datadrive"
 master_commands="$${master_commands};sudo mount /dev/sdc1 /datadrive"
 master_commands="$${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
 master_commands="$${master_commands};cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
+master_commands="$${master_commands};~/scripts/datadrive.sh"
 master_commands="$${master_commands};~/scripts/master.sh"
+
 IFS=$" "
 for master in $$masters
 do
@@ -116,12 +118,6 @@ do_ssh \
     "Execute load-traefik.sh" \
     ${admin}@$${master[0]} \
     "~/scripts/traefik/load-traefik.sh"
-
-banner "ssh-commands.sh" "Execute datadrive.sh on first master"
-do_ssh \
-    "Execute load-traefik.sh" \
-    ${admin}@$${master[0]} \
-    "~/scripts/datadrive.sh"
 
 banner "DONE ssh-commands.sh" "Completed all commands on all machines"
 IFS=$" "
