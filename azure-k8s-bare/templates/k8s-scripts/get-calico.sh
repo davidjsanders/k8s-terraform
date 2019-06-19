@@ -6,7 +6,8 @@ curl https://docs.projectcalico.org/v3.7/manifests/calico-policy-only.yaml -O
 sleep 2
 
 echo "*** $(date) *** Change IP Cidr to 192.168.0.0/16 in calico-policy-only.yaml"
-sed -i -e "s?192.168.0.0/16?192.168.0.0/16?g" calico-policy-only.yaml
+POD_CIDR="192.168.0.0/16"
+sed -i -e "s?10.244.0.0/16?$POD_CIDR?g" calico-policy-only.yaml
 sleep 2
 
 echo "*** $(date) *** Apply calico-policy-only.yaml"
