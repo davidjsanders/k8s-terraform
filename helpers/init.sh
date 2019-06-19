@@ -11,6 +11,8 @@ start_date=$(date)
 echo ""
 echo "Starting tf initat: "${start_date}
 echo
+echo "command: terraform init -backend-config=targets/beconf.tfvars"
+echo
 terraform init -backend-config=targets/beconf.tfvars
 end_date=$(date)
 echo

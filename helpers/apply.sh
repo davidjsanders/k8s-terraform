@@ -12,6 +12,8 @@ start_date=$(date)
 echo ""
 echo "Starting tf apply on $1 at: "${start_date}
 echo
+echo "command: terraform apply -input=false targets/$1-run"
+echo
 terraform apply -input=false targets/$1-run
 end_date=$(date)
 echo

@@ -8,6 +8,8 @@ start_date=$(date)
 echo ""
 echo "Starting tf plan on $1 at: "${start_date}
 echo
+echo "command: terraform plan -input=false -out=targets/$1-run -var-file=targets/$1.tfvars -var-file=targets/credentials.secret"
+echo
 terraform plan \
   -input=false \
   -out=targets/$1-run \
