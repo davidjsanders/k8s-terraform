@@ -3,6 +3,7 @@
 * Fix OS Disk sizes
 * Add Azure storage class support
 * Add instructions to create permanent data disk
+* Update NFS storage to restrict to IPs for nodes
 * ~~Add NFS persistent storage~~
 * ~~Add automounting of /datadrive in a script on master~~
   * ~~`uuid=$(sudo -i blkid | grep /dev/sdc1 | awk '{print $2}' | sed -e 's/UUID="\(.*\)\"/\1/')`~~
