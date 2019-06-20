@@ -21,6 +21,13 @@
 # -------------------------------------------------------------------
 
 #
+# Kubernetes Variables
+#
+variable "k8s_version" {
+  default = "1.14.3-00"
+}
+
+#
 # Service Principal Variables
 #
 variable "client_id" {}

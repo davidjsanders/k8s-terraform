@@ -13,7 +13,6 @@ executable_scripts="$executable_scripts /home/${admin}/scripts/master.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/worker.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/ssh-commands.sh"
-executable_scripts="$executable_scripts /home/${admin}/scripts/datadrive.sh"
 IFS=$" "
 for target in $$masters $$workers
 do
@@ -33,7 +32,6 @@ master_commands="sudo mkdir /datadrive"
 master_commands="$${master_commands};sudo mount /dev/sdc1 /datadrive"
 master_commands="$${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
 master_commands="$${master_commands};cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
-master_commands="$${master_commands};~/scripts/datadrive.sh"
 master_commands="$${master_commands};~/scripts/master.sh"
 
 IFS=$" "

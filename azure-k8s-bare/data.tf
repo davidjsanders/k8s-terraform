@@ -17,6 +17,7 @@ data "template_file" "master-sh" {
 
   vars {
     admin="${var.vm-adminuser}"
+    cidr="${var.vnet-cidr}"
   }
 }
 
