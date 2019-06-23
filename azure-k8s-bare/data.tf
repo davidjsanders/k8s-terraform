@@ -17,7 +17,7 @@ data "template_file" "master-sh" {
 
   vars {
     admin="${var.vm-adminuser}"
-    cidr="${var.vnet-cidr}"
+    workers="${local.l-nic-worker-1-ip} ${local.l-nic-worker-2-ip}"
   }
 }
 

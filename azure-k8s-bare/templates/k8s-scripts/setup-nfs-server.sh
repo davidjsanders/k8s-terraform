@@ -12,8 +12,11 @@ parentdir="$(dirname "$EXPORT_DIRECTORY")"
 sudo chmod 777 ${EXPORT_DIRECTORY}
 sudo chmod 777 $parentdir
 
-banner "setup-nfs.sh" "Appending localhost and Kubernetes subnet address ${K8S_SUBNET} to exports configuration file"
-echo "/datadrive/export        ${K8S_SUBNET}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+banner "setup-nfs.sh" "Appending localhost and Kubernetes workers ${node} to exports configuration file"
+for node in ${worker_nodes}
+do
+    echo "/datadrive/export        ${node}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+done
 echo "/datadrive/export        localhost(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
 
 banner "setup-nfs.sh" "Restart NFS service"
