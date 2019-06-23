@@ -1,4 +1,4 @@
-resource "null_resource" "k8s_master" {
+resource "null_resource" "k8s" {
     triggers {
         vm_master_1_id = "${module.vm-jumpbox.id}"
         vm_k8s_master_1_id = "${module.vm-manager-1.id}"
@@ -34,6 +34,11 @@ resource "null_resource" "k8s_master" {
     provisioner "file" {
         content = "${data.template_file.worker-sh.rendered}"
         destination = "/home/${var.vm-adminuser}/scripts/worker.sh"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.setup-nfs-server-sh.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/k8s-scripts/setup-nfs-server.sh"
     }
 
     provisioner "file" {
