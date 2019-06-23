@@ -2,7 +2,7 @@
 source ~/scripts/banner.sh
 
 EXPORT_DIRECTORY=/datadrive/export/data
-K8S_SUBNET=${1}
+worker_nodes=${1}
 
 banner "setup-nfs.sh" "Make directories ${EXPORT_DIRECTORY}"
 sudo mkdir -p ${EXPORT_DIRECTORY}
