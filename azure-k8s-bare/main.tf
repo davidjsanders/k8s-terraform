@@ -1,20 +1,18 @@
 # -------------------------------------------------------------------
 #
-# Module:         terraform-reference-app
-# Submodule:      engine/main.tf
-# Environment:    dev
-# Purpose:        .
+# Module:         k8s-terraform
+# Submodule:      main.tf
+# Environments:   all
+# Purpose:        Terraform main.tf module.
 #
-# Created on:     29 August 2018
+# Created on:     23 June 2019
 # Created by:     David Sanders
 # Creator email:  dsanderscanada@nospam-gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
 # -------------------------------------------------------------------
-# 29 Aug 2018  | David Sanders               | First release and
-#                                            | valid creation of
-#                                            | sample app.
+# 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 
 provider "azurerm" {

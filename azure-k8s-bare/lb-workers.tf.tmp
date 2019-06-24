@@ -1,3 +1,6 @@
+#
+# DEPRECATED
+#
 module "elb-web-l4-lb" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-with-pip?ref=0.6.0"
   name                = "lb-web-tier"

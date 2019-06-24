@@ -1,3 +1,21 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      helpers/error-checking.sh
+# Environments:   n/a
+# Purpose:        Helper script to wrap error checking for the other
+#                 scripts.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 if [[ "X"$1 == "X" ]]; then
     echo "Error: An environment (with a matching target) must be provided."
     exit 1

@@ -1,3 +1,21 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      vm-jumpbox.tf
+# Environments:   all
+# Purpose:        Module to define the Azure VM to be used as the
+#                 jumpbox to other non-public resources.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 locals {
   l-jumpbox-temp-name   = "${format("%s-%s-JUMPBOX%s", var.target, var.vm-name, local.l-dev)}"
   l-jumpbox-name-1      = "${format("VM-%s-%s-JUMPBOX%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"

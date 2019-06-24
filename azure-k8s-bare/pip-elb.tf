@@ -1,3 +1,21 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      pip-elb.tf
+# Environments:   all
+# Purpose:        Module to define external load balancer for the
+#                 vnet to manage in-bound worker traffic.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 locals {
   l-pip-elb-temp-name = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
   l-pip-elb-name      = "${format("PIP-%s-%s%s", local.l-pip-elb-temp-name, var.environ, local.l-random)}"

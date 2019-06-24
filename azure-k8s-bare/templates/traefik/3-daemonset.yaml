@@ -1,3 +1,20 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/traefik/3-daemonset.yaml
+# Environments:   all
+# Purpose:        YAML specification to create a deamon set to install
+#                 Traefik as an ingress controller.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
 ---
 apiVersion: v1
 kind: ServiceAccount

@@ -1,23 +1,19 @@
 # -------------------------------------------------------------------
 #
-# Module:         terraform-reference-app/green
+# Module:         k8s-terraform
 # Submodule:      variables.tf
-# Purpose:        Define the variables used in the terraform script.
+# Environments:   all
+# Purpose:        Module to define variables used in various tf
+#                 scripts. Values are provided in .tfvars files
 #
-#                 **NOTE** No *ACTUAL* values are defined here, only
-#                          the variables themselves; values are
-#                          defined in .tfvars files.
-#
-# Created on:     22 August 2018
+# Created on:     23 June 2019
 # Created by:     David Sanders
 # Creator email:  dsanderscanada@nospam-gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
 # -------------------------------------------------------------------
-# 22 Aug 2018  | David Sanders               | First release and
-#                                            | valid creation of
-#                                            | sample app.
+# 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 
 #

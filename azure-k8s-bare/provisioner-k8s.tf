@@ -1,3 +1,21 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      provisioner-k8s.tf
+# Environments:   all
+# Purpose:        Module to define provisioners to configure the nodes
+#                 after provisioning.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 resource "null_resource" "k8s" {
     triggers {
         vm_master_1_id = "${module.vm-jumpbox.id}"

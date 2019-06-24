@@ -1,3 +1,20 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      nic-masters.tf
+# Environments:   all
+# Purpose:        Module to provision nics for the k8s master(s).
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 locals {
   l-pnic-temp-name    = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
   l-pnic-master-1     = "${format("NIC-MASTER-1-%s-%s%s", local.l-pnic-temp-name, var.environ, local.l-random)}"

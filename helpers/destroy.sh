@@ -1,7 +1,22 @@
 #!/usr/bin/env bash
+# -------------------------------------------------------------------
 #
-# TODO: Add --force arg
+# Module:         k8s-terraform
+# Submodule:      helpers/destroy.sh
+# Environments:   n/a
+# Purpose:        Helper script to wrap the commands and arguments
+#                 around terraform destroy.
 #
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 #
 # Validate args
 #

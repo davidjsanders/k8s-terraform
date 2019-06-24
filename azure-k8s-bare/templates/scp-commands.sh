@@ -1,5 +1,26 @@
 #!/bin/bash
-source /home/${admin}/scripts/banner.sh
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/scp-commands.sh
+# Environments:   all
+# Purpose:        The collection of steps and sequences required for
+#                 copying setup files from the jumpbox to the nodes.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
+# Include the banner function for logging purposes (see 
+# templates/banner.sh)
+#
+source ~/scripts/banner.sh
 source /home/${admin}/scripts/do-scp.sh
 source /home/${admin}/scripts/do-scp-recursive.sh
 

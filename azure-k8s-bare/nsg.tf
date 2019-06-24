@@ -1,21 +1,19 @@
 # -------------------------------------------------------------------
 #
-# Module:         terraform-reference-app/green
-# Submodule:      nsg-k8s.tf
-# Purpose:        Create a network security group to be used 
-#                 on the Docker subnet to restrict traffic
-#                 flows inbound or outbound (E<>W).
+# Module:         k8s-terraform
+# Submodule:      nsg.tf
+# Environments:   all
+# Purpose:        Module to define NSG for all vnet, subnet and node
+#                 traffic.
 #
-# Created on:     22 August 2018
+# Created on:     23 June 2019
 # Created by:     David Sanders
 # Creator email:  dsanderscanada@nospam-gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
 # -------------------------------------------------------------------
-# 22 Aug 2018  | David Sanders               | First release and
-#                                            | valid creation of
-#                                            | sample app.
+# 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 
 # Define local variables for use in the module. **NOTE** Although the local
