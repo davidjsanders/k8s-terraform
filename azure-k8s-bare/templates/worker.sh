@@ -49,6 +49,10 @@ do
 done
 IFS=$" "
 
+# Copy the Docker daemon to the correct location
+banner "worker.sh" "Executing Master scripts"
+sudo cp /home/${admin}/scripts/registry/daemon.json /etc/docker/daemon.json
+
 # Make sure the master is ready before proceeding. Currently, this
 # simply executes a pwd command on the master BUT will be changed to
 # perform a proper kubectl check.

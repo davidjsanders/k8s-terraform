@@ -58,4 +58,8 @@ do
 done
 IFS=$" "
 
+# Copy the Docker daemon to the correct location
+banner "master.sh" "Copy daemon.json /etc/docker"
+sudo cp /home/${admin}/scripts/registry/daemon.json /etc/docker/daemon.json
+
 echo "*** $(date) *** DONE"
