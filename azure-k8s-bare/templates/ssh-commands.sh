@@ -1,5 +1,27 @@
 #!/bin/bash
-source /home/${admin}/scripts/banner.sh
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/ssh-commands.sh
+# Environments:   all
+# Purpose:        The collection of steps and sequences required for
+#                 executing ssh commands from the jumpbox to the
+#                 cluster nodes.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
+# Include the banner function for logging purposes (see 
+# templates/banner.sh)
+#
+source ~/scripts/banner.sh
 source /home/${admin}/scripts/do-ssh.sh
 source /home/${admin}/scripts/do-ssh-nohup.sh
 source /home/${admin}/scripts/do-scp.sh
@@ -7,6 +29,7 @@ source /home/${admin}/scripts/do-scp.sh
 masters="${masters}"
 workers="${workers}"
 
+# Define the scripts that should be set to executabl
 banner "ssh-commands.sh" "Set all scripts on all machines to be executable"
 executable_scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/master.sh"
@@ -14,6 +37,8 @@ executable_scripts="$executable_scripts /home/${admin}/scripts/worker.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/ssh-commands.sh"
 IFS=$" "
+# Execute an ssh command on every node and set the executable
+# flag on the scripts and setup the hosts file
 for target in $$masters $$workers
 do
     do_ssh \
@@ -27,6 +52,9 @@ do
         "cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
 done
 
+# Define the commands that should be executed on the master. TODO: 
+# These should probably ALL be in master.sh rather than split here
+# and most in the other shell script.
 banner "ssh-commands.sh" "Execute ssh commands on master"
 master_commands="sudo mkdir /datadrive"
 master_commands="$${master_commands};sudo mount /dev/sdc1 /datadrive"
@@ -34,6 +62,7 @@ master_commands="$${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
 master_commands="$${master_commands};cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
 master_commands="$${master_commands};~/scripts/master.sh"
 
+# Execute the commands on every master
 IFS=$" "
 for master in $$masters
 do
@@ -47,6 +76,9 @@ do
     done
 done
 
+# After the master shell script is created, a kubeadm_join_cmd is
+# created to allow other nodes to join. This script is now copied
+# to each node.
 banner "ssh-commands.sh" "Copy kubeadm_join_cmd.sh to all workers"
 IFS=$" "
 for worker in $$workers
@@ -57,6 +89,7 @@ do
         $$worker:/home/${admin}/kubeadm_join_cmd.sh
 done
 
+# After copying the script, the master is rebooted.
 banner "ssh-commands.sh" "Instruct masters to reboot"
 IFS=$" "
 for target in $$masters
@@ -67,6 +100,10 @@ do
         "sudo reboot now"
 done
 
+# While the master is rebooting, the workers are executed 
+# "In Parallel" using nohup and background tasks to setup the
+# Docker and k8s packages. The workers *WILL* wait for the
+# master to reboot before tryng to join the cluster.
 banner "ssh-commands.sh" "Execute ssh commands on all workers"
 worker_commands="~/scripts/worker.sh"
 IFS=$" "
@@ -78,6 +115,11 @@ do
         "~/scripts/worker.sh"
 done
 
+# The worker scripts are running in the background and this script
+# now waits until each worker is completed. A worker signifies
+# completion by copying a hostname.done file to the jumpbox. When
+# the number of files matches the number of workers, the script
+# proceeds.
 banner "ssh-commands.sh" "Wait for workers to complete"
 worker_array=(${workers})
 sleep_time=30
@@ -100,6 +142,7 @@ do
     fi
 done
 
+# Reboot all of the workers
 banner "ssh-commands.sh" "Reboot all workers"
 IFS=$" "
 for worker in $$workers
@@ -110,6 +153,9 @@ do
         "sudo reboot now"
 done
 
+# Load the sample Traefik Ingress Controller on the master, even
+# though the workers are probably not ready; k8s will wait until
+# a worker becomes ready to schedule the DaemonSet on that node.
 banner "ssh-commands.sh" "Execute load-traefik.sh on first master"
 master=(${masters})
 do_ssh \

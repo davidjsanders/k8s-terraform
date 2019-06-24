@@ -1,3 +1,21 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/hosts
+# Environments:   all
+# Purpose:        Template file updated by the data module to add
+#                 short-name entries for each node in /etc/hosts.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 ${master} k8s-master
 ${worker1} k8s-worker-1
 ${worker2} k8s-worker-2

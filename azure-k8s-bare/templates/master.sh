@@ -1,7 +1,31 @@
 #!/bin/bash
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/master.sh
+# Environments:   all
+# Purpose:        The collection of steps and sequences required to
+#                 setup the k8s master.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
+# Include the banner function for logging purposes (see 
+# templates/banner.sh)
+#
 source ~/scripts/banner.sh
+
 banner "master.sh" "Perform configuration steps for master(s)"
 
+# Define the scripts that should be called by this scheduler.
+# Note the IFS is set to ;
 scripts="/home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/swap-off.sh"
@@ -24,6 +48,8 @@ scripts=$scripts";/home/${admin}/scripts/k8s-scripts/autocomplete.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
 
+# Loop through the list of scripts and source each one in 
+# order. Note the IFS is ;
 banner "master.sh" "Executing Master scripts"
 IFS=$";"
 for script in $scripts

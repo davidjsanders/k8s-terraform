@@ -1,4 +1,10 @@
+#!/bin/bash
+# -------------------------------------------------------------------
+# DEPRECATED - DO NOT USE
+# -------------------------------------------------------------------
+
 source ~/scripts/banner.sh
+
 banner "taint-master.sh" "Remove taints from master to enable scheduling"
 
 echo "*** $(date) *** taint master node"

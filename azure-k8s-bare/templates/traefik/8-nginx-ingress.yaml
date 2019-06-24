@@ -1,3 +1,20 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/traefik/8-nginx-ingress.yaml
+# Environments:   all
+# Purpose:        YAML specification to create an ingress for the
+#                 nginx sample Traefik app.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
