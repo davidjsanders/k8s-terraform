@@ -16,6 +16,8 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | Add private registry.
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)

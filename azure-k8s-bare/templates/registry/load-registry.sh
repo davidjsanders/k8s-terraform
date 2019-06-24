@@ -7,14 +7,14 @@
 # Purpose:        Bash shell script to apply any yaml files found in
 #                 the registry sub-directory.
 #
-# Created on:     23 June 2019
+# Created on:     24 June 2019
 # Created by:     David Sanders
 # Creator email:  dsanderscanada@nospam-gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
 # -------------------------------------------------------------------
-# 23 Jun 2019  | David Sanders               | First release.
+# 24 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
