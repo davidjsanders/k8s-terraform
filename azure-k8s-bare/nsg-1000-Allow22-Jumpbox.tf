@@ -1,23 +1,19 @@
 # -------------------------------------------------------------------
 #
-# Module:         terraform-reference-app/green
-# Submodule:      nsg-rule-Allow22From10-62.tf
-# Purpose:        Create a network security group rule to allow port 
-#                 22 traffic in the Docker NSG from 10.62.71.0/24.
+# Module:         k8s-terraform
+# Submodule:      nsg-Allow22-Jumpbox.tf
+# Environments:   all
+# Purpose:        Module to define NSG inbound rule for allowing port
+#                 22 traffic only to the jumpbox.
 #
-# ISSUES:         1. The inbound IP address is hard-coded. Needs to 
-#                    change to a variable.
-#
-# Created on:     22 August 2018
+# Created on:     23 June 2019
 # Created by:     David Sanders
 # Creator email:  dsanderscanada@nospam-gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
 # -------------------------------------------------------------------
-# 22 Aug 2018  | David Sanders               | First release and
-#                                            | valid creation of
-#                                            | sample app.
+# 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 
 locals {

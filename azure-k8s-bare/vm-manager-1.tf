@@ -1,3 +1,21 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      vm-manager-1.tf
+# Environments:   all
+# Purpose:        Module to define the Azure VM to be used as the
+#                 k8s master.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 locals {
   l-manager-1-temp-name   = "${format("%s-%s-MANAGER%s", var.target, var.vm-name, local.l-dev)}"
   l-manager-1-name-1      = "${format("VM-%s-%s-MANAGER-1%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"

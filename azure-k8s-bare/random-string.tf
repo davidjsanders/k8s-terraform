@@ -1,3 +1,21 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      random-string.tf
+# Environments:   all
+# Purpose:        Module to define random string which is used for all
+#                 passwords, so avoids certain characters.
+#
+# Created on:     23 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+
 resource "random_string" "password" {
   length = 16
   special = true
