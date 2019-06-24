@@ -1,0 +1,31 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/2-vol2.yaml
+# Environments:   all
+# Purpose:        The yaml for the registry private volume vol2.
+#
+# Created on:     24 June 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 24 Jun 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    type: local
+  name: registryvm
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 200Mi
+  hostPath:
+    path: /datadrive/nginx
+  persistentVolumeReclaimPolicy: Retain

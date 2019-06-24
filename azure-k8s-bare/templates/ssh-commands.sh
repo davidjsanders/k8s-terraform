@@ -17,6 +17,8 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 24 Jun 2019  | David Sanders               | Add private registry.
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)
@@ -32,6 +34,7 @@ workers="${workers}"
 # Define the scripts that should be set to executabl
 banner "ssh-commands.sh" "Set all scripts on all machines to be executable"
 executable_scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/registry/load-registry.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/master.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/worker.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
@@ -110,7 +113,7 @@ IFS=$" "
 for worker in $$workers
 do
     do_ssh_nohup \
-        "Executing $${command}" \
+        "Executing worker.sh" \
         ${admin}@$${worker} \
         "~/scripts/worker.sh"
 done
@@ -156,12 +159,22 @@ done
 # Load the sample Traefik Ingress Controller on the master, even
 # though the workers are probably not ready; k8s will wait until
 # a worker becomes ready to schedule the DaemonSet on that node.
-banner "ssh-commands.sh" "Execute load-traefik.sh on first master"
+# Also, load the private registry.
+scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
+scripts=$scripts";/home/${admin}/scripts/registry/load-registry.sh"
+# Loop through the list of scripts and source each one in 
+# order. Note the IFS is ;
+banner "master.sh" "Loading Traefik and Registry"
 master=(${masters})
-do_ssh \
-    "Execute load-traefik.sh" \
-    ${admin}@$${master[0]} \
-    "~/scripts/traefik/load-traefik.sh"
+IFS=$";"
+for script in $scripts
+do
+    do_ssh \
+        "Execute $script" \
+        ${admin}@$${master[0]} \
+        "$${script}"
+done
+IFS=$" "
 
 banner "DONE ssh-commands.sh" "Completed all commands on all machines"
 IFS=$" "

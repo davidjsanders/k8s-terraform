@@ -16,6 +16,8 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 23 Jun 2019  | David Sanders               | Add private registry.
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)
@@ -48,6 +50,10 @@ do
     source $script
 done
 IFS=$" "
+
+# Copy the Docker daemon to the correct location
+banner "worker.sh" "Executing Master scripts"
+sudo cp /home/${admin}/scripts/registry/daemon.json-template /etc/docker/daemon.json
 
 # Make sure the master is ready before proceeding. Currently, this
 # simply executes a pwd command on the master BUT will be changed to
