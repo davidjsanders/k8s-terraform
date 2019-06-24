@@ -32,4 +32,9 @@ sudo DEBIAN_FRONTEND=noninteractive \
     kubelet=1.14.3-00 \
     kubectl=1.14.3-00
 
+banner "install-k8s.sh" "Install kompose"
+sudo curl -L https://bit.ly/2tN0bEa -o kompose
+sudo chmod +x kompose
+sudo mv ./kompose /usr/local/bin/kompose
+
 sleep 2

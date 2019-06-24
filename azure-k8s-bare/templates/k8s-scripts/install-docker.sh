@@ -21,14 +21,17 @@
 #
 source ~/scripts/banner.sh
 
-banner "install-docker.sh" "Install Docker CE (latest)"
+banner "install-docker.sh" "Install Docker CE (latest), docker-compose and apache2-utils"
 
-echo "*** $(date) *** apt-get install -y docker.io"
+echo "*** $(date) *** apt-get install Docker, docker-compose and apache2-utils"
 sudo DEBIAN_FRONTEND=noninteractive \
         apt-get -o Dpkg::Options::="--force-confold" \
         -q \
         --yes \
-        install docker.io
+        install \
+           docker.io \
+           docker-compose \
+           apache2-utils
 sleep 2
 
 echo "*** $(date) *** systemctl enable docker"
