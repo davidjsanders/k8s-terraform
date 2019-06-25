@@ -1,5 +1,5 @@
 # The templates directory
-The templates directory in the repo provides a set of bash shell scripts used to provision Kubernetes the hard way! They are imperative actions that occur in a strict order fired off by the terraform module `provisioner-k8s.tf`.
+The azure-k8s-bare/templates directory in the repo provides a set of bash shell scripts used to provision Kubernetes the hard way! They are imperative actions that occur in a strict order fired off by the terraform module `provisioner-k8s.tf`.
 
 The provisioner connects to the jumpbox (as the only externally accessible source in the vnet) via the public IP, copies a number of files (some of which have been pre-processed using Terraform data modules - see data.tf) and then executes a number of steps on the jumpbox to:
 
