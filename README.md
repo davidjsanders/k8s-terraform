@@ -5,10 +5,13 @@ Terraform to script a Kubernetes cluster on Azure with Calico (for policy) and C
 This Terraform script uses a [centralized library](https://github.com/dsandersAzure/terraform-library) which provides custom Terraform modules to provision:
 
 * A Kubernetes (k8s) master
-* Two k8s workers
+* n k8s workers (Specified in the environment.tfvars file)
 * A jumpbox
 
-The script then uses a provisioner to install Docker and k8s on the master and the workers before joining the workers to the cluster.
+The script then uses a provisioner to install Docker and k8s on the master and the workers before joining the workers to the cluster. The script also provisions persistent storage (via NFS), Traefik as an Ingress controller, a sample nginx app running and a private registry (by default accessed through
+a node port on k8s-master:32000)
+
+> NOTE: The registry does not run on the master (which is tainted) but the master is used for the node to target and the workload goes to whichever node contains the pod that is handling registry traffic.
 
 There are four helper scripts included in the repo which abstract terraform commands:
 
