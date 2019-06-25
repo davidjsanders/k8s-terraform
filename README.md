@@ -23,13 +23,18 @@ There are four helper scripts included in the repo which abstract terraform comm
 ## Required Azure Resources
 The following Azure resources need to be created in advance of running the scripts:
 
+* Terraform must be installed on the workstation running the script.
+> NOTE The scripts were tested with v0.11.8
 * An Azure subscription
+> NOTE Typically costs incurred have been around about CAD$3.50 for 2 to 2.5 hours work per evening on the environment.
 * `RG-TFSTATE` - A resource group for containing state objects
   * `terraformstate` - A Storage Account in RG-TFSTATE used to contain blobs for state
 > NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
 * `RG-K8S-PERSISTENT` - A resource group for containing persistent objects
   * `K8S-MASTER-DATA-DISK` - A managed disk which can be used for persistent storage; note, this can be ssd or hdd BUT must be in the same location as the VMs, e.g. East US.
 > NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
+* A private key (created with `ssh-keygen -b 4096 -t rsa`) which is specified in the dev.tfvars file and copied to all the Azure VMs.
+> NOTE The private key *must not* have a keyphrase as there will be no ability to provide it to the provisioner. Also, it is highly recommended to not use this private key pair for any other resources.
 
 ## Required Files
 In the azure-k8s-bare directory, there is a sub-directory called *targets*; this directory needs to contain the following files:
