@@ -51,9 +51,11 @@ After forking and cloning the repo and populating the azure-k8s-bare/targets dir
   ../helpers/apply.sh dev | tee /path/to/logs/apply-mmddyy-hhmm.log
 ```
 
-> Note 1: the `dev` in the command tells the helper scripts to expect to find variable values in a file called `dev.tfvars` in the targets directory. If you create other environments, e.g. prod, then create them in a `prod.tfvars` file and pass `prod` instead of `dev`
+> Note 1: the `dev` in the command tells the helper scripts to expect to find variable values in a file called `dev.tfvars` in the targets directory. If you create other environments, e.g. prod, then create them in a `prod.tfvars` file and pass `prod` instead of `dev`. This is useful for varying the resources between environment targets (e.g. 2 small workers for dev and 5 big workers for prod.)
 
-> Note 2: The ../helpers/apply.sh script can take around 15 minutes to run! This is because it creates the Azure servics **and** configures all of the machines for Docker and k8s.
+> Note 2: The .gitignore in the project ignores **ALL** files ending in .tfvars to help prevent secret leakage.
+
+> Note 3: The ../helpers/apply.sh script can take around 15 minutes to run! This is because it creates the Azure servics **and** configures all of the machines for Docker and k8s.
 
 ## Destroying the environment
 To remove the environment run:
