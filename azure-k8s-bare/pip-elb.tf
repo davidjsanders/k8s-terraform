@@ -19,7 +19,7 @@
 locals {
   l-pip-elb-temp-name = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
   l-pip-elb-name      = "${format("PIP-%s-%s%s", local.l-pip-elb-temp-name, var.environ, local.l-random)}"
-  l-pip-elb-dns       = "${format("%s-%s%s", lower(local.l-pip-elb-temp-name), lower(var.environ), local.l-random)}"
+  l-pip-elb-dns       = "${format("%s-%s%s", var.elb-prefix, var.elb-name, local.l-random)}"
 }
 
 module "pip-elb" {

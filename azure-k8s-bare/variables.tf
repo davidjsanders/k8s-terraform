@@ -64,6 +64,9 @@ variable "nsg-name" {}
 variable "dc-prefix" {}
 variable "public-dns-name" {}
 variable "elb-static-ip" {}
+variable "elb-prefix" {}
+variable "elb-name" {}
+
 variable "worker-static-ip-1" {}
 variable "worker-static-ip-2" {}
 variable "master-static-ip-1" {}
