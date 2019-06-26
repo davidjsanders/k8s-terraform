@@ -1,9 +1,10 @@
 # -------------------------------------------------------------------
 #
 # Module:         k8s-terraform
-# Submodule:      lb-workers.tf
+# Submodule:      lb-workers-probe.tf
 # Environments:   all
 # Purpose:        Module to provision Azure load balancer (Layer 4)
+#                 probe
 #
 # Created on:     25 June 2019
 # Created by:     David Sanders
@@ -15,18 +16,14 @@
 # 25 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 
-locals {
-  l-lb-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
-  l-lb-name      = "${format("LB-WORKERS-%s-%s%s", local.l-lb-temp-name, var.environ, local.l-random)}"
-}
-
-module "lb-workers" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-with-pip?ref=0.6.0"
-  name                = "${local.l-lb-name}"
-  frontend-name       = "fe-workers-fe"
-  sku                 = "Basic"
-  public-ip-id        = "${module.pip-elb.id}"
+module "lb-workers-probe" {
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-probe?ref=0.8.0"
+  name                = "pro-workers-fe"
+  protocol            = "tcp"
+  port                = "80"
+  interval-in-seconds = "5"
+  number-of-probes    = "4"
+  http-probe-path     = ""
   resource-group-name = "${module.resource-group.name}"
-  location            = "${var.location}"
-  tags                = "${var.tags}"
+  load-balancer-id    = "${module.lb-workers.id}"
 }
