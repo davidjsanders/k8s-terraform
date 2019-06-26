@@ -7,6 +7,9 @@ This Terraform script uses a [centralized library](https://github.com/dsandersAz
 * A Kubernetes (k8s) master
 * n k8s workers (Specified in the environment.tfvars file)
 * A jumpbox
+* An Azure Load Balancer (Layer 4) with front-end and back-end connections to the Worker availability set
+* Traefik as an Ingress controller
+* Sample services (nginx) with xip.io addresses for the Ingress
 
 The script then uses a provisioner to install Docker and k8s on the master and the workers before joining the workers to the cluster. The script also provisions persistent storage (via NFS), Traefik as an Ingress controller, a sample nginx app running and a private registry (by default accessed through
 a node port on k8s-master:32000)
@@ -26,7 +29,7 @@ The following Azure resources need to be created in advance of running the scrip
 * Terraform must be installed on the workstation running the script.
 > NOTE The scripts were tested with v0.11.8
 * An Azure subscription
-> NOTE Typically costs incurred have been around about CAD$3.50 for 2 to 2.5 hours work per evening on the environment.
+> NOTE Typically costs incurred have been around about CAD$4.50 for 2 to 2.5 hours work per evening on the environment.
 * `RG-TFSTATE` - A resource group for containing state objects
   * `terraformstate` - A Storage Account in RG-TFSTATE used to contain blobs for state
 > NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
