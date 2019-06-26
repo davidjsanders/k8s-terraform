@@ -116,10 +116,10 @@ nic-name = "ENGINE"
 # Load Balancer
 #
 
-# The Frontend port for the load balancer
+# The Frontend port for the load balancer (Not currently used)
 lb-frontend-port = "80"
 
-# The Backend port for the load balancer
+# The Backend port for the load balancer (Not currently used)
 lb-backend-port = "8080"
 
 #
