@@ -9,6 +9,7 @@ This Terraform script uses a [centralized library](https://github.com/dsandersAz
 * A jumpbox
 * An Azure Load Balancer (Layer 4) with front-end and back-end connections to the Worker availability set
 * Traefik as an Ingress controller
+* NFS for serving (existing) persistent storage through the cluster
 * Sample services (nginx) with xip.io addresses for the Ingress
 
 The script then uses a provisioner to install Docker and k8s on the master and the workers before joining the workers to the cluster. The script also provisions persistent storage (via NFS), Traefik as an Ingress controller, a sample nginx app running and a private registry (by default accessed through
