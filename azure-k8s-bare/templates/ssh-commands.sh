@@ -161,7 +161,7 @@ done
 # a worker becomes ready to schedule the DaemonSet on that node.
 # Also, load the private registry.
 scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
-scripts=$scripts";/home/${admin}/scripts/registry/load-registry.sh"
+
 # Loop through the list of scripts and source each one in 
 # order. Note the IFS is ;
 banner "master.sh" "Loading Traefik and Registry"
