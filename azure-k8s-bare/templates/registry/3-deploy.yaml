@@ -35,10 +35,6 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    annotations:
-      kompose.cmd: kompose convert -f docker-compose.yaml -o localregistry.yaml
-      kompose.version: 1.1.0 (36652f6)
-    creationTimestamp: null
     labels:
       app: registry
     name: registry
@@ -56,10 +52,6 @@ items:
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    annotations:
-      kompose.cmd: kompose convert -f docker-compose.yaml -o localregistry.yaml
-      kompose.version: 1.1.0 (36652f6)
-    creationTimestamp: null
     labels:
       app: nginx
     name: nginx
@@ -69,7 +61,6 @@ items:
       type: Recreate
     template:
       metadata:
-        creationTimestamp: null
         labels:
           app: nginx
       spec:
@@ -101,13 +92,9 @@ items:
     resources:
       requests:
         storage: 100Mi
-  status: {}
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    annotations:
-      kompose.cmd: kompose convert -f docker-compose.yaml -o localregistry.yaml
-      kompose.version: 1.1.0 (36652f6)
     creationTimestamp: null
     labels:
       app: registry
@@ -118,7 +105,6 @@ items:
       type: Recreate
     template:
       metadata:
-        creationTimestamp: null
         labels:
           app: registry
       spec:
@@ -140,11 +126,9 @@ items:
         - name: registry-claim0
           persistentVolumeClaim:
             claimName: registry-claim0
-  status: {}
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-    creationTimestamp: null
     labels:
       app: registry-claim0
     name: registry-claim0
@@ -155,5 +139,3 @@ items:
       requests:
         storage: 100Mi
   status: {}
-kind: List
-metadata: {}
