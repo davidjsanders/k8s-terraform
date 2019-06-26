@@ -62,7 +62,7 @@ After forking and cloning the repo and populating the azure-k8s-bare/targets dir
 
 > Note 1: the `dev` in the command tells the helper scripts to expect to find variable values in a file called `dev.tfvars` in the targets directory. If you create other environments, e.g. prod, then create them in a `prod.tfvars` file and pass `prod` instead of `dev`. This is useful for varying the resources between environment targets (e.g. 2 small workers for dev and 5 big workers for prod.). 
 
-> About `dev`: When dev is found in the environment name, the scripts will append a random 4 digit number to ensure uniqueness; this is usefull as it allows you to have multiple terraform workspaces and deploy without worrying about uniqueness.
+> About `dev`: When dev is found in the environment name, the scripts will append a random 4 digit number to the names of *all* resources to ensure uniqueness; this is usefull as it allows you to have multiple terraform workspaces and deploy without worrying about uniqueness.
 
 > Note 2: The .gitignore in the project ignores **ALL** files ending in .tfvars to help prevent secret leakage.
 
