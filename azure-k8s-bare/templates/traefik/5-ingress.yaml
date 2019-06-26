@@ -23,7 +23,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: traefik-ui
+  - host: traefik-ui.${lbip}.xip.io
     http:
       paths:
       - path: /

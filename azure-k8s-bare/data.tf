@@ -107,3 +107,23 @@ data "template_file" "setup-nfs-server-sh" {
     workers="${local.l-nic-worker-1-ip} ${local.l-nic-worker-2-ip}"
   }
 }
+
+# Compute and interpolate the variables required for 5-ingress.yaml
+# in the Traefik app
+data "template_file" "ingress-yaml" {
+  template = "${file("templates/traefik/5-ingress.yaml")}"
+
+  vars {
+    lbip="${module.pip-elb.ip_address}"
+  }
+}
+
+# Compute and interpolate the variables required for 
+# 8-nginx-ingress.yaml in the Traefik app
+data "template_file" "nginx-ingress-yaml" {
+  template = "${file("templates/traefik/8-nginx-ingress.yaml")}"
+
+  vars {
+    lbip="${module.pip-elb.ip_address}"
+  }
+}

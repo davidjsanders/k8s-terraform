@@ -93,6 +93,16 @@ resource "null_resource" "k8s" {
         destination = "/home/${var.vm-adminuser}/.ssh/azure_pk.pub"
     }
 
+    provisioner "file" {
+        content = "${data.template_file.ingress-yaml.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/traefik/5-ingress.yaml"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.nginx-ingress-yaml.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/traefik/8-nginx-ingress.yaml"
+    }
+
     provisioner "remote-exec" {
         inline = [
             "cat /home/${var.vm-adminuser}/hosts | sudo tee -a /etc/hosts",
