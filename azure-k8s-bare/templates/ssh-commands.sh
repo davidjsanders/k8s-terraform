@@ -39,6 +39,8 @@ executable_scripts="$executable_scripts /home/${admin}/scripts/master.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/worker.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/ssh-commands.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/registry/load-registry.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/registry/delete-registry.sh"
 IFS=$" "
 # Execute an ssh command on every node and set the executable
 # flag on the scripts and setup the hosts file
@@ -63,6 +65,7 @@ master_commands="sudo mkdir /datadrive"
 master_commands="$${master_commands};sudo mount /dev/sdc1 /datadrive"
 master_commands="$${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
 master_commands="$${master_commands};cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
+master_commands="$${master_commands};mv /home/${admin}/scripts/registry /home/${admin}/registry"
 master_commands="$${master_commands};~/scripts/master.sh"
 
 # Execute the commands on every master
