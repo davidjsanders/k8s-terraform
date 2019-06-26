@@ -143,13 +143,13 @@ vm-name = "K8S"
 vm-size = "Standard_B2s"
 
 # The VM size of the manager
-manager-vm-size = "Standard_B2s"
+manager-vm-size = "Standard_A2_v2"
 
 # The VM size of the workers
-worker-vm-size = "Standard_DS4_v2"
+worker-vm-size = "Standard_A2_v2"
 
 # The VM size of the jumpbox
-jumpbox-vm-size = "Standard_B1s"
+jumpbox-vm-size = "Standard_A1_v2"
 
 # Details when using a prepared image (Not used)
 image-name = "img-ubuntu"
