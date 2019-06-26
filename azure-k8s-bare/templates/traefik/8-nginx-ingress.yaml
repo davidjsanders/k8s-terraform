@@ -20,10 +20,10 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: traefik-web-ui
-  namespace: default.${lbip}.xip.io
+  namespace: default
 spec:
   rules:
-  - host: nginx-frontend
+  - host: nginx-frontend.${lbip}.xip.io
     http:
       paths:
       - path: /
