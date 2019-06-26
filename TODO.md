@@ -4,6 +4,7 @@
 * Add Azure storage class support
 * Add instructions to create permanent data disk
 * Add additional error checking
+* Fix master provisioning - only works for master n = 1 at the moment
 * Fix deprecation warnings from old code
   * module.mgt-subnet.azurerm_subnet.subnets: "network_security_group_id
   * module.mgt-subnet.azurerm_subnet.subnets: "route_table_id"
