@@ -36,7 +36,7 @@ The following resources need to be created in advance of running the scripts:
 > NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
 * `RG-K8S-PERSISTENT` - A resource group for containing persistent objects
   * `K8S-MASTER-DATA-DISK` - A managed disk which can be used for persistent storage; note, this can be ssd or hdd BUT must be in the same location as the VMs, e.g. East US.
-> NOTE Persistent objects will incur charges; If you don't want on-going charges DO NOT use persistent objects (see below)
+> NOTE Persistent objects will incur charges, even when your cluster is deleted and not running; If you don't want on-going charges DO NOT use persistent objects (see below)
 * A private key (created with `ssh-keygen -b 4096 -t rsa`) which is specified in the dev.tfvars file and copied to all the Azure VMs.
 > NOTE The private key *must not* have a keyphrase as there will be no ability to provide it to the provisioner. Also, it is highly recommended to not use this private key pair for any other resources.
 
