@@ -3,7 +3,7 @@
 * Fix OS Disk sizes
 * Add Azure storage class support
 * Add instructions to create permanent data disk
-* Add error checking
+* Add additional error checking
 * ~~Add additional in-line comments~~
 * ~~Update NFS storage to restrict to IPs for nodes~~
 * ~~Add NFS persistent storage~~
