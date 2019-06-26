@@ -23,8 +23,8 @@ There are four helper scripts included in the repo which abstract terraform comm
 * helpers/apply.sh
 * helpers/destroy.sh
 
-## Required Azure Resources
-The following Azure resources need to be created in advance of running the scripts:
+## Required Resources
+The following resources need to be created in advance of running the scripts:
 
 * Terraform must be installed on the workstation running the script.
 > NOTE The scripts were tested with v0.11.8
