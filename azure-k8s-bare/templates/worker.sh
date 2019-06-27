@@ -52,7 +52,7 @@ done
 IFS=$" "
 
 # Copy the Docker daemon to the correct location
-banner "worker.sh" "Executing Master scripts"
+banner "worker.sh" "Copy Docker daemon"
 sudo cp /home/${admin}/scripts/registry/daemon.json-template /etc/docker/daemon.json
 
 # Make sure the master is ready before proceeding. Currently, this

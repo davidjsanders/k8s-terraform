@@ -31,7 +31,7 @@ source /home/${admin}/scripts/do-scp.sh
 masters="${masters}"
 workers="${workers}"
 
-# Define the scripts that should be set to executabl
+# Define the scripts that should be set to executable.
 banner "ssh-commands.sh" "Set all scripts on all machines to be executable"
 executable_scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/registry/load-registry.sh"
@@ -39,9 +39,12 @@ executable_scripts="$executable_scripts /home/${admin}/scripts/master.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/worker.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/ssh-commands.sh"
-IFS=$" "
+executable_scripts="$executable_scripts /home/${admin}/scripts/registry/load-registry.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/registry/delete-registry.sh"
+
 # Execute an ssh command on every node and set the executable
 # flag on the scripts and setup the hosts file
+IFS=$" "
 for target in $$masters $$workers
 do
     do_ssh \
@@ -59,10 +62,23 @@ done
 # These should probably ALL be in master.sh rather than split here
 # and most in the other shell script.
 banner "ssh-commands.sh" "Execute ssh commands on master"
+
+# Make the mountpoint for the NFS drive
 master_commands="sudo mkdir /datadrive"
+
+# Mount the NFS drive
 master_commands="$${master_commands};sudo mount /dev/sdc1 /datadrive"
+
+# Change the ownership of *EVERYTHING* in the drive to the admin user
 master_commands="$${master_commands};sudo chown -R ${admin} /datadrive/azadmin"
+
+# Setup the hosts file
 master_commands="$${master_commands};cat /home/${admin}/hosts | sudo tee -a /etc/hosts"
+
+# Move the registry files from the scripts dir to the home dir
+master_commands="$${master_commands};mv /home/${admin}/scripts/registry /home/${admin}/registry"
+
+# Execute the steps required to setup a k8s master
 master_commands="$${master_commands};~/scripts/master.sh"
 
 # Execute the commands on every master
@@ -79,7 +95,7 @@ do
     done
 done
 
-# After the master shell script is created, a kubeadm_join_cmd is
+# After the master script is completed, a kubeadm_join_cmd is
 # created to allow other nodes to join. This script is now copied
 # to each node.
 banner "ssh-commands.sh" "Copy kubeadm_join_cmd.sh to all workers"
@@ -107,6 +123,14 @@ done
 # "In Parallel" using nohup and background tasks to setup the
 # Docker and k8s packages. The workers *WILL* wait for the
 # master to reboot before tryng to join the cluster.
+#
+# In an Emergency
+# ---------------
+# If for some reason the master doesn't come up, the easiest way
+# to abort so the cluster can be destroyed (DON'T rerun the 
+# provisioner!), is to ssh into the jumpbox and `touch` worker1.done
+# through workern.done - this 'fools' the script into thinking all
+# workers are done.
 banner "ssh-commands.sh" "Execute ssh commands on all workers"
 worker_commands="~/scripts/worker.sh"
 IFS=$" "
@@ -156,15 +180,15 @@ do
         "sudo reboot now"
 done
 
-# Load the sample Traefik Ingress Controller on the master, even
-# though the workers are probably not ready; k8s will wait until
-# a worker becomes ready to schedule the DaemonSet on that node.
-# Also, load the private registry.
+# Load the collection of apps we want to apply to our new k8s
+# cluster in advance of starting. There should really be a check
+# here to make sure all the nodes are ready, although k8s should
+# proceed okay.
 scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
-scripts=$scripts";/home/${admin}/scripts/registry/load-registry.sh"
+
 # Loop through the list of scripts and source each one in 
 # order. Note the IFS is ;
-banner "master.sh" "Loading Traefik and Registry"
+banner "master.sh" "Loading kubernetes apps"
 master=(${masters})
 IFS=$";"
 for script in $scripts
