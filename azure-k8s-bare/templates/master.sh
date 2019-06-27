@@ -18,6 +18,9 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | Add private registry.
 # -------------------------------------------------------------------
+# 27 Jun 2019  | David Sanders               | Add docker-compose to
+#              |                             | master.
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)
@@ -36,6 +39,7 @@ scripts=$scripts";/home/${admin}/scripts/k8s-scripts/install-nfs-server.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/install-jq.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/setup-nfs-server.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/install-docker.sh"
+scripts=$scripts";/home/${admin}/scripts/k8s-scripts/install-docker-compose.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/apt-google-k8s-keys.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/install-k8s.sh"
