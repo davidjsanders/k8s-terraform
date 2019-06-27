@@ -80,7 +80,7 @@ cd ${current_directory}
 
 # Install docker-compose 1.24.0 from the binaries
 banner "install-docker.sh" "Install docker-compose version 1.24.0"
-instisudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 sleep 2
