@@ -21,7 +21,7 @@
 #              |                             | 1813003.
 # -------------------------------------------------------------------
 # 27 Jun 2019  | David Sanders               | Remove docker-compose
-#              |                             | from script for greate
+#              |                             | from script for greater
 #              |                             | granularity.
 # -------------------------------------------------------------------
 
