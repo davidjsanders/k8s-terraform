@@ -21,10 +21,10 @@
 #
 source ~/scripts/banner.sh
 
-banner "install-docker.sh" "Install docker-compose"
+banner "install-docker-compose.sh" "Install docker-compose"
 
 # Install docker-compose 1.24.0 from the binaries
-banner "install-docker.sh" "Install docker-compose version 1.24.0"
+banner "install-docker-compose.sh" "Install docker-compose version 1.24.0"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
