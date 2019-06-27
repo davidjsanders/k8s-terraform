@@ -34,8 +34,8 @@ current_directory=$(pwd)
 mkdir -p /tmp/docker-install
 cd /tmp/docker-install
 wget https://download.docker.com/linux/static/stable/x86_64/docker-18.09.6.tgz
-wget https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.service
 wget https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.socket
+wget https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.service
 
 banner "install-docker.sh" "Un-tar Docker 18.09.6 tarball"
 tar xzvf docker-18.09.6.tgz
@@ -64,17 +64,8 @@ sudo systemctl start docker
 banner "install-docker.sh" "Return to ${current_directory}"
 cd ${current_directory}
 
-# echo "*** $(date) *** apt-get install Docker, docker-compose and apache2-utils"
-# sudo DEBIAN_FRONTEND=noninteractive \
-#         apt-get -o Dpkg::Options::="--force-confold" \
-#         -q \
-#         --yes \
-#         install \
-#            docker.io \
-#            docker-compose \
-#            apache2-utils
-# sleep 2
+banner "install-docker.sh" "Install docker-compose"
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-echo "*** $(date) *** systemctl enable docker"
-sudo systemctl enable docker.service
 sleep 2
