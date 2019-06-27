@@ -139,3 +139,4 @@ items:
       requests:
         storage: 100Mi
   status: {}
+kind: List
