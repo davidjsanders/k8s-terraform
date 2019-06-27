@@ -22,7 +22,7 @@
 #
 source ~/scripts/banner.sh
 
-yaml_files=$(ls -r1 ~/scripts/registry/[0-9]*.yaml)
+yaml_files=$(ls -r1 [0-9]*.yaml)
 for file in $yaml_files
 do
     echo "Delete yaml for: $file"
