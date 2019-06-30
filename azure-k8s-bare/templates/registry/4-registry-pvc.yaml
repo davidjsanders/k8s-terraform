@@ -1,32 +1,30 @@
 # -------------------------------------------------------------------
 #
 # Module:         k8s-terraform
-# Submodule:      templates/2-vol2.yaml
+# Submodule:      templates/8-registry-pvc.yaml
 # Environments:   all
-# Purpose:        The yaml for the registry private volume vol2.
+# Purpose:        The yaml for the registery persitent volume claim.
 #
-# Created on:     24 June 2019
+# Created on:     27 June 2019
 # Created by:     David Sanders
 # Creator email:  dsanderscanada@nospam-gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
 # -------------------------------------------------------------------
-# 24 Jun 2019  | David Sanders               | First release.
+# 27 Jun 2019  | David Sanders               | First release.
+#              |                             | Decomposed larger file.
 # -------------------------------------------------------------------
 ---
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
   labels:
-    type: nfs
-  name: registryvm
+    app: registry-claim0
+  name: registry-claim0
 spec:
   accessModes:
   - ReadWriteOnce
-  capacity:
-    storage: 200Mi
-  nfs:
-    server: k8s-master
-    path: "/datadrive/export"
-  persistentVolumeReclaimPolicy: Retain
+  resources:
+    requests:
+      storage: 100Mi

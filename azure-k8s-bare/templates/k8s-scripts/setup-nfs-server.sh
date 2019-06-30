@@ -31,15 +31,16 @@ sudo mkdir -p $${EXPORT_DIRECTORY}
 
 banner "setup-nfs-server.sh" "Mount binding $${DATA_DIRECTORY} to $${EXPORT_DIRECTORY}"
 parentdir="$$(dirname "$$EXPORT_DIRECTORY")"
-sudo chmod 777 $${EXPORT_DIRECTORY}
-sudo chmod 777 $$parentdir
+sudo chmod -R 777 $${EXPORT_DIRECTORY}
+sudo chmod -R 777 $$parentdir
 
 banner "setup-nfs-server.sh" "Appending localhost and Kubernetes workers $${node} to exports configuration file"
-for node in "$${worker_nodes}"
+IFS=$" "
+for node in $${worker_nodes}
 do
     echo "/datadrive/export        $${node}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
 done
-echo "/datadrive/export        localhost(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+echo "/datadrive/export        ${masters}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
 
 banner "setup-nfs.sh" "Restart NFS service"
 sudo service nfs-kernel-server restart

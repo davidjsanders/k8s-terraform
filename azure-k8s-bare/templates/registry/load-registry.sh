@@ -25,7 +25,7 @@
 #
 source ~/scripts/banner.sh
 
-yaml_files=$(ls -1 [0-9]*.yaml)
+yaml_files=$(ls -1 ~/registry/[0-9]*.yaml)
 for file in $yaml_files
 do
     echo "Applying yaml for: $file"
