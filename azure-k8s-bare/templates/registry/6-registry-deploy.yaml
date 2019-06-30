@@ -15,6 +15,9 @@
 # 27 Jun 2019  | David Sanders               | First release.
 #              |                             | Decomposed larger file.
 # -------------------------------------------------------------------
+# 30 Jun 2019  | David Sanders               | Update registry image
+#              |                             | to 2.7.1.
+# -------------------------------------------------------------------
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
