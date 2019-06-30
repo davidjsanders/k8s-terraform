@@ -36,7 +36,7 @@ spec:
       - env:
         - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
           value: /data
-        image: registry:2
+        image: registry:2.7.1
         name: registry
         ports:
         - containerPort: 5000
