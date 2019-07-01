@@ -148,6 +148,9 @@ done
 # the number of files matches the number of workers, the script
 # proceeds.
 banner "ssh-commands.sh" "Wait for workers to complete"
+function show_state() {
+    banner "ssh-commands.sh" "$1 - $2 done reports for $3 agents"
+}
 worker_array=(${workers})
 sleep_time=30
 IFS=$" "
@@ -161,13 +164,12 @@ do
 
     if [ "$${#done_files[@]}" == "$${#worker_array[@]}" ]
     then
-        echo "Staus        : All workers report done."
         break;
-    else
-        echo "Status       : Jobs still running; sleeping for $${sleep_time}s"
-        sleep $${sleep_time}
     fi
+    show_state "In progress" "$${#done_files[@]}"
+    sleep $${sleep_time}
 done
+show_state "Completed" "$${#done_files[@]}"
 
 # Reboot all of the workers
 banner "ssh-commands.sh" "Reboot all workers"
