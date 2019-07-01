@@ -15,13 +15,15 @@
 # 27 Jun 2019  | David Sanders               | First release.
 #              |                             | Decomposed larger file.
 # -------------------------------------------------------------------
+# 27 Jun 2019  | David Sanders               | Update naming stds.
+# -------------------------------------------------------------------
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: registry
-  name: registry
+    app: registry-backend
+  name: registry-backend
 spec:
   type: NodePort
   ports:
@@ -30,6 +32,6 @@ spec:
     targetPort: 5000
     nodePort: 32000
   selector:
-    app: registry
+    app: registry-backend
 status:
   loadBalancer: {}

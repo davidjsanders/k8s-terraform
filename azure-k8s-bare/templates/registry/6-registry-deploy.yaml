@@ -18,14 +18,16 @@
 # 30 Jun 2019  | David Sanders               | Update registry image
 #              |                             | to 2.7.1.
 # -------------------------------------------------------------------
+# 30 Jun 2019  | David Sanders               | Update naming stds.
+# -------------------------------------------------------------------
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: registry
-  name: registry
+    app: registry-backend
+  name: registry-backend
 spec:
   replicas: 1
   strategy:
@@ -33,14 +35,14 @@ spec:
   template:
     metadata:
       labels:
-        app: registry
+        app: registry-backend
     spec:
       containers:
       - env:
         - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
           value: /data
         image: registry:2.7.1
-        name: registry
+        name: registry-backend
         ports:
         - containerPort: 5000
           hostIP: 127.0.0.1

@@ -15,13 +15,15 @@
 # 27 Jun 2019  | David Sanders               | First release.
 #              |                             | Decomposed larger file.
 # -------------------------------------------------------------------
+# 27 Jun 2019  | David Sanders               | Update naming stds.
+# -------------------------------------------------------------------
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: nginx
-  name: nginx
+    app: registry-frontend
+  name: registry-frontend
 spec:
   replicas: 1
   strategy:
@@ -29,11 +31,11 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx
+        app: registry-frontend
     spec:
       containers:
       - image: nginx:1.12
-        name: nginx
+        name: registry-frontend
         ports:
         - containerPort: 443
         resources: {}

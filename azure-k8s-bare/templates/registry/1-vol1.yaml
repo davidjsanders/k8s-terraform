@@ -14,13 +14,15 @@
 # -------------------------------------------------------------------
 # 24 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 30 Jun 2019  | David Sanders               | Update naming stds.
+# -------------------------------------------------------------------
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   labels:
     type: nfs
-  name: task-pv-volume
+  name: nginx-pv
 spec:
   accessModes:
   - ReadWriteOnce

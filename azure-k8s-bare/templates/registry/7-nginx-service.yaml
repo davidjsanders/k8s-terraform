@@ -15,19 +15,21 @@
 # 27 Jun 2019  | David Sanders               | First release.
 #              |                             | Decomposed larger file.
 # -------------------------------------------------------------------
+# 30 Jun 2019  | David Sanders               | Update naming stds.
+# -------------------------------------------------------------------
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: nginx
-  name: nginx
+    app: registry-frontend
+  name: registry-frontend
 spec:
   ports:
   - name: "443"
     port: 443
     targetPort: 443
   selector:
-    app: nginx
+    app: registry-frontend
 status:
   loadBalancer: {}
