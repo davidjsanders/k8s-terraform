@@ -105,7 +105,7 @@ data "template_file" "setup-nfs-server-sh" {
 
   vars {
     workers="${local.l-nic-worker-1-ip} ${local.l-nic-worker-2-ip}"
-    masters="${local.l-pnic-master-1}"
+    masters="${local.l-pnic-master-1-ip}"
   }
 }
 
