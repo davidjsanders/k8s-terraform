@@ -3,7 +3,7 @@
 * Fix OS Disk sizes
 * Add Azure storage class support
 * Add Helm support
-* Add nfs-provisioner (manual install)
+* ~~Add nfs-provisioner (manual install)~~
 * Add nfs-provisioner (automatic install)
 * Add instructions to create permanent data disk
 * Add additional error checking
