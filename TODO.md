@@ -7,6 +7,8 @@
 * Add nfs-provisioner (automatic install)
 * Add instructions to create permanent data disk
 * Add additional error checking
+* Make it easier to choose machine/disk sizes that match
+  * e.g. DS with Premium LRS, D with Standard LRS
 * Fix master provisioning - only works for master n = 1 at the moment
 * Fix deprecation warnings from old code
   * module.mgt-subnet.azurerm_subnet.subnets: "network_security_group_id
