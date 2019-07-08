@@ -4,6 +4,7 @@
 **/targets/*-run
 **/targets/*.tfvars
 **/.DS_Store
+**/*.old
 **/*.json
 **/*.tpl
 **/*.ini

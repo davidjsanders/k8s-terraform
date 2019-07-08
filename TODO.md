@@ -1,5 +1,6 @@
 # To Do
 * Remove sample nginx ingress - no longer needed
+* Add auth for traefik UI
 * Update README.md - provide instructions
 * Fix OS Disk sizes
 * Add Azure storage class support
