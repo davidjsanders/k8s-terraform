@@ -127,3 +127,7 @@ variable "docker_registry" {}
 variable "docker_image" {}
 variable "docker_tag" {}
 
+#
+# Helm Variables
+#
+variable "helm_service_account_name" {}

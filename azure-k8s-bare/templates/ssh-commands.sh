@@ -41,6 +41,10 @@ executable_scripts="$executable_scripts /home/${admin}/scripts/scp-commands.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/ssh-commands.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/registry/load-registry.sh"
 executable_scripts="$executable_scripts /home/${admin}/scripts/registry/delete-registry.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/helm/load-helm.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/helm/delete-helm.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/nfs-provisioner/load-nfs-provisioner.sh"
+executable_scripts="$executable_scripts /home/${admin}/scripts/nfs-provisioner/delete-nfs-provisioner.sh"
 
 # Execute an ssh command on every node and set the executable
 # flag on the scripts and setup the hosts file
@@ -187,6 +191,7 @@ done
 # here to make sure all the nodes are ready, although k8s should
 # proceed okay.
 scripts="/home/${admin}/scripts/traefik/load-traefik.sh"
+scripts="$scripts;/home/${admin}/scripts/helm/load-helm.sh"
 
 # Loop through the list of scripts and source each one in 
 # order. Note the IFS is ;
