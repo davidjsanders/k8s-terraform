@@ -184,3 +184,11 @@ vm-adminpass = "Password1234!"
 
 # Set the VM disk type
 vm-osdisk-type = "Standard_LRS"
+
+
+#
+# Helm
+#
+# Set the service account name for the tiller rbac role
+#
+helm_service_account_name = "tiller"

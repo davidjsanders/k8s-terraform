@@ -128,3 +128,30 @@ data "template_file" "nginx-ingress-yaml" {
     lbip="${module.pip-elb.ip_address}"
   }
 }
+
+# Compute and interpolate the variables required for Helm setup
+data "template_file" "helm-rbac-role-yaml" {
+  template = "${file("templates/helm/helm-rbac-role.yaml")}"
+
+  vars {
+    tiller_user="${var.helm_service_account_name}"
+  }
+}
+
+data "template_file" "load-helm-sh" {
+  template = "${file("templates/helm/load-helm.sh")}"
+
+  vars {
+    admin="${var.vm-adminuser}"
+    tiller_user="${var.helm_service_account_name}"
+  }
+}
+
+data "template_file" "delete-helm-sh" {
+  template = "${file("templates/helm/load-helm.sh")}"
+
+  vars {
+    admin="${var.vm-adminuser}"
+    tiller_user="${var.helm_service_account_name}"
+  }
+}

@@ -2,11 +2,13 @@
 * Update README.md - provide instructions
 * Fix OS Disk sizes
 * Add Azure storage class support
-* Add Helm support
+* ~~Add Helm support~~
 * ~~Add nfs-provisioner (manual install)~~
-  * Set default storage class
-* Add nfs-provisioner (automatic install)
-  * Set default storage class
+  * ~~Set default storage class~~
+* ~~Add nfs-provisioner (automatic install)~~
+  * ~~Temporary storage~~
+  * ~~Set default storage class~~
+  * Azure disk storage
 * Add instructions to create permanent data disk
 * Add additional error checking
 * Make it easier to choose machine/disk sizes that match

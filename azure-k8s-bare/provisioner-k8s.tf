@@ -103,6 +103,21 @@ resource "null_resource" "k8s" {
         destination = "/home/${var.vm-adminuser}/scripts/traefik/8-nginx-ingress.yaml"
     }
 
+    provisioner "file" {
+        content = "${data.template_file.helm-rbac-role-yaml.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/helm/helm-rbac-role.yaml"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.load-helm-sh.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/helm/load-helm.sh"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.delete-helm-sh.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/helm/delete-helm.sh"
+    }
+
     provisioner "remote-exec" {
         inline = [
             "cat /home/${var.vm-adminuser}/hosts | sudo tee -a /etc/hosts",
