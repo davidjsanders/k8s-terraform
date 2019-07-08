@@ -1,4 +1,5 @@
 # To Do
+* Remove sample nginx ingress - no longer needed
 * Update README.md - provide instructions
 * Fix OS Disk sizes
 * Add Azure storage class support
