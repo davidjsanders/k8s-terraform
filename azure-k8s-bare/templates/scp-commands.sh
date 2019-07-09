@@ -50,6 +50,11 @@ do
         ~/hosts \
         $${target}:~/hosts
 
+    do_scp \
+        "Copying lbip.txt" \
+        ~/lbip.txt \
+        $${target}:~/
+
     do_scp_recursive \
         "Copying Scripts" \
         ~/scripts \

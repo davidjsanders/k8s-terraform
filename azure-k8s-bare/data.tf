@@ -119,10 +119,10 @@ data "template_file" "ingress-yaml" {
   }
 }
 
-# Compute and interpolate the variables required for 
-# 8-nginx-ingress.yaml in the Traefik app
-data "template_file" "nginx-ingress-yaml" {
-  template = "${file("templates/traefik/8-nginx-ingress.yaml")}"
+# Compute and interpolate the variables required for lbip.txt
+# for the Traefik Ingress Controller
+data "template_file" "lbip-txt" {
+  template = "${file("templates/lbip.txt")}"
 
   vars {
     lbip="${module.pip-elb.ip_address}"

@@ -99,8 +99,8 @@ resource "null_resource" "k8s" {
     }
 
     provisioner "file" {
-        content = "${data.template_file.nginx-ingress-yaml.rendered}"
-        destination = "/home/${var.vm-adminuser}/scripts/traefik/8-nginx-ingress.yaml"
+        content = "${data.template_file.lbip-txt.rendered}"
+        destination = "/home/${var.vm-adminuser}/lbip.txt"
     }
 
     provisioner "file" {

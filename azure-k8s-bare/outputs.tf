@@ -32,10 +32,6 @@ output "Jumpbox-IP-Address" {
     value = "${module.pip-jumpbox.ip_address}"
 }
 
-output "nginx-hosts-line" {
-    value = "${module.pip-elb.ip_address}    nginx-frontend"
-}
-
-output "traefik-hosts-line" {
-    value = "${module.pip-elb.ip_address}    traefik-ui"
+output "traefik-ui" {
+    value = "${format("traefik-ui.%s.xip.io", module.pip-elb.ip_address)}"
 }
