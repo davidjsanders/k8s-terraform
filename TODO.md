@@ -3,7 +3,8 @@
 * Add auth for traefik UI
 * Update README.md - provide instructions
 * Fix OS Disk sizes
-* Add Azure storage class support
+* Add Azure cloud provider support
+  * Change kubeadm init to use config file
 * ~~Add Helm support~~
 * ~~Add nfs-provisioner (manual install)~~
   * ~~Set default storage class~~
