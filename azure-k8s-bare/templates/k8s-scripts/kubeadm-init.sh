@@ -17,7 +17,10 @@
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 # 10 Jul 2019  | David Sanders               | Use kubeadm config
-#              |                             | file
+#              |                             | file. Initially, set
+#              |                             | all values in this
+#              |                             | scipt; later, this will
+#              |                             | be changed to tf vars.
 # -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
