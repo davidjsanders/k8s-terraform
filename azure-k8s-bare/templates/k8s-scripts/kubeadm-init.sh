@@ -34,50 +34,41 @@ sudo cp ~/scripts/k8s-scripts/kubeadm.config.yaml /root/kubeadm/kubeadm.config.y
 sudo chmod 0600 /root/kubeadm/kubeadm.config.yaml
 
 banner "kubeadm-init.sh" "Prepare configuration"
+KUBEADM_CONFIG_FILE="/root/kubeadm/kubeadm.config.yaml"
 KUBEADM_API=kubeadm.k8s.io
 KUBEADM_API_VERSION=v1beta1
 KUBEADM_TOKEN=$(kubeadm token generate)
 KUBEADM_API_ADVERTISE_IP=10.70.1.6
-KUBEADM_CERT_DIR=\/etc\/kubernetes\/pki
+KUBEADM_CERT_DIR="\/etc\/kubernetes\/pki"
 KUBEADM_CLUSTER_NAME=kubernetes
-KUBEADM_POD_SUBNET=192.168.0.0\/16
-KUBEADM_SERVICE_SUBNET=10.96.0.0\/12
+KUBEADM_POD_SUBNET="192.168.0.0\/16"
+KUBEADM_SERVICE_SUBNET="10.96.0.0\/12"
 KUBEADM_K8S_VERSION=v1.14.3
 
 banner "kubeadm-init.sh" "Substitute kubeadm config file values with sed"
 sudo sed -i \
-    's/\${KUBEADM_API}/'${KUBEADM_API}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_API_VERSION}/'${KUBEADM_API_VERSION}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_TOKEN}/'${KUBEADM_TOKEN}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_API_ADVERTISE_IP}/'${KUBEADM_API_ADDVERTISE_IP}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_CERT_DIR}/'${KUBEADM_CERT_DIR}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_CLUSTER_NAME}/'${KUBEADM_CLUSTER_NAME}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_POD_SUBNET}/'${KUBEADM_POD_SUBNET}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_SERVICE_SUBNET}/'${KUBEADM_SERVICE_SUBNET}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
-sudo sed -i \
-    's/\${KUBEADM_K8S_VERSION}/'${KUBEADM_K8S_VERSION}'/g' \
-    /root/kubeadm/kubeadm.config.yaml
+    's/\${KUBEADM_API}/'${KUBEADM_API}'/g;
+     s/\${KUBEADM_API_VERSION}/'${KUBEADM_API_VERSION}'/g;
+     s/\${KUBEADM_TOKEN}/'${KUBEADM_TOKEN}'/g;
+     s/\${KUBEADM_API_ADVERTISE_IP}/'${KUBEADM_API_ADDVERTISE_IP}'/g;
+     s/\${KUBEADM_CERT_DIR}/'${KUBEADM_CERT_DIR}'/g;
+     s/\${KUBEADM_CLUSTER_NAME}/'${KUBEADM_CLUSTER_NAME}'/g;
+     s/\${KUBEADM_POD_SUBNET}/'${KUBEADM_POD_SUBNET}'/g;
+     s/\${KUBEADM_SERVICE_SUBNET}/'${KUBEADM_SERVICE_SUBNET}'/g;
+     s/\${KUBEADM_K8S_VERSION}/'${KUBEADM_K8S_VERSION}'/g' \
+    $KUBEADM_CONFIG_FILE
+ret_stat="$?"
+if [ "$ret_stat" != "0" ]
+then
+    banner "kubeadm-init.sh" "ERROR! Error substituting kubeadm config; exiting"
+    exit 1
+fi
 
 banner "kubeadm-init.sh" "Perform kubeadm init"
 
 echo "*** $(date) *** kubeadm init"
 sudo kubeadm init \
-    --config=/root/kubeadm/kubeadm.config.yaml
+    --config=$KUBEADM_CONFIG_FILE
 
 #    --kubernetes-version 1.14.3 \
 #    --pod-network-cidr 192.168.0.0/16
