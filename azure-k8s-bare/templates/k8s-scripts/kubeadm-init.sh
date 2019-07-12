@@ -69,6 +69,3 @@ banner "kubeadm-init.sh" "Perform kubeadm init"
 echo "*** $(date) *** kubeadm init"
 sudo kubeadm init \
     --config=$KUBEADM_CONFIG_FILE
-
-#    --kubernetes-version 1.14.3 \
-#    --pod-network-cidr 192.168.0.0/16
