@@ -6,6 +6,7 @@
 * Add Azure cloud provider support
   * ~~Change kubeadm init to use config file~~
 * Simplify ssh-commands by using modules
+* Simplify master and worker scripts by using modules
 * ~~Add Helm support~~
 * ~~Add nfs-provisioner (manual install)~~
   * ~~Set default storage class~~
