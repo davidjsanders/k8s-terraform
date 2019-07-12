@@ -163,7 +163,7 @@ IFS=$" "
 echo
 while true
 do
-    files=$(ls -m *.done)
+    files=$(ls -m *.done 2> /dev/null)
     done_files=(`echo $files`)
 
     # echo "Done notices : $${#done_files[@]}"
