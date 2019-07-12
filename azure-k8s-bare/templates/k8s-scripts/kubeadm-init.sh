@@ -23,6 +23,11 @@
 #              |                             | be changed to tf vars.
 # -------------------------------------------------------------------
 
+# Reference:
+# Klevensky, K., 2019, Kubernetes by kubeadm config yamls [ONLINE] 
+# Available at: https://medium.com/@kosta709/kubernetes-by-kubeadm-config-yamls-94e2ee11244
+# Accessed on: 11 Jul 2019
+
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)
 #
