@@ -1,0 +1,32 @@
+apiVersion: ${KUBEADM_API}/${KUBEADM_API_VERSION}
+bootstrapTokens:
+- token: ${KUBEADM_TOKEN}
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: ${KUBEADM_API_ADVERTISE_IP}
+  bindPort: 6443
+---
+apiServer:
+  extraArgs:
+    authorization-mode: Node,RBAC
+  timeoutForControlPlane: 4m0s
+apiVersion: ${KUBEADM_API}/${KUBEADM_API_VERSION}
+certificatesDir: ${KUBEADM_CERT_DIR}
+clusterName: ${KUBEADM_CLUSTER_NAME}
+controlPlaneEndpoint: ""
+controllerManager: {}
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: ${KUBEADM_K8S_VERSION}
+networking:
+  dnsDomain: cluster.local
+  podSubnet: ${KUBEADM_POD_SUBNET}
+  serviceSubnet: ${KUBEADM_SERVICE_SUBNET}
+scheduler: {}

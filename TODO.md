@@ -1,10 +1,11 @@
 # To Do
-* Remove sample nginx ingress - no longer needed
+* ~~Remove sample nginx ingress - no longer needed~~
 * Add auth for traefik UI
 * Update README.md - provide instructions
 * Fix OS Disk sizes
 * Add Azure cloud provider support
-  * Change kubeadm init to use config file
+  * ~~Change kubeadm init to use config file~~
+* Simplify ssh-commands by using modules
 * ~~Add Helm support~~
 * ~~Add nfs-provisioner (manual install)~~
   * ~~Set default storage class~~
