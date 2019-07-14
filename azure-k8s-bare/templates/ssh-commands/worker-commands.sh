@@ -13,10 +13,10 @@
 banner "ssh-commands.sh" "Execute ssh commands on all workers"
 worker_commands="~/scripts/worker.sh"
 IFS=$" "
-for worker in $$workers
+for worker in $workers
 do
     do_ssh_nohup \
         "Executing worker.sh" \
-        ${admin}@$${worker} \
+        $admin@${worker} \
         "~/scripts/worker.sh"
 done

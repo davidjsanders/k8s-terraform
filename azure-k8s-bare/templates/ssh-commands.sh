@@ -36,6 +36,7 @@ source /home/${admin}/scripts/do-scp.sh
 
 masters="${masters}"
 workers="${workers}"
+admin="${admin}"
 
 source /home/${admin}/scripts/ssh-commands/executable-scripts.sh
 source /home/${admin}/scripts/ssh-commands/master-commands.sh

@@ -9,7 +9,7 @@ function show_state() {
     echo "Workers $1 - $2 done for $3 agents"
 }
 
-worker_array=(${workers})
+worker_array=($workers)
 sleep_time=30
 IFS=$" "
 echo
@@ -18,15 +18,15 @@ do
     files=$(ls -m *.done 2> /dev/null)
     done_files=(`echo $files`)
 
-    # echo "Done notices : $${#done_files[@]}"
-    # echo "Workers      : $${#worker_array[@]}"
+    # echo "Done notices : ${#done_files[@]}"
+    # echo "Workers      : ${#worker_array[@]}"
 
-    if [ "$${#done_files[@]}" == "$${#worker_array[@]}" ]
+    if [ "${#done_files[@]}" == "${#worker_array[@]}" ]
     then
         break;
     fi
-    show_state "In progress" "$${#done_files[@]}" "$${#worker_array[@]}"
-    sleep $${sleep_time}
+    show_state "In progress" "${#done_files[@]}" "${#worker_array[@]}"
+    sleep ${sleep_time}
 done
-show_state "Completed" "$${#done_files[@]}" "$${#worker_array[@]}"
+show_state "Completed" "${#done_files[@]}" "${#worker_array[@]}"
 echo
