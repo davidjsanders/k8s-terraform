@@ -17,7 +17,7 @@
 # -------------------------------------------------------------------
 
 locals {
-  l-avs-mstr-temp-name = "${format("%s-%s%s", var.target, "ENGINES", local.l-dev)}"
+  l-avs-mstr-temp-name = "${format("%s-%s%s", var.target, "MASTERS", local.l-dev)}"
   l-avs-mstr-name      = "${format("AVS-%s-%s%s", local.l-avs-mstr-temp-name, var.environ, local.l-random)}"
 }
 

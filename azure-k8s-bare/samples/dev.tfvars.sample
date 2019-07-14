@@ -110,7 +110,7 @@ nsg-name = "K8S"
 public-dns-name = ""
 
 # The NIC name prefix
-nic-name = "ENGINE"
+nic-name = "K8S"
 
 #
 # Load Balancer
