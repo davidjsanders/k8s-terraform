@@ -19,11 +19,16 @@
 # 26 Jun 2019  | David Sanders               | Add space between each
 #              |                             | yaml apply.
 # -------------------------------------------------------------------
+# 15 Jul 2019  | David Sanders               | Add sleep period between
+#              |                             | each yaml apply.
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)
 #
 source ~/scripts/banner.sh
+
+sleep_period=5
 
 yaml_files=$(ls -1 ~/registry/[0-9]*.yaml)
 for file in $yaml_files
@@ -31,6 +36,7 @@ do
     echo "Applying yaml for: $file"
     kubectl apply -f $file
     echo
+    sleep $sleep_period
 done
 echo "Done."
 echo
