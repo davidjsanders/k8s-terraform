@@ -40,13 +40,5 @@ do
     echo
 done
 
-echo
-echo "Applying Ingress"
-echo
-sed 's/\${LBIP}/'"$LBIP"'/g' ~/scripts/nexus-oss/ingress.yaml.env | kubectl apply -f -
-if [ "$?" != "0" ]; then echo "Error applying Nexus OSS!"; exit 1; fi
-echo
-
-
 echo "Done."
 echo

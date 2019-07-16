@@ -24,7 +24,7 @@
 #
 source ~/scripts/banner.sh
 
-banner "load-nexus-oss.sh" "Deleting NFS Provisioner"
+banner "load-nexus-oss.sh" "Deleting Nexus OSS"
 yaml_files=$(ls -r1 ~/scripts/nexus-oss/[0-9]*.yaml)
 for file in $yaml_files
 do
