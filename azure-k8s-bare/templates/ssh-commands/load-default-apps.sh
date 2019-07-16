@@ -4,6 +4,7 @@
 # proceed okay.
 scripts="/home/$admin/scripts/traefik/load-traefik.sh"
 scripts="$scripts;/home/$admin/registry/load-registry.sh"
+#scripts="$scripts;/home/$admin/scripts/nexus-oss/load-nexus-oss.sh"
 scripts="$scripts;/home/$admin/scripts/helm/load-helm.sh"
 scripts="$scripts;/home/$admin/scripts/nfs-provisioner/load-nfs-provisioner.sh"
 

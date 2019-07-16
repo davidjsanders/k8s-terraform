@@ -94,6 +94,11 @@ resource "null_resource" "k8s" {
     }
 
     provisioner "file" {
+        content = "${data.template_file.nexus-ingress-yaml.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/nexus-oss/90-ingress.yaml"
+    }
+
+    provisioner "file" {
         content = "${data.template_file.ingress-yaml.rendered}"
         destination = "/home/${var.vm-adminuser}/scripts/traefik/5-ingress.yaml"
     }

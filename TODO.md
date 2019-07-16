@@ -3,6 +3,8 @@
 * Add auth for traefik UI
 * Update README.md - provide instructions
 * Fix OS Disk sizes
+* Change Docker Registry to use local storage
+* Remove Nexus OSS from install
 * Add Azure cloud provider support
   * ~~Change kubeadm init to use config file~~
 * ~~Simplify ssh-commands by using modules~~

@@ -23,24 +23,34 @@
 #
 source ~/scripts/banner.sh
 
-EXPORT_DIRECTORY=/datadrive/export/data
+EXPORT_DIRECTORY=/datadrive/export
+EXPORT_DIRECTORY_2=/datadrive/nexus
 worker_nodes="${workers}"
 
 banner "setup-nfs-server.sh" "Make directories $${EXPORT_DIRECTORY}"
 sudo mkdir -p $${EXPORT_DIRECTORY}
+sudo mkdir -p $${EXPORT_DIRECTORY_2}
 
 banner "setup-nfs-server.sh" "Mount binding $${DATA_DIRECTORY} to $${EXPORT_DIRECTORY}"
 parentdir="$$(dirname "$$EXPORT_DIRECTORY")"
 sudo chmod -R 777 $${EXPORT_DIRECTORY}
+sudo chown -R nobody:nogroup $${EXPORT_DIRECTORY}
+sudo chmod -R 777 $$parentdir
+
+parentdir="$$(dirname "$$EXPORT_DIRECTORY_2")"
+sudo chmod -R 777 $${EXPORT_DIRECTORY_2}
+sudo chown -R nobody:nogroup $${EXPORT_DIRECTORY_2}
 sudo chmod -R 777 $$parentdir
 
 banner "setup-nfs-server.sh" "Appending localhost and Kubernetes workers $${node} to exports configuration file"
 IFS=$" "
 for node in $${worker_nodes}
 do
-    echo "/datadrive/export        $${node}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+    echo "$EXPORT_DIRECTORY        $${node}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+    echo "$EXPORT_DIRECTORY_2         $${node}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
 done
-echo "/datadrive/export        ${masters}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+echo "$EXPORT_DIRECTORY        ${masters}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+echo "$EXPORT_DIRECTORY_2        ${masters}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
 
 banner "setup-nfs.sh" "Restart NFS service"
 sudo service nfs-kernel-server restart
