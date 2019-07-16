@@ -1,0 +1,30 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/nexus-oss/50-nexus-blob-store-pvc.yaml
+# Environments:   all
+# Purpose:        The persitent volume claim for /blob-store.
+#
+# Created on:     15 July 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 15 Jul 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nexus-blob-store-claim
+  name: nexus-blob-store-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

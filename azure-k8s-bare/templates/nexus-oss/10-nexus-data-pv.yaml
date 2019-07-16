@@ -1,0 +1,33 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/nexus-oss/10-nexus-data-pv.yaml
+# Environments:   all
+# Purpose:        The persistent volume for /nexus-data
+#
+# Created on:     15 July 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 15 Jul 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nexus-data-pv
+  labels:
+    type: local
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /datadrive/nexus/data
+  persistentVolumeReclaimPolicy: Retain
