@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: test-frontend
+  name: test-frontend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: test-frontend
+    spec:
+      containers:
+      - image: nginx:1.12
+        name: test-frontend
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /test
+          name: example-local-claim
+      restartPolicy: Always
+      volumes:
+      - name: example-local-claim
+        persistentVolumeClaim:
+          claimName: example-local-claim

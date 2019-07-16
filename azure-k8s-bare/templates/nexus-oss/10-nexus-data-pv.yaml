@@ -18,16 +18,25 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: nexus-data-pv
   labels:
-    type: local
+    type: local-storage
+  name: nexus-data-pv
 spec:
   accessModes:
   - ReadWriteOnce
+  storage
   capacity:
     storage: 500Mi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: /datadrive/nexus/data
+  storageClassName: local-storage
+  local:
+    path: /datadrive/test
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+         - key: node-role.kubernetes.io/master
+           operator: Exists
+           values: true
   persistentVolumeReclaimPolicy: Retain

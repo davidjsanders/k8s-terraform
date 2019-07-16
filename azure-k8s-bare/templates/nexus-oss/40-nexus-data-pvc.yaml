@@ -23,6 +23,7 @@ metadata:
     app: nexus-data-claim
   name: nexus-data-claim
 spec:
+  storageClassName: local-storage
   accessModes:
   - ReadWriteOnce
   resources:

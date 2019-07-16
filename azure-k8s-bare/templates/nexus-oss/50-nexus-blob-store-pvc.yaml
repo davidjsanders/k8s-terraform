@@ -23,6 +23,7 @@ metadata:
     app: nexus-blob-store-claim
   name: nexus-blob-store-claim
 spec:
+  storageClassName: local-storage
   accessModes:
   - ReadWriteOnce
   resources:
