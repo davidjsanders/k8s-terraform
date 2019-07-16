@@ -18,8 +18,8 @@ items:
         - env:
           - name: foobar
             value: fred
-#          - name: INSTALL4J_ADD_VM_PARAMS
-#            value: "-Djava.util.prefs.userRoot=/userRoot"
+          - name: INSTALL4J_ADD_VM_PARAMS
+            value: "-Djava.util.prefs.userRoot=/userRoot"
           image: sonatype/nexus3:3.17.0
           name: nexus-oss
           ports:

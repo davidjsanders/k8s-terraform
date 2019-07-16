@@ -24,12 +24,6 @@
 #
 source ~/scripts/banner.sh
 
-if [ -z "${LBIP+x}" ]
-then
-    echo "ERROR: The environment variable LBIP (Load Balancer IP) must be set!"
-    exit 1
-fi
-
 banner "load-nexus-oss.sh" "Apply NFS Provisioner"
 yaml_files=$(ls -1 ~/scripts/nexus-oss/[0-9]*.yaml)
 for file in $yaml_files
