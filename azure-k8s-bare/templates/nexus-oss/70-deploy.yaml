@@ -31,6 +31,13 @@ items:
             name: nexus-user-root-claim
           - mountPath: /blob-store
             name: nexus-blob-store-claim
+          resources:
+            limits:
+              memory: "6Gi"
+              cpu: "4"
+            requests:
+              memory: "4Gi"
+              cpu: "3"
 #          readinessProbe:
 #            tcpSocket:
 #              port: 8080
