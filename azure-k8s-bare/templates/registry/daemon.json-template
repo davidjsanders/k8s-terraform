@@ -1,1 +1,6 @@
-{ "insecure-registries": ["k8s-master:32000"]}
+{ 
+    "insecure-registries": [
+        "k8s-master:32000", 
+        "k8s-master:32080"
+    ]
+}

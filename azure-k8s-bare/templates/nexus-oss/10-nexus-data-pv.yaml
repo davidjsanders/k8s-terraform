@@ -24,19 +24,18 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storage
+  storageClassName: local-storage
   capacity:
     storage: 500Mi
   accessModes:
     - ReadWriteOnce
   storageClassName: local-storage
   local:
-    path: /datadrive/test
+    path: "/datadrive/nexus-oss/data"
   nodeAffinity:
     required:
       nodeSelectorTerms:
       - matchExpressions:
          - key: node-role.kubernetes.io/master
-           operator: Exists
-           values: true
+           operator: DoesNotExist
   persistentVolumeReclaimPolicy: Retain

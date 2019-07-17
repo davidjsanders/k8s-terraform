@@ -28,12 +28,11 @@ spec:
     storage: 200Mi
   storageClassName: local-storage
   local:
-    path: /datadrive/test
+    path: "/datadrive/nexus-oss/user-root"
   nodeAffinity:
     required:
       nodeSelectorTerms:
       - matchExpressions:
          - key: node-role.kubernetes.io/master
-           operator: Exists
-           values: true
+           operator: DoesNotExist
   persistentVolumeReclaimPolicy: Retain

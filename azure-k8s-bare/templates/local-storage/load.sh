@@ -25,7 +25,8 @@
 #
 source ~/scripts/banner.sh
 
-yaml_files=$(ls -1 /datadrive/azadmin/local-storage/[0-9]*.yaml)
+banner "local-storage/load.sh" "Apply local-storage storage class"
+yaml_files=$(ls -1 ~/scripts/local-storage/[0-9]*.yaml)
 for file in $yaml_files
 do
     echo "Applying yaml for: $file"

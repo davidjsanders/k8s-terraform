@@ -1,31 +1,34 @@
 # -------------------------------------------------------------------
 #
 # Module:         k8s-terraform
-# Submodule:      templates/traefik/5-ingress.yaml
+# Submodule:      templates/nexus-oss/80-service.yaml
 # Environments:   all
-# Purpose:        YAML specification to create an ingress for the
-#                 Traefik web UI.
+# Purpose:        The yaml for the Nexus OSS docker proxy registry.
 #
-# Created on:     15 Jule 2019
+# Created on:     16 Jule 2019
 # Created by:     David Sanders
 # Creator email:  dsanderscanada@nospam-gmail.com
 #
 # -------------------------------------------------------------------
 # Modifed On   | Modified By                 | Release Notes
 # -------------------------------------------------------------------
-# 15 Jul 2019  | David Sanders               | First release.
+# 16 Jul 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: v1
+kind: Service
 metadata:
-  name: nexus-oss
+  labels:
+    app: nexus-docker
+  name: nexus-docker
 spec:
-  rules:
-  - host: nexus.40.76.5.20.xip.io
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nexus-frontend
-          servicePort: nexus-port
+  type: NodePort
+  ports:
+  - name: nexus-docker-port
+    port: 18080
+    targetPort: 18080
+    nodePort: 32080
+  selector:
+    app: nexus-oss
+status:
+  loadBalancer: {}
