@@ -3,10 +3,15 @@
 * Add auth for traefik UI
 * Update README.md - provide instructions
 * Fix OS Disk sizes
-* Change Docker Registry to use local storage
-* Remove Nexus OSS from install
+* ~~Change Docker Registry to use local storage (DEPRECATED)~~
+* ~~Remove Nexus OSS from install~~
 * Add Azure cloud provider support
   * ~~Change kubeadm init to use config file~~
+* Decommision private Docker registry and replace with Nexus OSS
+  * ~~Decomm registry by removing from default apps~~
+  * ~~Enabled Nexus OSS and persistent local-storage~~
+  * Remove registry directory
+  * Change location of default docker daemon.json
 * ~~Simplify ssh-commands by using modules~~
 * Simplify master and worker scripts by using modules
 * ~~Add Helm support~~
@@ -14,7 +19,7 @@
   * ~~Set default storage class~~
 * ~~Add nfs-provisioner (automatic install)~~
   * ~~Temporary storage~~
-  * ~~Set default storage class~~
+  * ~~Set default storage class (DEPRECATED~~
   * Azure disk storage
 * Add instructions to create permanent data disk
 * Add additional error checking

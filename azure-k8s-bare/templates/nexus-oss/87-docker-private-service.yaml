@@ -1,9 +1,9 @@
 # -------------------------------------------------------------------
 #
 # Module:         k8s-terraform
-# Submodule:      templates/nexus-oss/85-docker-service.yaml
+# Submodule:      templates/nexus-oss/87-docker-private-service.yaml
 # Environments:   all
-# Purpose:        The yaml for the Nexus OSS docker proxy registry.
+# Purpose:        The yaml for the Nexus OSS docker private registry.
 #
 # Created on:     16 Jule 2019
 # Created by:     David Sanders
@@ -20,14 +20,14 @@ kind: Service
 metadata:
   labels:
     app: nexus-oss
-  name: nexus-docker
+  name: nexus-docker-private
 spec:
   type: NodePort
   ports:
   - name: nexus-docker-port
-    port: 18080
-    targetPort: 18080
-    nodePort: 32080
+    port: 18081
+    targetPort: 18081
+    nodePort: 32081
   selector:
     app: nexus-oss
 status:
