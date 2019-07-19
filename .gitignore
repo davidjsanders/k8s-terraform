@@ -11,6 +11,7 @@
 **/.vagrant
 **/.terraform
 **/*.retry
+**/*.log
 
 # .tfstate files
 *.tfstate
