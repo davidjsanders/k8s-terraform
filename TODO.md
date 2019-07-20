@@ -3,6 +3,7 @@
 * Add auth for traefik UI
 * Update README.md - provide instructions
 * Fix OS Disk sizes
+* Set .bashrc for login instructions
 * ~~Change Docker Registry to use local storage (DEPRECATED)~~
 * ~~Remove Nexus OSS from install~~
 * Add Azure cloud provider support
