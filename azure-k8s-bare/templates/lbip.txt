@@ -1,10 +1,11 @@
+**
+** DO NOT CHANGE THIS FILE - IT IS SCRAPED FOR INFORMATION
+**
 
-This is the IP Address for the Load Balancer: ${lbip}
+export LBIP=${lbip}
 
-When accessing a load balancer based service, do two things:
+Access <service>.${lbip}.xip.io
 
-1. For starting/stopping: export LBIP=${lbip}
-2. To access <service>.${lbip}.xip.io
 
 An example Ingress
 ==================

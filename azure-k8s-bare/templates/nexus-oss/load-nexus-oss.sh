@@ -25,11 +25,15 @@
 source ~/scripts/banner.sh
 
 banner "load-nexus-oss.sh" "Apply NFS Provisioner"
+
+lbip=$(cat ~/lbip.txt | grep "export LBIP" | cut -d'=' -f2)
 yaml_files=$(ls -1 ~/scripts/nexus-oss/[0-9]*.yaml)
 for file in $yaml_files
 do
     echo "Applying yaml for: $file"
-    kubectl apply -f $file
+    sed '
+            s/\${LBIP}/'"$lbip"'/g;
+        ' $file | kubectl apply -f -
     if [ "$?" != "0" ]; then echo "Error applying Nexus OSS!"; exit 1; fi
     echo
 done
