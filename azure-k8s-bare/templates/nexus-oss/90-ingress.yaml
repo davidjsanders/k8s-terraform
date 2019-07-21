@@ -22,7 +22,7 @@ metadata:
   name: nexus-oss
 spec:
   rules:
-  - host: nexus.${LBIP}.xip.io
+  - host: nexus.${lbip}.xip.io
     http:
       paths:
       - path: /

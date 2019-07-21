@@ -109,16 +109,6 @@ data "template_file" "setup-nfs-server-sh" {
   }
 }
 
-# Compute and interpolate the variables required for the Nexus OSS
-# 90-ingress.yaml file
-data "template_file" "nexus-ingress-yaml" {
-  template = "${file("templates/nexus-oss/90-ingress.yaml")}"
-
-  vars {
-    lbip="${module.pip-elb.ip_address}"
-  }
-}
-
 # Compute and interpolate the variables required for 5-ingress.yaml
 # in the Traefik app
 data "template_file" "ingress-yaml" {

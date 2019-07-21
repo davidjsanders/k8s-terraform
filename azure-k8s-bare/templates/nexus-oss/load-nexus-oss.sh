@@ -32,7 +32,7 @@ for file in $yaml_files
 do
     echo "Applying yaml for: $file"
     sed '
-            s/\${LBIP}/'"$lbip"'/g;
+            s/\${lbip}/'"$lbip"'/g;
         ' $file | kubectl apply -f -
     if [ "$?" != "0" ]; then echo "Error applying Nexus OSS!"; exit 1; fi
     echo
