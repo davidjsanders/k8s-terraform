@@ -35,12 +35,12 @@ do
 done
 if [ "$?" != "0" ]; then echo "Error applying NFS provisioner!"; exit 1; fi
 
-banner "load-nfs-provisioner.sh" "Set default storage class"
-kubectl patch \
-    storageclass example-nfs \
-    -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-if [ "$?" != "0" ]; then echo "Error applying NFS provisioner!"; exit 1; fi
-echo
+# banner "load-nfs-provisioner.sh" "Set default storage class"
+# kubectl patch \
+#     storageclass example-nfs \
+#     -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+# if [ "$?" != "0" ]; then echo "Error applying NFS provisioner!"; exit 1; fi
+# echo
 
 echo "Done."
 echo
