@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------
 #
 # Module:         k8s-terraform
-# Submodule:      templates/traefik/5-ingress.yaml
+# Submodule:      templates/traefik/50-ingress.yaml
 # Environments:   all
 # Purpose:        YAML specification to create an ingress for the
 #                 Traefik web UI.
