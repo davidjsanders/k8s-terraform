@@ -33,6 +33,7 @@ banner "master.sh" "Perform configuration steps for master(s)"
 # Note the IFS is set to ;
 scripts="/home/${admin}/scripts/k8s-scripts/apt-updates.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/apt-upgrade.sh"
+scripts=$scripts";/home/${admin}/scripts/k8s-scripts/set-timezone.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/swap-off.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/fstab-datadrive.sh"
 scripts=$scripts";/home/${admin}/scripts/k8s-scripts/install-nfs-server.sh"
