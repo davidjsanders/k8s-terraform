@@ -33,6 +33,10 @@ spec:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-         - key: node-role.kubernetes.io/master
-           operator: DoesNotExist
+        - key: role
+          operator: In
+          values:
+          - "worker"
+        #  - key: node-role.kubernetes.io/master
+        #    operator: DoesNotExist
   persistentVolumeReclaimPolicy: Retain

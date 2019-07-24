@@ -44,6 +44,7 @@ source /home/${admin}/scripts/ssh-commands/create-join.sh
 source /home/${admin}/scripts/ssh-commands/reboot-masters.sh
 source /home/${admin}/scripts/ssh-commands/worker-commands.sh
 source /home/${admin}/scripts/ssh-commands/wait-for-workers.sh
+source /home/${admin}/scripts/ssh-commands/label-workers.sh
 source /home/${admin}/scripts/ssh-commands/reboot-workers.sh
 source /home/${admin}/scripts/ssh-commands/load-default-apps.sh
 
