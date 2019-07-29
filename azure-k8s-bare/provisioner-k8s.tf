@@ -120,7 +120,7 @@ resource "null_resource" "k8s" {
 
     provisioner "remote-exec" {
         inline = [
-            "timedatectl set-timezone America/Toronto",
+            "sudo DEBIAN_FRONTEND=noninteractive timedatectl set-timezone America/Toronto",
             "cat /home/${var.vm-adminuser}/hosts | sudo tee -a /etc/hosts",
             "chmod 0600 /home/${var.vm-adminuser}/.ssh/azure_pk",
             "chmod +x /home/${var.vm-adminuser}/scripts/traefik/load-traefik.sh /home/${var.vm-adminuser}/scripts/master.sh /home/${var.vm-adminuser}/scripts/worker.sh /home/${var.vm-adminuser}/scripts/scp-commands.sh /home/${var.vm-adminuser}/scripts/ssh-commands.sh",
