@@ -30,7 +30,6 @@
 #
 locals {
   l-storage-account-name       = "${lower(format("sa%s%s%s", lower(var.target), var.sa-name, random_integer.unique-sa-id.result))}"
-  l-storage-account-persistent = "${lower(format("sa%s%s%s", lower(var.target), var.sa-persistent-name, random_integer.unique-sa-id.result))}"
 }
 
 module "sa-boot-diag" {
