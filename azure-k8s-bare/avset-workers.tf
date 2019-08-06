@@ -24,7 +24,7 @@ locals {
 }
 
 module "avs-workers" {
-  source                       = "git::https://github.com/dsandersAzure/terraform-library.git//modules/availability-set?ref=0.6.0"
+  source                       = "git::https://github.com/dsandersAzure/terraform-library.git//modules/availability-set?ref=0.8.0"
   name                         = "${local.l-avs-wrk-name}"
   resource-group-name          = "${module.resource-group.name}"
   platform-fault-domain-count  = "3"

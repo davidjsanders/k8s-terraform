@@ -17,7 +17,7 @@
 # -------------------------------------------------------------------
 
 module "nsg-Allow80" {
-  source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.6.0"
+  source                      = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg_rule?ref=0.8.0"
   name                        = "Allow80"
   resource-group-name         = "${module.resource-group.name}"
   network-security-group-name = "${module.nsg-k8s.name}"

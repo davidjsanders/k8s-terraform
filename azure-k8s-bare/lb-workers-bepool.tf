@@ -24,7 +24,7 @@ locals {
 }
 
 module "lb-workers-bepool" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-bepool?ref=0.6.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-bepool?ref=0.8.0"
   name                = "${local.l-lb-bepool-name}"
   resource-group-name = "${module.resource-group.name}"
   load-balancer-id    = "${module.lb-workers.id}"

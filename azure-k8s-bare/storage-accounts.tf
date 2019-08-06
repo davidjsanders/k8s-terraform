@@ -33,7 +33,7 @@ locals {
 }
 
 module "sa-boot-diag" {
-  source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/storage-account?ref=0.6.0"
+  source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/storage-account?ref=0.8.0"
   name                      = "${local.l-storage-account-name}"
   resource-group-name       = "${module.resource-group.name}"
   account-tier              = "Standard"
