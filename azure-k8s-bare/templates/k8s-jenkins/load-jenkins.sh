@@ -16,6 +16,9 @@
 # -------------------------------------------------------------------
 # 30 Jul 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 06 Aug 2019  | David Sanders               | Fix location of banner
+#              |                             | source.
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see
 # templates/banner.sh)
