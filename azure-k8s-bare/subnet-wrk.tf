@@ -25,10 +25,10 @@ locals {
 }
 
 module "wrk-subnet" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.8.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.9.0"
   name                = "${local.l-wrk-snet-name}"
   vnet-target-rg-name = "${module.resource-group.name}"
   vnet-target-name    = "${module.vnet-main.name}"
-  nsg-id              = "${module.nsg-k8s.id}"
+  # nsg-id              = "${module.nsg-k8s.id}"
   address-prefix      = "${local.l-wrk-snet-address-prefix}"
 }

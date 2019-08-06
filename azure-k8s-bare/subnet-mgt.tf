@@ -17,6 +17,9 @@
 # 05 Aug 2019  | David Sanders               | Simplify resource 
 #              |                             | names and remove
 #              |                             | deprecated code.
+#              |                             | Update to remove
+#              |                             | deprecated NSG
+#              |                             | association.
 # -------------------------------------------------------------------
 
 # Define local variables for use in the module. **NOTE** Although the local
@@ -30,10 +33,10 @@ locals {
 }
 
 module "mgt-subnet" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.8.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.9.0"
   name                = "${local.l-mgt-snet-name}"
   vnet-target-rg-name = "${module.resource-group.name}"
   vnet-target-name    = "${module.vnet-main.name}"
-  nsg-id              = "${module.nsg-k8s.id}"
+  #nsg-id              = "${module.nsg-k8s.id}"
   address-prefix      = "${local.l-mgt-snet-address-prefix}"
 }
