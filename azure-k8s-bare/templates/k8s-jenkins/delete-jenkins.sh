@@ -20,7 +20,7 @@
 # Include the banner function for logging purposes (see
 # templates/banner.sh)
 #
-source ./banner.sh
+source ~/scripts/k8s-jenkins/banner.sh
 
 log_banner "load-jenkins.sh" "Apply NFS Provisioner"
 
