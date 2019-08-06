@@ -15,18 +15,22 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names. Change Git
+#              |                             | release to 0.8.0.
+# -------------------------------------------------------------------
 
 # Define local variables for use in the module. **NOTE** Although the local
 # variables are defined here they are GLOBAL in scope, hence the reason they
 # all start with a unique name for the module, the l-... text.
 #
 locals {
-  l-nsg-temp-name   = "${format("%s-%s%s", var.target, var.nsg-name, local.l-dev)}"
-  l-nsg-name        = "${format("NSG-%s-%s%s", local.l-nsg-temp-name, var.environ, local.l-random)}"
+  # l-nsg-temp-name   = "${format("%s-%s%s", var.target, var.nsg-name, local.l-dev)}"
+  l-nsg-name        = "${format("NSG-%s-%s%s", var.target, var.environ, local.l-random)}"
 }
 
 module "nsg-k8s" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg?ref=0.6.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/nsg?ref=0.8.0"
   name                = "${local.l-nsg-name}"
   resource-group-name = "${module.resource-group.name}"
   location            = "${var.location}"

@@ -1,23 +1,5 @@
 # -------------------------------------------------------------------
 #
-# Module:         terraform-reference-app/green
-# Submodule:      subnet-k8s.tf
-# Purpose:        Create a subnet for docker resources.
-#
-# Created on:     22 August 2018
-# Created by:     David Sanders
-# Creator email:  dsanderscanada@nospam-gmail.com
-#
-# -------------------------------------------------------------------
-# Modifed On   | Modified By                 | Release Notes
-# -------------------------------------------------------------------
-# 22 Aug 2018  | David Sanders               | First release and
-#                                            | valid creation of
-#                                            | sample app.
-# -------------------------------------------------------------------
-
-# -------------------------------------------------------------------
-#
 # Module:         k8s-terraform
 # Submodule:      subnet-mgt.tf
 # Environments:   all
@@ -32,14 +14,18 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names and remove
+#              |                             | deprecated code.
+# -------------------------------------------------------------------
 
 # Define local variables for use in the module. **NOTE** Although the local
 # variables are defined here they are GLOBAL in scope, hence the reason they
 # all start with a unique name for the module, the l-... text.
 #
 locals {
-  l-mgt-snet-temp-name      = "${format("%s-%s%s", var.target, var.subnet-mgt-name, local.l-dev)}"
-  l-mgt-snet-name           = "${format("SNET-%s-%s%s", local.l-mgt-snet-temp-name, var.environ, local.l-random)}"
+  # l-mgt-snet-temp-name      = "${format("%s-%s%s", var.target, var.subnet-mgt-name, local.l-dev)}"
+  l-mgt-snet-name           = "${format("SNET-MASTERS-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-mgt-snet-address-prefix = "${replace(var.subnet-mgt-cidr, "dc-prefix", var.dc-prefix)}"
 }
 

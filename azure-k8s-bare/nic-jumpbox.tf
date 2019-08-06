@@ -14,10 +14,12 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource names
+# -------------------------------------------------------------------
 
 locals {
-  l-pnic-jumpbox-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
-  l-pnic-jumpbox-1         = "${format("NIC-JUMPBOX-1-%s-%s%s", local.l-pnic-jumpbox-temp-name, var.environ, local.l-random)}"
+  # l-pnic-jumpbox-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
+  l-pnic-jumpbox-1         = "${format("NIC-JUMPBOX-1-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-pnic-jumpbox-1-ip      = "${replace(var.jumpbox-static-ip, "dc-prefix", var.dc-prefix)}"
 }
 

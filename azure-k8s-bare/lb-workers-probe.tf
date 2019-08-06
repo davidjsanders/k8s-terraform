@@ -15,10 +15,18 @@
 # -------------------------------------------------------------------
 # 25 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Add local variable for
+#              |                             | probe name
+# -------------------------------------------------------------------
+
+locals {
+  # l-lb-bepool-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
+  l-lb-probe-name      = "${format("LB-PROBE-%s-%s%s", var.target, var.environ, local.l-random)}"
+}
 
 module "lb-workers-probe" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-probe?ref=0.8.0"
-  name                = "pro-workers-fe"
+  name                = "${local.l-lb-probe-name}"
   protocol            = "tcp"
   port                = "80"
   interval-in-seconds = "5"

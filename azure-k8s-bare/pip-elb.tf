@@ -15,10 +15,13 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-pip-elb-temp-name = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
-  l-pip-elb-name      = "${format("PIP-%s-%s%s", local.l-pip-elb-temp-name, var.environ, local.l-random)}"
+  # l-pip-elb-temp-name = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
+  l-pip-elb-name      = "${format("PIP-LB-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-pip-elb-dns       = "${format("%s-%s%s", var.elb-prefix, var.elb-name, local.l-random)}"
 }
 

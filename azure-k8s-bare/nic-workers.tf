@@ -14,11 +14,14 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-nic-temp-name    = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
-  l-nic-worker-1     = "${format("NIC-WORKER-1-%s-%s%s", local.l-nic-temp-name, var.environ, local.l-random)}"
-  l-nic-worker-2     = "${format("NIC-WORKER-2-%s-%s%s", local.l-nic-temp-name, var.environ, local.l-random)}"
+  # l-nic-temp-name    = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
+  l-nic-worker-1     = "${format("NIC-WORKER-1-%s-%s%s", var.target, var.environ, local.l-random)}"
+  l-nic-worker-2     = "${format("NIC-WORKER-2-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-nic-worker-1-ip  = "${replace(var.worker-static-ip-1, "dc-prefix", var.dc-prefix)}"
   l-nic-worker-2-ip  = "${replace(var.worker-static-ip-2, "dc-prefix", var.dc-prefix)}"
 }

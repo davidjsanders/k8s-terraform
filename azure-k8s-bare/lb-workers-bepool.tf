@@ -15,10 +15,12 @@
 # -------------------------------------------------------------------
 # 25 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource name
+# -------------------------------------------------------------------
 
 locals {
-  l-lb-bepool-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
-  l-lb-bepool-name      = "${format("LB-WORKERS-BEPOOL-%s-%s%s", local.l-lb-temp-name, var.environ, local.l-random)}"
+  # l-lb-bepool-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
+  l-lb-bepool-name      = "${format("LB-WORKERS-BEPOOL-%s-%s%s", var.target, var.environ, local.l-random)}"
 }
 
 module "lb-workers-bepool" {

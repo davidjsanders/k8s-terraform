@@ -16,14 +16,19 @@
 # 25 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
 
+locals {
+  # l-lb-bepool-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
+  l-lb-rule-name      = "${format("LB-RULE-%s-%s%s", var.target, var.environ, local.l-random)}"
+}
+
 module "lb-workers-80-rule" {
   source                  = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-rule?ref=0.8.0"
-  name                    = "lbr-80-80-workers-fe"
+  name                    = "${local.l-lb-rule-name}"
   resource-group-name     = "${module.resource-group.name}"
   load-balancer-id        = "${module.lb-workers.id}"
   probe-id                = "${module.lb-workers-probe.id}"
   bepool-id               = "${module.lb-workers-bepool.id}"
-  frontend-config-name    = "fe-workers-fe"
+  frontend-config-name    = "${local.l-lb-fe-name}"
   protocol                = "Tcp"
   frontend-port           = "80"
   backend-port            = "80"

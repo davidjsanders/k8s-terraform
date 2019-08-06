@@ -15,9 +15,12 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-vnet-name        = "${upper(format("VNET-%s-%s-%s%s-%s", var.target, var.vnet-name, var.environ, local.l-dev, local.l-random))}"
+  l-vnet-name        = "${upper(format("VNET-%s-%s-%s%s", var.vnet-name, var.target, var.environ, local.l-random))}"
 }
 
 module "vnet-main" {

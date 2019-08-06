@@ -14,10 +14,13 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-pip-jumpbox-temp-name     = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
-  l-pip-jumpbox-name-1        = "${format("PIP-JUMPBOX-%s-%s-1%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev, var.environ, local.l-random)}"
+  # l-pip-jumpbox-temp-name     = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
+  l-pip-jumpbox-name-1        = "${format("PIP-JUMPBOX-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-pip-jumpbox-dns-1          = "${format("%s-%s-jump%s", var.elb-prefix, var.elb-name, local.l-random)}"
 }
 

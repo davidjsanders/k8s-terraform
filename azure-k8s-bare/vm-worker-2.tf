@@ -15,10 +15,13 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-worker-2-name-1        = "${format("VM-%s-%s-WORKER-2%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
-  l-worker-2-osdisk-name-1 = "${format("OSD-%s-%s-WORKER-2%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
+  l-worker-2-name-1        = "${format("VM-WORKER-2-%s-%s%s", var.target, var.environ, local.l-random)}"
+  l-worker-2-osdisk-name-1 = "${format("OSD-WORKER-2-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-worker-2-pk-file       = "${format("%s.pub", var.private-key)}"
 }
 

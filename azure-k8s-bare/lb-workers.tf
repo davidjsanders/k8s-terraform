@@ -14,16 +14,20 @@
 # -------------------------------------------------------------------
 # 25 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource name
+#              |                             | and add variable for
+#              |                             | fe name
+# -------------------------------------------------------------------
 
 locals {
-  l-lb-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
-  l-lb-name      = "${format("LB-WORKERS-%s-%s%s", local.l-lb-temp-name, var.environ, local.l-random)}"
+  l-lb-name      = "${format("LB-WORKERS-%s-%s%s", var.target, var.environ, local.l-random)}"
+  l-lb-fe-name      = "${format("LB-WORKERS-FE-%s-%s%s", var.target, var.environ, local.l-random)}"
 }
 
 module "lb-workers" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-with-pip?ref=0.6.0"
   name                = "${local.l-lb-name}"
-  frontend-name       = "fe-workers-fe"
+  frontend-name       = "${local.l-lb-fe-name}"
   sku                 = "Basic"
   public-ip-id        = "${module.pip-elb.id}"
   resource-group-name = "${module.resource-group.name}"
