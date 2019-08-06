@@ -1,6 +1,7 @@
 # To Do
 * ~~Remove sample nginx ingress - no longer needed~~
 * Add auth for traefik UI
+* ~~Add Jenkins/Sonarqube to initial install~~
 * Update README.md - provide instructions
 * Fix OS Disk sizes
 * Set .bashrc for login instructions
