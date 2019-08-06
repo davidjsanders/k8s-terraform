@@ -16,6 +16,9 @@ executable_scripts="$executable_scripts /home/$admin/scripts/helm/load-helm.sh"
 executable_scripts="$executable_scripts /home/$admin/scripts/helm/delete-helm.sh"
 executable_scripts="$executable_scripts /home/$admin/scripts/nfs-provisioner/load-nfs-provisioner.sh"
 executable_scripts="$executable_scripts /home/$admin/scripts/nfs-provisioner/delete-nfs-provisioner.sh"
+executable_scripts="$executable_scripts /home/$admin/scripts/k8s-jenkins/load-jenkins.sh"
+executable_scripts="$executable_scripts /home/$admin/scripts/k8s-jenkins/delete-jenkins.sh"
+executable_scripts="$executable_scripts /home/$admin/scripts/k8s-jenkins/get-jenkins-cloud-setup.sh"
 
 # Execute an ssh command on every node and set the executable
 # flag on the scripts and setup the hosts file

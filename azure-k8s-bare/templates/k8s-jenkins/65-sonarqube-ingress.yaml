@@ -1,0 +1,15 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: sonarqube-ingress
+  namespace: jenkins
+spec:
+  rules:
+  - host: sonarqube.${lbip}.xip.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sonarqube-service
+          servicePort: sonarqube-ui
