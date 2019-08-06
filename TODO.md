@@ -15,7 +15,7 @@
   * Remove registry directory
   * Change location of default docker daemon.json
 * ~~Simplify ssh-commands by using modules~~
-* Simplify master and worker scripts by using modules
+* ~~Simplify master and worker scripts by using modules~~
 * ~~Add Helm support~~
 * ~~Add nfs-provisioner (manual install)~~
   * ~~Set default storage class~~
