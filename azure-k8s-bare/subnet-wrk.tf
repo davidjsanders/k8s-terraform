@@ -17,6 +17,10 @@
 # 05 Aug 2019  | David Sanders               | Simplify resource 
 #              |                             | names.
 # -------------------------------------------------------------------
+# 06 Aug 2019  | David Sanders               | Remove deprecated route 
+#              |                             | table ID and NSG id
+#              |                             | from subnet
+# -------------------------------------------------------------------
 
 locals {
   # l-wrk-snet-temp-name      = "${format("%s-%s%s", var.target, var.subnet-wrk-name, local.l-dev)}"
@@ -29,6 +33,5 @@ module "wrk-subnet" {
   name                = "${local.l-wrk-snet-name}"
   vnet-target-rg-name = "${module.resource-group.name}"
   vnet-target-name    = "${module.vnet-main.name}"
-  # nsg-id              = "${module.nsg-k8s.id}"
   address-prefix      = "${local.l-wrk-snet-address-prefix}"
 }
