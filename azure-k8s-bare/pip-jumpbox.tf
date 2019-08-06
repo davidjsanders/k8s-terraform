@@ -17,6 +17,11 @@
 # 05 Aug 2019  | David Sanders               | Simplify resource 
 #              |                             | names.
 # -------------------------------------------------------------------
+# 06 Aug 2019  | David Sanders               | Change deprecated 
+#              |                             | public ip address
+#              |                             | allocation to
+#              |                             | allocation method.
+# -------------------------------------------------------------------
 
 locals {
   # l-pip-jumpbox-temp-name     = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
@@ -25,12 +30,12 @@ locals {
 }
 
 module "pip-jumpbox" {
-  source                       = "git::https://github.com/dsandersAzure/terraform-library.git//modules/publicip?ref=0.8.0"
-  name                         = "${local.l-pip-jumpbox-name-1}"
-  resource-group-name          = "${module.resource-group.name}"
-  public-ip-address-allocation = "static"
-  domain-name-label            = "${local.l-pip-jumpbox-dns-1}"
-  sku                          = "Basic"
-  location                     = "${var.location}"
-  tags                         = "${var.tags}"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/publicip?ref=0.11.0"
+  name                = "${local.l-pip-jumpbox-name-1}"
+  resource-group-name = "${module.resource-group.name}"
+  allocation-method   = "Static"
+  domain-name-label   = "${local.l-pip-jumpbox-dns-1}"
+  sku                 = "Basic"
+  location            = "${var.location}"
+  tags                = "${var.tags}"
 }

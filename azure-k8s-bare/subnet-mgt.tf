@@ -36,7 +36,7 @@ locals {
 }
 
 module "mgt-subnet" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.9.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.10.0"
   name                = "${local.l-mgt-snet-name}"
   vnet-target-rg-name = "${module.resource-group.name}"
   vnet-target-name    = "${module.vnet-main.name}"
