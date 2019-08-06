@@ -21,6 +21,9 @@
 #              |                             | deprecated NSG
 #              |                             | association.
 # -------------------------------------------------------------------
+# 06 Aug 2019  | David Sanders               | Remove deprecated route 
+#              |                             | table ID from subnet
+# -------------------------------------------------------------------
 
 # Define local variables for use in the module. **NOTE** Although the local
 # variables are defined here they are GLOBAL in scope, hence the reason they
@@ -33,10 +36,9 @@ locals {
 }
 
 module "mgt-subnet" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.9.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/subnet?ref=0.10.0"
   name                = "${local.l-mgt-snet-name}"
   vnet-target-rg-name = "${module.resource-group.name}"
   vnet-target-name    = "${module.vnet-main.name}"
-  #nsg-id              = "${module.nsg-k8s.id}"
   address-prefix      = "${local.l-mgt-snet-address-prefix}"
 }

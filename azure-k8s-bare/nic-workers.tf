@@ -17,6 +17,9 @@
 # 05 Aug 2019  | David Sanders               | Simplify resource 
 #              |                             | names.
 # -------------------------------------------------------------------
+# 06 Aug 2019  | David Sanders               | Remove deprecated back 
+#              |                             | end pool ID
+# -------------------------------------------------------------------
 
 locals {
   # l-nic-temp-name    = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
@@ -27,24 +30,23 @@ locals {
 }
 
 module "nic-worker-1" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-with-bepool-ip?ref=0.8.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-with-bepool-ip?ref=0.10.0"
   name                = "${local.l-nic-worker-1}"
   resource-group-name = "${module.resource-group.name}"
   subnet-id           = "${module.wrk-subnet.id}"
   ip-address          = "${local.l-nic-worker-1-ip}"
-  bepool-ids          = "${module.lb-workers-bepool.id}"
   allocation          = "Static"
   location            = "${var.location}"
   tags                = "${var.tags}"
 }
 
 module "nic-worker-2" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-with-bepool-ip?ref=0.8.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/private-nic-with-bepool-ip?ref=0.10.0"
   name                = "${local.l-nic-worker-2}"
   resource-group-name = "${module.resource-group.name}"
   subnet-id           = "${module.wrk-subnet.id}"
   ip-address          = "${local.l-nic-worker-2-ip}"
-  bepool-ids          = "${module.lb-workers-bepool.id}"
+  # bepool-ids          = "${module.lb-workers-bepool.id}"
   allocation          = "Static"
   location            = "${var.location}"
   tags                = "${var.tags}"
