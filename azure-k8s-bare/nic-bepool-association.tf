@@ -17,7 +17,7 @@
 
 locals {
   l-config-name-worker-1 = "${format("%s-ip-config", local.l-nic-worker-1)}"
-  l-config-name-worker-2 = "${format("%s-ip-config", local.l-nic-worker-1)}"
+  l-config-name-worker-2 = "${format("%s-ip-config", local.l-nic-worker-2)}"
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "worker-1-nic-bepool" {
