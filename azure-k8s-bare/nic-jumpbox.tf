@@ -14,15 +14,17 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource names
+# -------------------------------------------------------------------
 
 locals {
-  l-pnic-jumpbox-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
-  l-pnic-jumpbox-1         = "${format("NIC-JUMPBOX-1-%s-%s%s", local.l-pnic-jumpbox-temp-name, var.environ, local.l-random)}"
+  # l-pnic-jumpbox-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
+  l-pnic-jumpbox-1         = "${format("NIC-JUMPBOX-1-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-pnic-jumpbox-1-ip      = "${replace(var.jumpbox-static-ip, "dc-prefix", var.dc-prefix)}"
 }
 
 module "nic-jumpbox-1" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/public-nic?ref=0.6.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/public-nic?ref=0.8.0"
   name                = "${local.l-pnic-jumpbox-1}"
   resource-group-name = "${module.resource-group.name}"
   allocation          = "Static"

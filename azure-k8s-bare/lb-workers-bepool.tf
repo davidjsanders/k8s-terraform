@@ -15,14 +15,16 @@
 # -------------------------------------------------------------------
 # 25 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource name
+# -------------------------------------------------------------------
 
 locals {
-  l-lb-bepool-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
-  l-lb-bepool-name      = "${format("LB-WORKERS-BEPOOL-%s-%s%s", local.l-lb-temp-name, var.environ, local.l-random)}"
+  # l-lb-bepool-temp-name = "${format("%s-%s%s", var.target, var.nic-name, local.l-dev)}"
+  l-lb-bepool-name      = "${format("LB-WORKERS-BEPOOL-%s-%s%s", var.target, var.environ, local.l-random)}"
 }
 
 module "lb-workers-bepool" {
-  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-bepool?ref=0.6.0"
+  source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/lb-bepool?ref=0.8.0"
   name                = "${local.l-lb-bepool-name}"
   resource-group-name = "${module.resource-group.name}"
   load-balancer-id    = "${module.lb-workers.id}"

@@ -28,7 +28,7 @@
   * e.g. DS with Premium LRS, D with Standard LRS
 * Fix master provisioning - only works for master n = 1 at the moment
 * Fix deprecation warnings from old code
-  * module.mgt-subnet.azurerm_subnet.subnets: "network_security_group_id
+  * ~~module.mgt-subnet.azurerm_subnet.subnets: "network_security_group_id~~
   * module.mgt-subnet.azurerm_subnet.subnets: "route_table_id"
   * module.nic-worker-1.azurerm_network_interface.nic-with-bepool-ip: "ip_configuration.0.load_balancer_backend_address_pools_ids"
   * module.nic-worker-2.azurerm_network_interface.nic-with-bepool-ip: "ip_configuration.0.load_balancer_backend_address_pools_ids"

@@ -15,16 +15,19 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-manager-1-temp-name   = "${format("%s-%s-MANAGER%s", var.target, var.vm-name, local.l-dev)}"
-  l-manager-1-name-1      = "${format("VM-%s-%s-MANAGER-1%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
-  l-manager-1-osdisk-1    = "${format("OSD-%s-%s-MANAGER-1%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
+  # l-manager-1-temp-name   = "${format("%s-%s-MANAGER%s", var.target, var.vm-name, local.l-dev)}"
+  l-manager-1-name-1      = "${format("VM-MANAGER-%s-%s%s", var.target, var.environ, local.l-random)}"
+  l-manager-1-osdisk-1    = "${format("OSD-MANAGER-1-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-manager-1-pk-file     = "${format("%s.pub", var.private-key)}"
 }
 
 module "vm-manager-1" {
-  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-datadisk?ref=0.6.0"
+  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-datadisk?ref=0.8.0"
   name                             = "${local.l-manager-1-name-1}"
   location                         = "${var.location}"
   resource-group-name              = "${module.resource-group.name}"

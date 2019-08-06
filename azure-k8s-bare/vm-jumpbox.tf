@@ -15,16 +15,19 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-jumpbox-temp-name   = "${format("%s-%s-JUMPBOX%s", var.target, var.vm-name, local.l-dev)}"
-  l-jumpbox-name-1      = "${format("VM-%s-%s-JUMPBOX%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
-  l-jumpbox-osdisk-1    = "${format("OSD-%s-%s-JUMPBOX%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
+  # l-jumpbox-temp-name   = "${format("%s-%s-JUMPBOX%s", var.target, var.vm-name, local.l-dev)}"
+  l-jumpbox-name-1      = "${format("VM-JUMPBOX-%s-%s%s", var.target, var.environ, local.l-random)}"
+  l-jumpbox-osdisk-1    = "${format("OSD-JUMPBOX-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-jumpbox-pk-file     = "${format("%s.pub", var.private-key)}"
 }
 
 module "vm-jumpbox" {
-  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-no-datadisk?ref=0.6.0"
+  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-no-datadisk?ref=0.8.0"
   name                             = "${local.l-jumpbox-name-1}"
   location                         = "${var.location}"
   resource-group-name              = "${module.resource-group.name}"

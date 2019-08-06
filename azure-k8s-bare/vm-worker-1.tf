@@ -15,15 +15,18 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-worker-1-name-1        = "${format("VM-%s-%s-WORKER-1%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
-  l-worker-1-osdisk-name-1 = "${format("OSD-%s-%s-WORKER-1%s-%s%s", var.target, var.vm-name, local.l-dev, var.environ, local.l-random)}"
+  l-worker-1-name-1        = "${format("VM-WORKER-1-%s-%s%s", var.target, var.environ, local.l-random)}"
+  l-worker-1-osdisk-name-1 = "${format("OSD-WORKER-1-%s-%s%s", var.target, var.environ, local.l-random)}"
   l-worker-1-pk-file       = "${format("%s.pub", var.private-key)}"
 }
 
 module "vm-worker-1" {
-  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-no-datadisk?ref=0.6.0"
+  source                           = "git::https://github.com/dsandersAzure/terraform-library.git//modules/standard-linux-vm-no-datadisk?ref=0.8.0"
   name                             = "${local.l-worker-1-name-1}"
   location                         = "${var.location}"
   resource-group-name              = "${module.resource-group.name}"

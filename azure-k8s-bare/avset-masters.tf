@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------
 #
 # Module:         k8s-terraform
-# Submodule:      avset-k8s.tf
+# Submodule:      avset-masters.tf
 # Environments:   all
 # Purpose:        Module to provision Azure Availability Set for
 #                 k8s master(s) and jumpbox.
@@ -15,14 +15,19 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify reource name
+#              |                             | Rename file from
+#              |                             | avset-k8s.tf to
+#              |                             | avset-masters.tf
+# -------------------------------------------------------------------
 
 locals {
-  l-avs-mstr-temp-name = "${format("%s-%s%s", var.target, "MASTERS", local.l-dev)}"
-  l-avs-mstr-name      = "${format("AVS-%s-%s%s", local.l-avs-mstr-temp-name, var.environ, local.l-random)}"
+  # l-avs-mstr-temp-name = "${format("%s-%s%s", var.target, "MASTERS", local.l-dev)}"
+  l-avs-mstr-name      = "${format("AVS-%s-MASTERS-%s%s", var.target, var.environ, local.l-random)}"
 }
 
 module "avs-k8s" {
-  source                       = "git::https://github.com/dsandersAzure/terraform-library.git//modules/availability-set?ref=0.6.0"
+  source                       = "git::https://github.com/dsandersAzure/terraform-library.git//modules/availability-set?ref=0.8.0"
   name                         = "${local.l-avs-mstr-name}"
   resource-group-name          = "${module.resource-group.name}"
   platform-fault-domain-count  = "3"

@@ -15,13 +15,16 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 05 Aug 2019  | David Sanders               | Simplify resource 
+#              |                             | names.
+# -------------------------------------------------------------------
 
 locals {
-  l-vnet-name        = "${upper(format("VNET-%s-%s-%s%s-%s", var.target, var.vnet-name, var.environ, local.l-dev, local.l-random))}"
+  l-vnet-name        = "${upper(format("VNET-%s-%s-%s%s", var.vnet-name, var.target, var.environ, local.l-random))}"
 }
 
 module "vnet-main" {
-  source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/virtual-network?ref=0.6.0"
+  source                    = "git::https://github.com/dsandersAzure/terraform-library.git//modules/virtual-network?ref=0.8.0"
   name                      = "${local.l-vnet-name}"
   resource-group-name       = "${module.resource-group.name}"
   cidr-block                = ["${var.vnet-cidr}"]
