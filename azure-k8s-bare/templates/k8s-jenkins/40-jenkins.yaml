@@ -21,6 +21,18 @@ spec:
         fsGroup: 1000
         runAsUser: 1000
       containers:
+      - name: docker-in-docker
+        image: k8s-master:32080/docker:19.03.1-dind
+        ports:
+        - containerPort: 2375
+        command: ["dockerd"]
+        args: ["-h", "tcp://0.0.0.0:2375"]
+        env:
+        - name: DOCKER_HOST
+          value: tcp://localhost:2375
+        volumeMounts:
+        - mountPath: /var/lib/docker
+          name: docker
       - name: master
         image: k8s-master:32080/jenkins/jenkins:2.187-alpine
         ports:
@@ -40,6 +52,8 @@ spec:
         #     secretKeyRef:
         #       name: jenkins
         #       key: options
+        - name: DOCKER_HOST
+          value: tcp://localhost:2375
         - name: JAVA_OPTS
           value: '-Xmx4000m'
         volumeMounts:
@@ -56,3 +70,6 @@ spec:
       - name: jenkins-home
         persistentVolumeClaim:
           claimName: jenkins-pvc
+      - name: docker
+        persistentVolumeClaim:
+          claimName: docker-pvc
