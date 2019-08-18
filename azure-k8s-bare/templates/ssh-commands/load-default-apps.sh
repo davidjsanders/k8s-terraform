@@ -8,8 +8,8 @@ scripts="$scripts;/home/$admin/registry/load-registry.sh"
 scripts="$scripts;/home/$admin/scripts/nexus-oss/load-nexus-oss.sh"
 scripts="$scripts;/home/$admin/scripts/helm/load-helm.sh"
 scripts="$scripts;/home/$admin/scripts/nfs-provisioner/load-nfs-provisioner.sh"
-scripts="$scripts;/home/$admin/scripts/k8s-jenkins/load-jenkins.sh"
-scripts="$scripts;/home/$admin/scripts/k8s-jenkins/get-jenkins-cloud-setup.sh"
+#scripts="$scripts;/home/$admin/scripts/k8s-jenkins/load-jenkins.sh"
+#scripts="$scripts;/home/$admin/scripts/k8s-jenkins/get-jenkins-cloud-setup.sh"
 
 # Loop through the list of scripts and source each one in 
 # order. Note the IFS is ;
