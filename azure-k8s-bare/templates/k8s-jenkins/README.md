@@ -1,2 +1,2 @@
 # k8s-jenkins
-Jenkins CI/CD
+**Deprecated** Use: [Jenkins Repo](https://github.com/dsandersAzure/k8s-jenkins) instead
