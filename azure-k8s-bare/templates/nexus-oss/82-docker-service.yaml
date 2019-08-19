@@ -14,6 +14,9 @@
 # -------------------------------------------------------------------
 # 16 Jul 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 19 Aug 2019  | David Sanders               | Add other registries
+#              |                             | as node ports.
+# -------------------------------------------------------------------
 ---
 apiVersion: v1
 kind: Service
@@ -28,6 +31,22 @@ spec:
     port: 18080
     targetPort: 18080
     nodePort: 32080
+  - name: nexus-privatehub-port
+    port: 18081
+    targetPort: 18081
+    nodePort: 32081
+  - name: nexus-registryhub-port
+    port: 18082
+    targetPort: 18082
+    nodePort: 32082
+  - name: nexus-quay-port
+    port: 18083
+    targetPort: 18083
+    nodePort: 32083
+  - name: nexus-ms-mcr-port
+    port: 18084
+    targetPort: 18084
+    nodePort: 32084
   selector:
     app: nexus-oss
 status:
