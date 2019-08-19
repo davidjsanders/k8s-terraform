@@ -46,11 +46,11 @@ banner "setup-nfs-server.sh" "Appending localhost and Kubernetes workers $${node
 IFS=$" "
 for node in $${worker_nodes}
 do
-    echo "$EXPORT_DIRECTORY        $${node}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
-    echo "$EXPORT_DIRECTORY_2         $${node}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+    echo "$EXPORT_DIRECTORY        $${node}(rw,async,no_root_squash,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+    echo "$EXPORT_DIRECTORY_2         $${node}(rw,async,no_root_squash,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
 done
-echo "$EXPORT_DIRECTORY        ${masters}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
-echo "$EXPORT_DIRECTORY_2        ${masters}(rw,async,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+echo "$EXPORT_DIRECTORY        ${masters}(rw,async,no_root_squash,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
+echo "$EXPORT_DIRECTORY_2        ${masters}(rw,async,no_root_squash,insecure,fsid=0,crossmnt,no_subtree_check)" | sudo tee -a /etc/exports
 
 banner "setup-nfs.sh" "Restart NFS service"
 sudo service nfs-kernel-server restart
