@@ -26,7 +26,6 @@ source ~/scripts/banner.sh
 
 banner "load-nexus-oss.sh" "Apply NFS Provisioner"
 
-lbip=$(cat ~/lbip.txt | grep "export LBIP" | cut -d'=' -f2)
 yaml_files=$(ls -1 ~/scripts/nexus-oss/[0-9]*.yaml)
 for file in $yaml_files
 do

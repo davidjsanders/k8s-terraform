@@ -18,6 +18,8 @@
 # 26 Aug 2019  | David Sanders               | Process load-traefik.sh
 #              |                             | and load-nexus.sh
 #              |                             | Remove deprecated code.
+#              |                             | Add processing to a text
+#              |                             | file called domain_name
 # -------------------------------------------------------------------
 
 # Get the managed disk being used to provide persistent storage
@@ -126,6 +128,16 @@ data "template_file" "lbip-txt" {
 
   vars {
     lbip="${module.pip-elb.ip_address}"
+  }
+}
+
+# Compute and interpolate the variables required for domain_name.txt
+# for the Traefik Ingress Controller
+data "template_file" "domain_name-txt" {
+  template = "${file("templates/domain_name.txt")}"
+
+  vars {
+    domain_name="${var.ddns_domain_name}"
   }
 }
 

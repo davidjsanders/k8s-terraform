@@ -113,6 +113,11 @@ resource "null_resource" "k8s" {
     }
 
     provisioner "file" {
+        content = "${data.template_file.domain_name-txt.rendered}"
+        destination = "/home/${var.vm-adminuser}/domain_name.txt"
+    }
+
+    provisioner "file" {
         content = "${data.template_file.helm-rbac-role-yaml.rendered}"
         destination = "/home/${var.vm-adminuser}/scripts/helm/helm-rbac-role.yaml"
     }

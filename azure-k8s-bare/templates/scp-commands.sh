@@ -16,6 +16,8 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 26 Aug 2019  | David Sanders               | Add domain_name.txt
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)
@@ -53,6 +55,11 @@ do
     do_scp \
         "Copying lbip.txt" \
         ~/lbip.txt \
+        $${target}:~/
+
+    do_scp \
+        "Copying domain_name.txt" \
+        ~/domain_name.txt \
         $${target}:~/
 
     do_scp_recursive \
