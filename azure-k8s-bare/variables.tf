@@ -33,6 +33,18 @@ variable "traefik_dev_password" {}
 # Auth variables
 #
 variable "auth_file" {}
+# To generate the auth file run the command below and 
+# enter a password and confirm when prompted:
+#
+# htpasswd -c ./auth <theusername>
+# 
+# Then cat the auth file and base64 encode it:
+#
+# cat ./auth | base64
+#
+# Then update the .tfvars file with the output of the cat command:
+#
+# auth_file="..........."
 
 #
 # Kubernetes Variables
