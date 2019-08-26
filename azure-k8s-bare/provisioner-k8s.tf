@@ -15,6 +15,10 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 26 Aug 2019  | David Sanders               | Change to process
+#              |                             | load-traefik.sh from
+#              |                             | data.
+# -------------------------------------------------------------------
 
 resource "null_resource" "k8s" {
     triggers {
@@ -94,8 +98,13 @@ resource "null_resource" "k8s" {
     }
 
     provisioner "file" {
-        content = "${data.template_file.ingress-yaml.rendered}"
-        destination = "/home/${var.vm-adminuser}/scripts/traefik/50-ingress.yaml"
+        content = "${data.template_file.load-traefik-sh.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/traefik/load-traefik.sh"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.load-nexus-oss-sh.rendered}"
+        destination = "/home/${var.vm-adminuser}/scripts/nexus-oss/load-nexus-oss.sh"
     }
 
     provisioner "file" {
@@ -129,5 +138,21 @@ resource "null_resource" "k8s" {
             "/home/${var.vm-adminuser}/scripts/ssh-commands.sh | tee /home/${var.vm-adminuser}/logs/ssh-commands.log",
             "echo 'Done.'"
         ]
+    }
+
+    provisioner "local-exec" {
+        command = "curl -X POST 'https://${var.k8s_dev_username}:${var.k8s_dev_password}@domains.google.com/nic/update?hostname=k8s${var.ddns_domain_name}&myip=${module.pip-jumpbox.ip_address}&offline=no'"
+    }
+    provisioner "local-exec" {
+        command = "curl -X POST 'https://${var.jenkins_dev_username}:${var.jenkins_dev_password}@domains.google.com/nic/update?hostname=jenkins${var.ddns_domain_name}&myip=${module.pip-elb.ip_address}&offline=no'"
+    }
+    provisioner "local-exec" {
+        command = "curl -X POST 'https://${var.sonarqube_dev_username}:${var.sonarqube_dev_password}@domains.google.com/nic/update?hostname=sonarqube${var.ddns_domain_name}&myip=${module.pip-elb.ip_address}&offline=no'"
+    }
+    provisioner "local-exec" {
+        command = "curl -X POST 'https://${var.traefik_dev_username}:${var.traefik_dev_password}@domains.google.com/nic/update?hostname=traefik${var.ddns_domain_name}&myip=${module.pip-elb.ip_address}&offline=no'"
+    }
+    provisioner "local-exec" {
+        command = "curl -X POST 'https://${var.nexus_dev_username}:${var.nexus_dev_password}@domains.google.com/nic/update?hostname=nexus${var.ddns_domain_name}&myip=${module.pip-elb.ip_address}&offline=no'"
     }
 }

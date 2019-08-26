@@ -19,11 +19,15 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/auth-type: "basic"
+    traefik.ingress.kubernetes.io/auth-secret: "traefik-auth"
   name: traefik-web-ui
   namespace: kube-system
 spec:
   rules:
-  - host: traefik-ui.${lbip}.xip.io
+  - host: traefik${domain_name}
     http:
       paths:
       - path: /

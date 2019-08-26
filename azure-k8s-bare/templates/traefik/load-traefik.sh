@@ -16,6 +16,10 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 26 Aug 2019  | David Sanders               | Re-factor traefik to
+#              |                             | include basic auth
+#              |                             | and TLS.
+# -------------------------------------------------------------------
 
 # Include the banner function for logging purposes (see 
 # templates/banner.sh)
@@ -26,7 +30,10 @@ yaml_files=$(ls -1 ~/scripts/traefik/[0-9]*.yaml)
 for file in $yaml_files
 do
     echo "Applying yaml for: $file"
-    kubectl apply -f $file
+    sed '
+      s/\${domain_name}/'"${domain_name}"'/g;
+      s/\${auth_file}/'"${auth_file}"'/g;
+    ' $file | kubectl apply -f -
 done
 echo "Done."
 echo

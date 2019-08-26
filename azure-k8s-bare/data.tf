@@ -15,21 +15,10 @@
 # -------------------------------------------------------------------
 # 23 Jun 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
-
-#
-# DEPRECATED BLOCK STARTS
-#
-# data "azurerm_resource_group" "vnet-resource-group" {
-#   name = "${var.vnet-resource-group}"
-# }
-
-# data "azurerm_virtual_network" "vnet" {
-#   name                 = "${var.vnet-name}"
-#   resource_group_name  = "${var.vnet-resource-group}"
-# }
-#
-# DEPRECATED BLOCK ENDS
-#
+# 26 Aug 2019  | David Sanders               | Process load-traefik.sh
+#              |                             | and load-nexus.sh
+#              |                             | Remove deprecated code.
+# -------------------------------------------------------------------
 
 # Get the managed disk being used to provide persistent storage
 # for the k8s cluster.
@@ -109,13 +98,24 @@ data "template_file" "setup-nfs-server-sh" {
   }
 }
 
-# Compute and interpolate the variables required for 50-ingress.yaml
+# Compute and interpolate the variables required for load-traefik.sh
 # in the Traefik app
-data "template_file" "ingress-yaml" {
-  template = "${file("templates/traefik/50-ingress.yaml")}"
+data "template_file" "load-traefik-sh" {
+  template = "${file("templates/traefik/load-traefik.sh")}"
 
   vars {
-    lbip="${module.pip-elb.ip_address}"
+    domain_name="${var.ddns_domain_name}"
+    auth_file="${var.auth_file}"
+  }
+}
+
+# Compute and interpolate the variables required for load-nexus.sh
+# in the Nexus app
+data "template_file" "load-nexus-oss-sh" {
+  template = "${file("templates/nexus-oss/load-nexus-oss.sh")}"
+
+  vars {
+    domain_name="${var.ddns_domain_name}"
   }
 }
 
