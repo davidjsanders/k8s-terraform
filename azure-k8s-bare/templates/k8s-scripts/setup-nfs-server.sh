@@ -31,15 +31,16 @@ banner "setup-nfs-server.sh" "Make directories $${EXPORT_DIRECTORY}"
 sudo mkdir -p $${EXPORT_DIRECTORY}
 sudo mkdir -p $${EXPORT_DIRECTORY_2}
 
-banner "setup-nfs-server.sh" "Mount binding $${DATA_DIRECTORY} to $${EXPORT_DIRECTORY}"
+banner "setup-nfs-server.sh" "chmod $${EXPORT_DIRECTORY}"
 parentdir="$$(dirname "$$EXPORT_DIRECTORY")"
-sudo chmod -R 777 $${EXPORT_DIRECTORY}
-sudo chown -R nobody:nogroup $${EXPORT_DIRECTORY}
+#sudo chmod -R 777 $${EXPORT_DIRECTORY}
+#sudo chown -R nobody:nogroup $${EXPORT_DIRECTORY}
 #sudo chmod -R 777 $$parentdir
 
+banner "setup-nfs-server.sh" "chmod $${EXPORT_DIRECTORY_2}"
 parentdir="$$(dirname "$$EXPORT_DIRECTORY_2")"
-sudo chmod -R 777 $${EXPORT_DIRECTORY_2}
-sudo chown -R nobody:nogroup $${EXPORT_DIRECTORY_2}
+#sudo chmod -R 777 $${EXPORT_DIRECTORY_2}
+#sudo chown -R nobody:nogroup $${EXPORT_DIRECTORY_2}
 #sudo chmod -R 777 $$parentdir
 
 banner "setup-nfs-server.sh" "Appending localhost and Kubernetes workers $${node} to exports configuration file"
