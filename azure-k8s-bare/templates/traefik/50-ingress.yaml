@@ -34,3 +34,5 @@ spec:
         backend:
           serviceName: traefik-web-ui
           servicePort: web
+  tls:
+   - secretName: traefik-ui-tls-cert

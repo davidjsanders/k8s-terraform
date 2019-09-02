@@ -12,6 +12,7 @@
 **/.terraform
 **/*.retry
 **/*.log
+**/auth
 
 # .tfstate files
 *.tfstate
