@@ -22,7 +22,7 @@ metadata:
   name: nexus-oss
 spec:
   rules:
-  - host: nexus${domain_name}
+  - host: nexus$domain_name
     http:
       paths:
       - path: /
