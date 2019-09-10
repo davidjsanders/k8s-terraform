@@ -82,7 +82,7 @@ subnet-mgt-cidr = "dc-prefix.1.0/27"
 subnet-wrk-cidr = "dc-prefix.2.0/25"
 
 # The Static IP for the Load Balancer
-elb-static-ip = "dc-prefix.1.50"
+lb-static-pip = "dc-prefix.1.50"
 
 # The Static IP for worker 1
 worker-static-ip-1 = "dc-prefix.2.10"

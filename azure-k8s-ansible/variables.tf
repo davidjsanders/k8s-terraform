@@ -15,6 +15,8 @@
 # -------------------------------------------------------------------
 # 08 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 10 Sep 2019  | David Sanders               | Add jump pip variables.
+# -------------------------------------------------------------------
 
 # Dynamic DNS Variables
 variable "ddns_domain_name" {}
@@ -97,9 +99,11 @@ variable "subnet-lb-cidr" {}
 variable "nsg-name" {}
 variable "dc-prefix" {}
 variable "public-dns-name" {}
-variable "elb-static-ip" {}
-variable "elb-prefix" {}
-variable "elb-name" {}
+variable "lb-static-pip" {}
+variable "lb-prefix" {}
+variable "lb-name" {}
+variable "jump-name" {}
+variable "jump-prefix" {}
 
 variable "worker-static-ip-1" {}
 variable "worker-static-ip-2" {}

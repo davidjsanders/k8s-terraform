@@ -26,13 +26,13 @@
 
 locals {
   # l-pip-elb-temp-name = "${format("%s-%s%s", var.target, module.mgt-subnet.name, local.l-dev)}"
-  l-pip-elb-name      = "${format("PIP-LB-%s-%s%s", var.target, var.environ, local.l-random)}"
-  l-pip-elb-dns       = "${format("%s-%s%s", var.elb-prefix, var.elb-name, local.l-random)}"
+  l-pip-lb-name      = "${format("PIP-LB-%s-%s%s", var.target, var.environ, local.l-random)}"
+  l-pip-elb-dns       = "${format("%s-%s%s", var.lb-prefix, var.lb-name, local.l-random)}"
 }
 
 module "pip-elb" {
   source              = "git::https://github.com/dsandersAzure/terraform-library.git//modules/publicip?ref=0.11.0"
-  name                = "${local.l-pip-elb-name}"
+  name                = "${local.l-pip-lb-name}"
   resource-group-name = "${module.resource-group.name}"
   allocation-method   = "Static"
   domain-name-label   = "${local.l-pip-elb-dns}"
