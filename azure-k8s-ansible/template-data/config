@@ -1,0 +1,23 @@
+#!/bin/bash
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform/azure-k8s-ansible
+# Submodule:      templates/config
+# Environments:   all
+# Purpose:        A template ssh configuration file which is copied
+#                 to each node.
+#
+# Created on:     10 September 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 10 Sep 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+Host k8s-master k8s-worker-1 k8s-worker-2
+  StrictHostKeyChecking no
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/azure_pk
+  ForwardAgent no
