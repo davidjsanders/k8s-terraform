@@ -29,5 +29,6 @@ resource "azurerm_network_interface" "k8s-nic-master" {
   }
 
   tags = "${var.tags}"
+  depends_on = ["azurerm_subnet.k8s-subnet-master"]
 }
 

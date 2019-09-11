@@ -19,4 +19,6 @@
 resource "azurerm_subnet_network_security_group_association" "k8s-nsg-snet-assoc-lb" {
   subnet_id                 = "${azurerm_subnet.k8s-subnet-lb.id}"
   network_security_group_id = "${azurerm_network_security_group.k8s-vnet-nsg.id}"
+
+  depends_on = ["azurerm_subnet.k8s-subnet-lb"]
 }
