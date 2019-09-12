@@ -1,0 +1,17 @@
+[jumpbox]
+k8s-jumpbox ansible_host=${jumpbox}
+
+[master]
+k8s-master ansible_host=${master}
+
+[masters]
+
+[workers]
+k8s-worker-1 ansible_host=${worker-1}
+k8s-worker-2 ansible_host=${worker-2}
+
+[all:vars]
+ansible_ssh_user=${admin}
+ansible_ssh_private_key_file=/home/${admin}/.ssh/azure_pk
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+ansible_python_interpreter=/usr/bin/python3

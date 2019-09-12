@@ -2,12 +2,7 @@
 echo
 echo "Set permissions on SSH keys"
 echo
-chmod 0600 ~/.ssh/hosts ~/.ssh/config
-
-echo
-echo "Configure hosts file"
-echo
-cat ~/hosts | sudo tee /etc/hosts
+chmod 0600 ~/.ssh/config ~/.ssh/azure_pk
 
 echo
 echo "Set timezone to America/Toronto"
@@ -44,3 +39,15 @@ echo "apt-get install ansible"
 echo
 sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -q --yes install ansible
 echo 'Done.'
+
+echo
+echo "Configure hosts file"
+echo
+cat ~/hosts | sudo tee /etc/hosts
+
+echo
+echo "Configure Ansible inventory"
+echo
+sudo cp ~/inventory /etc/ansible/hosts
+sudo chown root:root /etc/ansible/hosts
+

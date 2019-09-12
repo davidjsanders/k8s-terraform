@@ -31,8 +31,13 @@ resource "null_resource" "provisioner" {
     }
 
     provisioner "file" {
-        source = "${local.l_pk_file}"
+        source = "${var.private-key}"
         destination = "/home/${var.vm-adminuser}/.ssh/azure_pk"
+    }
+
+    provisioner "file" {
+        source = "${var.private-key}.pub"
+        destination = "/home/${var.vm-adminuser}/.ssh/azure_pk.pub"
     }
 
     provisioner "file" {
@@ -43,6 +48,11 @@ resource "null_resource" "provisioner" {
     provisioner "file" {
         content = "${data.template_file.template-hosts-file.rendered}"
         destination = "/home/${var.vm-adminuser}/hosts"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.template-ansible-inventory.rendered}"
+        destination = "/home/${var.vm-adminuser}/inventory"
     }
 
     provisioner "file" {
