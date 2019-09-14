@@ -6,10 +6,21 @@
 
 - hosts: master
   become: true
+  vars:
+    KUBEADM_API: kubeadm.k8s.io
+    KUBEADM_API_VERSION: v1beta1
+    KUBEADM_TOKEN: $(kubeadm token generate)
+    KUBEADM_API_ADVERTISE_IP: 10.70.1.6
+    KUBEADM_CERT_DIR: "/etc/kubernetes/pki"
+    KUBEADM_CLUSTER_NAME: kubernetes
+    KUBEADM_POD_SUBNET: "192.168.0.0/16"
+    KUBEADM_SERVICE_SUBNET: "10.96.0.0/12"
+    KUBEADM_K8S_VERSION: v1.14.3 
   roles:
-  - k8s_master
   - nfs_server
   - docker_engine
+  - docker_compose
+  - k8s_master
 
 - hosts:
   - jumpbox
@@ -17,3 +28,4 @@
   become: true
   roles:
   - nfs_client
+  - docker_engine
