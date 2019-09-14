@@ -5,17 +5,12 @@ echo
 chmod 0600 ~/.ssh/config ~/.ssh/azure_pk
 
 echo
-echo "Set timezone to America/Toronto"
-echo
-sudo DEBIAN_FRONTEND=noninteractive timedatectl set-timezone America/Toronto
-
-echo
 echo "apt-get update"
 echo
 sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -q update
 
 echo
-echo "apt-get update"
+echo "apt-get upgrade"
 echo
 sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -q --yes upgrade
 
