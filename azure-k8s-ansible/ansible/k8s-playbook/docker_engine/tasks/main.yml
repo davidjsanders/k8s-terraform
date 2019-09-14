@@ -47,9 +47,6 @@
     path: /tmp/docker-install/docker.service
     regexp: 'dockerd -H fd://'
     replace: 'dockerd -H unix://'
-# - name: Update Docker Service
-#   shell: |
-#     sed 's/dockerd -H fd:\/\//dockerd -H unix:\/\//g' /tmp/docker-install/docker.service
 - name: Copy Docker Service
   copy:
     src: "/tmp/docker-install/docker.service"
@@ -77,7 +74,7 @@
     state: started
     enabled: yes
     daemon_reload: yes
-# - name: Remove installation media
-#   file:
-#     path: /tmp/docker-install
-#     state: absent
+- name: Remove installation media
+  file:
+    path: /tmp/docker-install
+    state: absent
