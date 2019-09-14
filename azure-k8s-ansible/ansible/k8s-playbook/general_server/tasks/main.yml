@@ -1,0 +1,26 @@
+---
+- name: Copy hosts
+  copy:
+    src: /etc/hosts
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+- name: Update packages
+  apt:
+    upgrade: full
+    force_apt_get: yes
+    update_cache: yes
+    dpkg_options: 'force-confold,force-confdef'
+- name: Set TimeZone to Toronto
+  timezone:
+    name: America/Toronto
+- name: Disable swap
+  shell: |
+    swapoff -a
+- name: Disable SWAP in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^(.+?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+

@@ -1,0 +1,83 @@
+---
+- name: Create Docker install location
+  file:
+    path: /tmp/docker-install
+    state: directory
+    mode: '0755'
+- name: Download and Extract Docker 18.09.6
+  unarchive:
+    src: https://download.docker.com/linux/static/stable/x86_64/docker-18.09.6.tgz
+    dest: /tmp/docker-install/
+    remote_src: yes
+- name: Download Docker Socket
+  get_url:
+    url: https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.service
+    dest: /tmp/docker-install/docker.service
+- name: Download Docker Service
+  get_url:
+    url: https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.socket
+    dest: /tmp/docker-install/docker.socket
+- name: Copy Docker binaries
+  copy:
+    src: "{{ item }}"
+    dest: /usr/bin/
+    owner: root
+    group: root
+    mode: '0655'
+    remote_src: yes
+  with_items:
+    - "/tmp/docker-install/docker/containerd"
+    - "/tmp/docker-install/docker/containerd-shim"
+    - "/tmp/docker-install/docker/ctr"
+    - "/tmp/docker-install/docker/docker"
+    - "/tmp/docker-install/docker/docker-init"
+    - "/tmp/docker-install/docker/docker-proxy"
+    - "/tmp/docker-install/docker/dockerd"
+    - "/tmp/docker-install/docker/runc"
+- name: Copy Docker to /usr/local/bin
+  copy:
+    src: /tmp/docker-install/docker/docker
+    dest: /usr/local/bin/
+    owner: root
+    group: root
+    mode: '0655'
+    remote_src: yes
+- name: Update Docker service to use unix//
+  replace:
+    path: /tmp/docker-install/docker.service
+    regexp: 'dockerd -H fd://'
+    replace: 'dockerd -H unix://'
+# - name: Update Docker Service
+#   shell: |
+#     sed 's/dockerd -H fd:\/\//dockerd -H unix:\/\//g' /tmp/docker-install/docker.service
+- name: Copy Docker Service
+  copy:
+    src: "/tmp/docker-install/docker.service"
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: '0655'
+    remote_src: yes
+- name: Copy Docker Socket
+  copy:
+    src: "/tmp/docker-install/docker.socket"
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: '0655'
+    remote_src: yes
+- name: Create docker group, gid = 10000
+  group:
+    gid: "10000"
+    name: docker
+    state: present
+- name: Enable Docker services
+  systemd:
+    name: docker.service
+    state: started
+    enabled: yes
+    daemon_reload: yes
+# - name: Remove installation media
+#   file:
+#     path: /tmp/docker-install
+#     state: absent

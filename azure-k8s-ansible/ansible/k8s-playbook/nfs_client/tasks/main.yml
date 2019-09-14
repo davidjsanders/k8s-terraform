@@ -1,0 +1,20 @@
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    force_apt_get: yes
+    update_cache: no
+    dpkg_options: 'force-confold,force-confdef'
+  vars:
+    packages:
+    - nfs-common
+- name: Make mount point
+  file:
+    path: /datadrive
+    state: directory
+    mode: '0777'
+- name: Configure datadrive in fstab
+  mount: 
+    path: /datadrive
+    src: k8s-master:/datadrive/export
+    fstype: nfs
+    state: mounted

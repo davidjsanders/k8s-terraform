@@ -1,0 +1,9 @@
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    force_apt_get: yes
+    update_cache: no
+    dpkg_options: 'force-confold,force-confdef'
+  vars:
+    packages:
+    - jq

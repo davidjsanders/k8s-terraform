@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: true
+  roles:
+  - general_server
+
+- hosts: master
+  become: true
+  roles:
+  - k8s_master
+  - nfs_server
+  - docker_engine
+
+- hosts:
+  - jumpbox
+  - workers
+  become: true
+  roles:
+  - nfs_client
