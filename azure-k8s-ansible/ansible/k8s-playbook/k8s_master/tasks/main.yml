@@ -27,6 +27,31 @@
     - kubelet=1.14.3-00
     - kubectl=1.14.3-00
 
+- name: Check if k8s is running
+  stat:
+    path: /root/kubeadm.config
+  register: kubeadm_config
+
+- name: Check if kube config exists
+  stat:
+    path: /home/azadmin/.kube/config
+  register: kube_config
+
+- name: Check if join command exists
+  stat:
+    path: /root/kubeadm_join_cmd.sh
+  register: join_command
+
+- name: Check kompose exists
+  stat:
+    path: /usr/local/bin/kompose
+  register: kompose_command
+
+- name: Check Calico exists
+  stat:
+    path: /root/calico-policy-only.yaml
+  register: calico_policy
+
 - name: Mark kube packages at 1.14.3-00
   dpkg_selections:
     name: "{{ item }}"
@@ -40,8 +65,10 @@
   shell: |
     kubeadm token generate
   register: k8s_token
+  when: kubeadm_config.stat.exists == False
 
 - set_fact: KUBEADM_TOKEN="{{ k8s_token.stdout }}"
+  when: kubeadm_config.stat.exists == False
 
 - name: Create kubeadm config
   template:
@@ -49,12 +76,94 @@
     dest: /root/kubeadm.config
     owner: root
     group: root
+  when: kubeadm_config.stat.exists == False
 
 - name: Kubernetes Installation
   shell: kubeadm init --config=/root/kubeadm.config
+  when: kubeadm_config.stat.exists == False
 
-# TODO
-# 1 - mkdir -p $HOME/.kube
-# 2 - cp -if /etc/kubernetes/admin.conf $HOME/.kube/config
-# 3 - chown $(id -u):$(id -g) $HOME/.kube/config
-# 4 - Add check if kubeadm already run
+- name: Make kubernetes config folder
+  file:
+    path: /home/azadmin/.kube
+    state: directory
+    owner: azadmin
+
+- name: Make kubernetes config folder for root
+  file:
+    path: /root/.kube
+    state: directory
+    owner: root
+
+- name: Copy config
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/azadmin/.kube/config
+    remote_src: yes
+    owner: azadmin
+  when: kube_config.stat.exists == False
+
+- name: Copy config for root
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+    remote_src: yes
+    owner: root
+
+- name: Enable kubectl autocompletion
+  lineinfile:
+    path: /home/azadmin/.bashrc
+    line: source <(kubectl completion bash)
+
+- name: Get Calico
+  get_url:
+    url: https://docs.projectcalico.org/v3.7/manifests/calico-policy-only.yaml
+    dest: /root/calico-policy-only.yaml
+  when: calico_policy.stat.exists == False
+
+- name: Update Calico POD CIDR block
+  replace:
+    path: /root/calico-policy-only.yaml
+    regexp: "10.244.0.0/16"
+    replace: "{{ KUBEADM_POD_SUBNET }}"
+  when: calico_policy.stat.exists == False
+
+- name: Apply Calico
+  shell: |
+    kubectl apply -f /root/calico-policy-only.yaml
+
+- name: Get Canal
+  get_url:
+    url: https://docs.projectcalico.org/v3.7/manifests/canal.yaml
+    dest: /root/canal.yaml
+
+- name: Update Canal POD CIDR block
+  replace:
+    path: /root/canal.yaml
+    regexp: "10.244.0.0/16"
+    replace: "{{ KUBEADM_POD_SUBNET }}"
+
+- name: Apply Canal
+  shell: |
+    kubectl apply -f /root/canal.yaml
+
+- name: Create join command
+  shell: |
+    kubeadm token create --print-join-command | tee /root/kubeadm_join_cmd.sh
+  when: join_command.stat.exists == False
+
+- name: Get the join command
+  shell: |
+    cat /root/kubeadm_join_cmd.sh
+  register: JOIN_COMMAND
+
+- name: Get kompose
+  get_url:
+    url: https://bit.ly/2tN0bEa
+    dest: /usr/local/bin/kompose
+    mode: '0655'
+    owner: root
+  when: kompose_command.stat.exists == False
+
+# sudo curl -L https://bit.ly/2tN0bEa -o kompose
+# sudo chmod +x kompose
+# sudo mv ./kompose /usr/local/bin/kompose

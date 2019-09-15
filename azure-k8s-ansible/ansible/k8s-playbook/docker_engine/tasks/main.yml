@@ -1,22 +1,40 @@
 ---
+- name: Check Docker install /usr/bin
+  stat:
+    path: /usr/bin/docker
+  register: docker
+
+- name: Check Docker installed /usr/local/bin/
+  stat:
+    path: /usr/bin/docker
+  register: docker_local
+
 - name: Create Docker install location
   file:
     path: /tmp/docker-install
     state: directory
     mode: '0755'
+  when: docker.stat.exists == False
+
 - name: Download and Extract Docker 18.09.6
   unarchive:
     src: https://download.docker.com/linux/static/stable/x86_64/docker-18.09.6.tgz
     dest: /tmp/docker-install/
     remote_src: yes
+  when: docker.stat.exists == False
+
 - name: Download Docker Socket
   get_url:
     url: https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.service
     dest: /tmp/docker-install/docker.service
+  when: docker.stat.exists == False
+
 - name: Download Docker Service
   get_url:
     url: https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.socket
     dest: /tmp/docker-install/docker.socket
+  when: docker.stat.exists == False
+
 - name: Copy Docker binaries
   copy:
     src: "{{ item }}"
@@ -34,6 +52,8 @@
     - "/tmp/docker-install/docker/docker-proxy"
     - "/tmp/docker-install/docker/dockerd"
     - "/tmp/docker-install/docker/runc"
+  when: docker.stat.exists == False
+
 - name: Copy Docker to /usr/local/bin
   copy:
     src: /tmp/docker-install/docker/docker
@@ -42,11 +62,15 @@
     group: root
     mode: '0655'
     remote_src: yes
+  when: docker_local.stat.exists == False
+
 - name: Update Docker service to use unix//
   replace:
     path: /tmp/docker-install/docker.service
     regexp: 'dockerd -H fd://'
     replace: 'dockerd -H unix://'
+  when: docker.stat.exists == False
+
 - name: Copy Docker Service
   copy:
     src: "/tmp/docker-install/docker.service"
@@ -55,6 +79,8 @@
     group: root
     mode: '0655'
     remote_src: yes
+  when: docker.stat.exists == False
+
 - name: Copy Docker Socket
   copy:
     src: "/tmp/docker-install/docker.socket"
@@ -63,18 +89,24 @@
     group: root
     mode: '0655'
     remote_src: yes
+  when: docker.stat.exists == False
+
 - name: Create docker group, gid = 10000
   group:
     gid: "10000"
     name: docker
     state: present
+  when: docker.stat.exists == False
+
 - name: Enable Docker services
   systemd:
     name: docker.service
     state: started
     enabled: yes
     daemon_reload: yes
+
 - name: Remove installation media
   file:
     path: /tmp/docker-install
     state: absent
+  when: docker.stat.exists == False
