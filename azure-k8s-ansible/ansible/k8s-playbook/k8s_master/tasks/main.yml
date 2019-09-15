@@ -164,6 +164,8 @@
     owner: root
   when: kompose_command.stat.exists == False
 
-# sudo curl -L https://bit.ly/2tN0bEa -o kompose
-# sudo chmod +x kompose
-# sudo mv ./kompose /usr/local/bin/kompose
+#
+# TODO
+#
+# 1 - Update azadmin to parameter/variable
+#
