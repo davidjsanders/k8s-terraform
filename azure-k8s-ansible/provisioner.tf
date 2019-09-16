@@ -52,7 +52,12 @@ resource "null_resource" "provisioner" {
 
     provisioner "file" {
         content = "${data.template_file.template-play-vars-yml.rendered}"
-        destination = "/home/${var.vm-adminuser}/playbooks/variables/vars.yml"
+        destination = "/home/${var.vm-adminuser}/playbooks/k8s_master/vars/main.yml"
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.template-traefik-auth-file-yml.rendered}"
+        destination = "/home/${var.vm-adminuser}/playbooks/k8s_traefik_ingress_controller/vars/main.yml"
     }
 
     provisioner "file" {

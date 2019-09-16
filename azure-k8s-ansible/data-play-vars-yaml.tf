@@ -18,7 +18,7 @@
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-play-vars-yml" {
-  template = "${file("template-data/play-vars.yml")}"
+  template = "${file("template-data/k8s-master-vars.yml")}"
 
   vars {
     kubeadm_api = "kubeadm.k8s.io"

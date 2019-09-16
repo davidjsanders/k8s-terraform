@@ -125,8 +125,12 @@
     dest: /usr/local/bin/kompose
     mode: '0655'
     owner: root
-    checksum: 4675f1a580b2775d021f3d1777f060ffd44b5f540f956c3b68f092480af9caf4
+    checksum: sha256:4675f1a580b2775d021f3d1777f060ffd44b5f540f956c3b68f092480af9caf4
   when: kompose_command.stat.exists == False
+
+- name: Pause for 30 seconds for kubernetes ready state
+  pause:
+    seconds: 30
 
 #
 # TODO

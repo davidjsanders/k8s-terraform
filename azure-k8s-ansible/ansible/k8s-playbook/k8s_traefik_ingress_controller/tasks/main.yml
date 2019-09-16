@@ -1,0 +1,36 @@
+- name: Check if manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/traefik_ingress_controller"
+  register: manifests
+
+- name: Make manifest directory
+  file:
+    path: "/home/{{ admin }}/k8s/traefik_ingress_controller"
+    state: directory
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy manifest
+  copy:
+    src: k8s_traefik_ingress_controller/manifests/
+    dest: "/home/{{ admin }}/k8s/traefik_ingress_controller"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated secret
+  template:
+    src: k8s_traefik_ingress_controller/manifests/auth_file.yaml
+    dest: "/home/{{ admin }}/k8s/traefik_ingress_controller"
+    owner: "{{ admin }}"
+
+- name: Create traefik RBAC
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/rbac.yaml
+
+- name: Create traefik auth file
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/auth_file.yaml
+
+- name: Create traefik configmap
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/configmap.yaml

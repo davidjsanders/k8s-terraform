@@ -1,0 +1,2 @@
+admin: "${admin}"
+auth_file: "${auth_file}"

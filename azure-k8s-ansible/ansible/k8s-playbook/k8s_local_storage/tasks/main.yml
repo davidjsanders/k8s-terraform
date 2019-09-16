@@ -1,0 +1,22 @@
+- name: Check if manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/local_storage"
+  register: manifests
+
+- name: Make manifest directory
+  file:
+    path: "/home/{{ admin }}/k8s/local_storage"
+    state: directory
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy manifest
+  copy:
+    src: k8s_local_storage/manifests/
+    dest: "/home/{{ admin }}/k8s/local_storage"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Create StorageClass local-storage
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/local_storage/storage-class.yaml
