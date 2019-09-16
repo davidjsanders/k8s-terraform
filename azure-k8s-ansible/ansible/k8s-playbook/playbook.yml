@@ -10,6 +10,7 @@
   become: true
   roles:
   - docker_engine
+  - prepare_k8s
 
 - hosts: master
   become: true

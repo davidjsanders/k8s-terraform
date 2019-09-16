@@ -1,0 +1,37 @@
+- name: Add Google public signing key
+  apt_key:
+    url: https://dl.google.com/linux/linux_signing_key.pub
+    state: present
+
+- name: Add Google Apt signing key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add Google sources to apt
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    force_apt_get: yes
+    force: yes
+    update_cache: no
+    dpkg_options: 'force-confold,force-confdef'
+  vars:
+    packages:
+    - jq
+    - kubeadm=1.14.3-00
+    - kubelet=1.14.3-00
+    - kubectl=1.14.3-00
+
+- name: Mark kube packages at 1.14.3-00
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+    - kubeadm
+    - kubelet
+    - kubectl
