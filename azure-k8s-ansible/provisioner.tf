@@ -84,7 +84,7 @@ resource "null_resource" "provisioner" {
     }
 
     provisioner "local-exec" {
-        command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} --> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=*.${var.ddns_domain_name}&myip=${azurerm_public_ip.k8s-pip-lb.ip_address}&offline=no'; echo"
+        command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} --> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=*${var.ddns_domain_name}&myip=${azurerm_public_ip.k8s-pip-lb.ip_address}&offline=no'; echo"
     }
 
     provisioner "local-exec" {
