@@ -29,6 +29,7 @@ data "template_file" "template-play-vars-yml" {
     kubeadm_pod_subnet = "192.168.0.0/16"
     kubeadm_service_subnet = "10.96.0.0/12"
     kubeadm_k8s_version = "v1.14.3"
+    admin = "${var.vm-adminuser}"
   }
 }
 
