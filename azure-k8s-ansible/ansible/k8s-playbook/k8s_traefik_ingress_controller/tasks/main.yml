@@ -40,3 +40,15 @@
 - name: Create traefik configmap
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/configmap.yaml
+
+- name: Create traefik daemonset
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/daemonset.yaml
+
+- name: Create traefik service
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/service.yaml
+
+- name: Create traefik ingress
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/ingress.yaml
