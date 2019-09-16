@@ -56,7 +56,7 @@ resource "null_resource" "provisioner" {
     }
 
     provisioner "file" {
-        content = "${data.template_file.template-traefik-auth-file-yml.rendered}"
+        content = "${data.template_file.template-traefik-vars.rendered}"
         destination = "/home/${var.vm-adminuser}/playbooks/k8s_traefik_ingress_controller/vars/main.yml"
     }
 
@@ -81,6 +81,14 @@ resource "null_resource" "provisioner" {
             "~/setup-jumpbox.sh",
             "echo 'Done.'"
         ]
+    }
+
+    provisioner "local-exec" {
+        command = "curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=*.${var.ddns_domain_name}&myip=${azurerm_public_ip.k8s-pip-lb.ip_address}&offline=no'"
+    }
+
+    provisioner "local-exec" {
+        command = "curl -X POST 'https://${var.jumpbox_username}:${var.jumpbox_password}@domains.google.com/nic/update?hostname=${var.jumpbox_domain_name}&myip=${azurerm_public_ip.k8s-pip-jump.ip_address}&offline=no'"
     }
 
 }

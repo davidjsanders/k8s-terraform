@@ -23,6 +23,12 @@
     dest: "/home/{{ admin }}/k8s/traefik_ingress_controller"
     owner: "{{ admin }}"
 
+- name: Copy templated ingress
+  template:
+    src: k8s_traefik_ingress_controller/manifests/ingress.yaml
+    dest: "/home/{{ admin }}/k8s/traefik_ingress_controller"
+    owner: "{{ admin }}"
+
 - name: Create traefik RBAC
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/traefik_ingress_controller/rbac.yaml

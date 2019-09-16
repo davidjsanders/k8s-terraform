@@ -20,16 +20,11 @@
 
 # Dynamic DNS Variables
 variable "ddns_domain_name" {}
-variable "k8s_dev_username" {}
-variable "jenkins_dev_username" {}
-variable "sonarqube_dev_username" {}
-variable "nexus_dev_username" {}
-variable "traefik_dev_username" {}
-variable "k8s_dev_password" {}
-variable "jenkins_dev_password" {}
-variable "sonarqube_dev_password" {}
-variable "nexus_dev_password" {}
-variable "traefik_dev_password" {}
+variable "jumpbox_domain_name" {}
+variable "wild_username" {}
+variable "wild_password" {}
+variable "jumpbox_username" {}
+variable "jumpbox_password" {}
 
 #
 # Auth variables

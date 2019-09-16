@@ -17,11 +17,12 @@
 # -------------------------------------------------------------------
 
 # Compute and interpolate the variables required for the hosts file
-data "template_file" "template-traefik-auth-file-yml" {
-  template = "${file("template-data/k8s-traefik-auth-file.yml")}"
+data "template_file" "template-traefik-vars" {
+  template = "${file("template-data/k8s-traefik-vars.yml")}"
 
   vars {
     admin = "${var.vm-adminuser}"
     auth_file = "${var.auth_file}"
+    domain_name = "${var.ddns_domain_name}"
   }
 }
