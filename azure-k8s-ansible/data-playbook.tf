@@ -17,8 +17,8 @@
 # -------------------------------------------------------------------
 
 # Compute and interpolate the variables required for the hosts file
-data "template_file" "template-playbook-yaml" {
-  template = "${file("ansible/k8s-playbook/playbook.yml")}"
+data "template_file" "template-play-vars-yml" {
+  template = "${file("template-data/play-vars.yml")}"
 
   vars {
     kubeadm_api = "kubeadm.k8s.io"
@@ -32,3 +32,4 @@ data "template_file" "template-playbook-yaml" {
   }
 }
 
+# TODO: Use vars from tf.vars, e.g. api advertise ip

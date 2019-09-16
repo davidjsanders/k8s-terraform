@@ -51,6 +51,11 @@ resource "null_resource" "provisioner" {
     }
 
     provisioner "file" {
+        content = "${data.template_file.template-play-vars-yml.rendered}"
+        destination = "/home/${var.vm-adminuser}/playbooks/variables/vars.yml"
+    }
+
+    provisioner "file" {
         content = "${data.template_file.template-hosts-file.rendered}"
         destination = "/home/${var.vm-adminuser}/hosts"
     }
