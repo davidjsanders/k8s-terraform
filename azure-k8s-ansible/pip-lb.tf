@@ -17,7 +17,6 @@
 
 resource "azurerm_public_ip" "k8s-pip-lb" {
   allocation_method   = "Static"
-  domain_name_label   = "${format("%s-%s%s", var.lb-prefix, var.lb-name, local.l-random)}"
   location            = "${var.location}"
   name                = "${format("PIP-%s-LB-%s-%s%s", var.vnet-name, var.target, var.environ, local.l-random)}"
   resource_group_name = "${azurerm_resource_group.k8s-rg.name}"
