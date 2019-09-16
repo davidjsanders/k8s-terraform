@@ -5,7 +5,7 @@
 
 - name: Check if kube config exists
   stat:
-    path: /home/azadmin/.kube/config
+    path: "/home/{{ admin }}/.kube/config"
   register: kube_config
 
 - name: Check if join command exists
@@ -31,7 +31,6 @@
 
 - set_fact: 
     KUBEADM_TOKEN: "{{ k8s_token.stdout }}"
-
   when: kubeadm_config.stat.exists == False
 
 - name: Create kubeadm config
@@ -48,9 +47,9 @@
 
 - name: Make kubernetes config folder
   file:
-    path: /home/azadmin/.kube
+    path: "/home/{{ admin }}/.kube"
     state: directory
-    owner: azadmin
+    owner: "{{ admin }}"
 
 - name: Make kubernetes config folder for root
   file:
@@ -61,9 +60,9 @@
 - name: Copy config
   copy:
     src: /etc/kubernetes/admin.conf
-    dest: /home/azadmin/.kube/config
+    dest: "/home/{{ admin }}/.kube/config"
     remote_src: yes
-    owner: azadmin
+    owner: "{{ admin }}"
   when: kube_config.stat.exists == False
 
 - name: Copy config for root
@@ -75,7 +74,7 @@
 
 - name: Enable kubectl autocompletion
   lineinfile:
-    path: /home/azadmin/.bashrc
+    path: "/home/{{ admin }}/.bashrc"
     line: source <(kubectl completion bash)
 
 - name: Get Calico
@@ -122,14 +121,13 @@
 
 - name: Get kompose
   get_url:
-    url: https://bit.ly/2tN0bEa
+    url: https://github.com/kubernetes/kompose/releases/download/v1.18.0/kompose-linux-amd64
     dest: /usr/local/bin/kompose
     mode: '0655'
     owner: root
+    checksum: 4675f1a580b2775d021f3d1777f060ffd44b5f540f956c3b68f092480af9caf4
   when: kompose_command.stat.exists == False
 
 #
 # TODO
-#
-# 1 - Update azadmin to parameter/variable
 #

@@ -14,8 +14,16 @@
 
 - hosts: master
   become: true
-  include_vars:
-    file: variables/vars.yaml
+  vars:
+    KUBEADM_API: "kubeadm.k8s.io"
+    KUBEADM_API_VERSION: "v1beta1"
+    KUBEADM_API_ADVERTISE_IP: "10.70.1.6"
+    KUBEADM_CERT_DIR: "/etc/kubernetes/pki"
+    KUBEADM_CLUSTER_NAME: "kubernetes"
+    KUBEADM_POD_SUBNET: "192.168.0.0/16"
+    KUBEADM_SERVICE_SUBNET: "10.96.0.0/12"
+    KUBEADM_K8S_VERSION: "v1.14.3"
+    admin: "azadmin"
   roles:
   - nfs_server
   - docker_compose
