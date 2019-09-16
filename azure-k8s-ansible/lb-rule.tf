@@ -24,4 +24,6 @@ resource "azurerm_lb_rule" "k8s-lb-rule-80" {
   frontend_port                  = 80
   backend_port                   = 80
   frontend_ip_configuration_name = "${upper(format("%s-FE-PIP-%s-%s%s", var.lb-name, var.target, var.environ, local.l-random))}"
+  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.k8s-lb-bepool.id}"
+  probe_id                       = "${azurerm_lb_probe.k8s-lb-probe.id}"
 }
