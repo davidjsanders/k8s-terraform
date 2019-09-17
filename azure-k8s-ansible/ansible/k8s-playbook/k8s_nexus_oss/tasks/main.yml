@@ -1,11 +1,11 @@
 - name: Check if Nexus OSS NFS Share exists
   stat:
-    path: "/datadrive/nexus-oss"
+    path: "/datadrive/export/nexus-oss"
   register: nexus
 
 - name: Make manifest directory
   file:
-    path: "/datadrive/nexus-oss"
+    path: "/datadrive/export/nexus-oss"
     state: directory
     owner: "nobody"
     group: "nogroup"
@@ -14,12 +14,12 @@
 
 - name: Check if Nexus OSS data exists
   stat:
-    path: "/datadrive/nexus-oss/data"
+    path: "/datadrive/export/nexus-oss/data"
   register: nexus_data
 
 - name: Make manifest directory
   file:
-    path: "/datadrive/nexus-oss/data"
+    path: "/datadrive/export/nexus-oss/data"
     state: directory
     owner: "nobody"
     group: "nogroup"
@@ -28,12 +28,12 @@
 
 - name: Check if Nexus OSS blob store exists
   stat:
-    path: "/datadrive/nexus-oss/blobs"
+    path: "/datadrive/export/nexus-oss/blobs"
   register: nexus_blob
 
 - name: Make manifest directory
   file:
-    path: "/datadrive/nexus-oss/blobs"
+    path: "/datadrive/export/nexus-oss/blobs"
     state: directory
     owner: "nobody"
     group: "nogroup"
@@ -42,12 +42,12 @@
 
 - name: Check if Nexus OSS user root exists
   stat:
-    path: "/datadrive/nexus-oss/user-root"
+    path: "/datadrive/export/nexus-oss/user-root"
   register: nexus_user_root
 
 - name: Make manifest directory
   file:
-    path: "/datadrive/nexus-oss/user-root"
+    path: "/datadrive/export/nexus-oss/user-root"
     state: directory
     owner: "nobody"
     group: "nogroup"

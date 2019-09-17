@@ -131,6 +131,7 @@
 - name: Pause for 30 seconds for kubernetes ready state
   pause:
     seconds: 30
+  when: kubeadm_config.stat.exists == False
 
 #
 # TODO
