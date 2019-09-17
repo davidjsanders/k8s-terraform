@@ -17,16 +17,32 @@
 # -------------------------------------------------------------------
 
 resource "azurerm_lb" "k8s-lb" {
-  location            = "${var.location}"
-  name                = "${upper(format("%s-LB-%s-%s%s", var.lb-name, var.target, var.environ, local.l-random))}"
-  resource_group_name = "${azurerm_resource_group.k8s-rg.name}"
+  location = var.location
+  name = upper(
+    format(
+      "%s-LB-%s-%s%s",
+      var.lb-name,
+      var.target,
+      var.environ,
+      local.l-random,
+    ),
+  )
+  resource_group_name = azurerm_resource_group.k8s-rg.name
   sku                 = "Basic"
 
-  tags                = "${var.tags}"
+  tags = var.tags
 
   frontend_ip_configuration {
-    name                 = "${upper(format("%s-FE-PIP-%s-%s%s", var.lb-name, var.target, var.environ, local.l-random))}"
-    public_ip_address_id = "${azurerm_public_ip.k8s-pip-lb.id}"
+    name = upper(
+      format(
+        "%s-FE-PIP-%s-%s%s",
+        var.lb-name,
+        var.target,
+        var.environ,
+        local.l-random,
+      ),
+    )
+    public_ip_address_id = azurerm_public_ip.k8s-pip-lb.id
   }
 }
 

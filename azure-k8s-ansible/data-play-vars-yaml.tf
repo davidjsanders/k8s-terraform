@@ -18,18 +18,18 @@
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-play-vars-yml" {
-  template = "${file("template-data/k8s-master-vars.yml")}"
+  template = file("template-data/k8s-master-vars.yml")
 
-  vars {
-    kubeadm_api = "kubeadm.k8s.io"
-    kubeadm_api_version = "v1beta1"
+  vars = {
+    kubeadm_api              = "kubeadm.k8s.io"
+    kubeadm_api_version      = "v1beta1"
     kubeadm_api_advertise_ip = "10.70.1.6"
-    kubeadm_cert_dir = "/etc/kubernetes/pki"
-    kubeadm_cluster_name = "kubernetes"
-    kubeadm_pod_subnet = "192.168.0.0/16"
-    kubeadm_service_subnet = "10.96.0.0/12"
-    kubeadm_k8s_version = "v1.14.3"
-    admin = "${var.vm-adminuser}"
+    kubeadm_cert_dir         = "/etc/kubernetes/pki"
+    kubeadm_cluster_name     = "kubernetes"
+    kubeadm_pod_subnet       = "192.168.0.0/16"
+    kubeadm_service_subnet   = "10.96.0.0/12"
+    kubeadm_k8s_version      = "v1.14.3"
+    admin                    = var.vm-adminuser
   }
 }
 

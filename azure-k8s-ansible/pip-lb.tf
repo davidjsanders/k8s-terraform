@@ -16,12 +16,20 @@
 # -------------------------------------------------------------------
 
 resource "azurerm_public_ip" "k8s-pip-lb" {
-  allocation_method   = "Static"
-  location            = "${var.location}"
-  name                = "${upper(format("PIP-%s-LB-%s-%s%s", var.vnet-name, var.target, var.environ, local.l-random))}"
-  resource_group_name = "${azurerm_resource_group.k8s-rg.name}"
+  allocation_method = "Static"
+  location          = var.location
+  name = upper(
+    format(
+      "PIP-%s-LB-%s-%s%s",
+      var.vnet-name,
+      var.target,
+      var.environ,
+      local.l-random,
+    ),
+  )
+  resource_group_name = azurerm_resource_group.k8s-rg.name
   sku                 = "Basic"
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 

@@ -17,8 +17,9 @@
 # -------------------------------------------------------------------
 
 resource "azurerm_lb_probe" "k8s-lb-probe" {
-  resource_group_name = "${azurerm_resource_group.k8s-rg.name}"
-  loadbalancer_id     = "${azurerm_lb.k8s-lb.id}"
+  resource_group_name = azurerm_resource_group.k8s-rg.name
+  loadbalancer_id     = azurerm_lb.k8s-lb.id
   name                = "http-probe"
   port                = 80
 }
+

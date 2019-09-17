@@ -19,9 +19,17 @@
 resource "azurerm_storage_account" "k8s-sa-boot-diag" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
-  name                     = "${lower(format("sa%s%s%s", lower(var.target), var.sa-name, random_integer.unique-sa-id.result))}"
-  location                 = "${var.location}"
-  resource_group_name      = "${azurerm_resource_group.k8s-rg.name}"
+  name = lower(
+    format(
+      "sa%s%s%s",
+      lower(var.target),
+      var.sa-name,
+      random_integer.unique-sa-id.result,
+    ),
+  )
+  location            = var.location
+  resource_group_name = azurerm_resource_group.k8s-rg.name
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
+

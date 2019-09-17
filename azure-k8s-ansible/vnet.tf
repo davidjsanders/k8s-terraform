@@ -17,10 +17,19 @@
 # -------------------------------------------------------------------
 
 resource "azurerm_virtual_network" "k8s-vnet" {
-  address_space       = ["${var.vnet-cidr}"]
-  location            = "${var.location}"
-  name                = "${upper(format("VNET-%s-%s-%s%s", var.vnet-name, var.target, var.environ, local.l-random))}"
-  resource_group_name = "${azurerm_resource_group.k8s-rg.name}"
+  address_space = [var.vnet-cidr]
+  location      = var.location
+  name = upper(
+    format(
+      "VNET-%s-%s-%s%s",
+      var.vnet-name,
+      var.target,
+      var.environ,
+      local.l-random,
+    ),
+  )
+  resource_group_name = azurerm_resource_group.k8s-rg.name
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
+

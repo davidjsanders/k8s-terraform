@@ -17,9 +17,8 @@
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-ssh-config" {
-  template = "${file("template-data/config")}"
+  template = file("template-data/config")
 
-  vars {
-  }
+  vars = {}
 }
 

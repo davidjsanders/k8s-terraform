@@ -17,20 +17,21 @@
 
 provider "azurerm" {
   version         = "1.28.0"
-  client_id       = "${var.client_id}"
-  client_secret   = "${var.client_secret}"
-  tenant_id       = "${var.tenant_id}"
-  subscription_id = "${var.subscription_id}"
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+  subscription_id = var.subscription_id
 }
 
 provider "random" {
-  version = "1.3.1"
+  version = "2.2.0"
 }
 
 provider "template" {
-  version = "1.0.0"
+  version = "2.1.2"
 }
 
 provider "null" {
-  version = "2.1"
+  version = "2.1.2"
 }
+

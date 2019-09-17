@@ -19,14 +19,14 @@
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-ansible-inventory" {
-  template = "${file("ansible/inventory")}"
+  template = file("ansible/inventory")
 
-  vars {
-    master   = "${azurerm_network_interface.k8s-nic-master.private_ip_address}"
-    worker-1 = "${azurerm_network_interface.k8s-nic-workers.*.private_ip_address[0]}"
-    worker-2 = "${azurerm_network_interface.k8s-nic-workers.*.private_ip_address[1]}"
-    jumpbox  = "${azurerm_network_interface.k8s-nic-jumpbox.private_ip_address}"
-    admin    = "${var.vm-adminuser}"
+  vars = {
+    master   = azurerm_network_interface.k8s-nic-master.private_ip_address
+    worker-1 = azurerm_network_interface.k8s-nic-workers[0].private_ip_address
+    worker-2 = azurerm_network_interface.k8s-nic-workers[1].private_ip_address
+    jumpbox  = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
+    admin    = var.vm-adminuser
   }
 }
 

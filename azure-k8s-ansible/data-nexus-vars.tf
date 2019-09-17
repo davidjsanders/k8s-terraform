@@ -18,9 +18,10 @@
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-nexus-vars" {
-  template = "${file("template-data/k8s-nexus-vars.yml")}"
+  template = file("template-data/k8s-nexus-vars.yml")
 
-  vars {
-    domain_name = "${var.ddns_domain_name}"
+  vars = {
+    domain_name = var.ddns_domain_name
   }
 }
+
