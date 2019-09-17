@@ -1,32 +1,16 @@
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: traefik-ingress-service
-  namespace: kube-system
-spec:
-  selector:
-    k8s-app: traefik-ingress-lb
-  ports:
-    - protocol: TCP
-      port: 80
-      name: web
-    - protocol: TCP
-      port: 443
-      name: webtls
-    - protocol: TCP
-      port: 8080
-      name: admin
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik-web-ui
-  namespace: kube-system
+  labels:
+    app: nexus-frontend
+  name: nexus-frontend
 spec:
-  selector:
-    k8s-app: traefik-ingress-lb
+  type: NodePort
   ports:
-  - name: web
+  - name: nexus-port
     port: 80
-    targetPort: 8080
+    targetPort: 8081
+  selector:
+    app: nexus-oss
+status:
+  loadBalancer: {}

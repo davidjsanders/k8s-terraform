@@ -1,0 +1,25 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  labels:
+    type: local-storage
+    role: nexus-data
+  name: nexus-data-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: local-storage
+  capacity:
+    storage: 500Mi
+  local:
+    path: "/datadrive/nexus-oss/data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: role
+          operator: In
+          values:
+          - "worker"
+  persistentVolumeReclaimPolicy: Retain

@@ -1,21 +1,13 @@
----
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/auth-type: "basic"
-    traefik.ingress.kubernetes.io/auth-secret: "traefik-auth"
-  name: traefik-web-ui
-  namespace: kube-system
+  name: nexus-oss
 spec:
   rules:
-  - host: "traefik{{ domain_name }}"
+  - host: "nexus{{ domain_name }}"
     http:
       paths:
       - path: /
         backend:
-          serviceName: traefik-web-ui
-          servicePort: web
-  # tls:
-  #  - secretName: traefik-ui-tls-cert
+          serviceName: nexus-frontend
+          servicePort: nexus-port

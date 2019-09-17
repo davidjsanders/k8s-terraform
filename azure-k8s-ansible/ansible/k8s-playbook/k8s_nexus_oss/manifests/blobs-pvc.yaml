@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nexus-blob-store-claim
+  name: nexus-blob-store-claim
+spec:
+  storageClassName: local-storage
+  selector: 
+    matchLabels:
+      role: nexus-blobs
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
