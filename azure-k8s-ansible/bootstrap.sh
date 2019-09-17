@@ -46,8 +46,8 @@ echo
 sudo cp ~/inventory /etc/ansible/hosts
 sudo chown root:root /etc/ansible/hosts
 
-# echo
-# echo "Execute Ansible playbook"
-# echo
-# cd ~/playbooks
-# ansible-playbook playbook.yml | tee ~/playbook.out
+echo
+echo "Execute Ansible playbook"
+echo
+cd ~/playbooks
+ansible-playbook playbook.yml | tee ~/playbook.out

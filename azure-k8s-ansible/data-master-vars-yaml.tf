@@ -17,7 +17,7 @@
 # -------------------------------------------------------------------
 
 # Compute and interpolate the variables required for the hosts file
-data "template_file" "template-play-vars-yml" {
+data "template_file" "template-master-vars-yml" {
   template = file("template-data/k8s-master-vars.yml")
 
   vars = {

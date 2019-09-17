@@ -1,0 +1,2 @@
+worker_1: "${worker_1}"
+worker_2: "${worker_2}"
