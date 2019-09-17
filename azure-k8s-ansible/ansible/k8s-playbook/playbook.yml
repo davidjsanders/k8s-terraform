@@ -20,6 +20,12 @@
   - k8s_master
 
 - hosts:
+  - workers
+  become: true
+  roles:
+  - k8s_workers
+
+- hosts:
   - jumpbox
   - workers
   become: true
@@ -27,15 +33,16 @@
   - nfs_client
 
 - hosts:
-  - workers
-  become: true
-  roles:
-  - k8s_workers
-
-- hosts:
   - master
   become: true
   roles:
+  - k8s_label_nodes
   - k8s_local_storage
   - k8s_traefik_ingress_controller
   - k8s_nexus_oss
+
+- hosts:
+  - jumpbox
+  become: true
+  roles:
+  - finalizer

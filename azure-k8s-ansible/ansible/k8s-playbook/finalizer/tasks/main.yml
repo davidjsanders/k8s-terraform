@@ -1,0 +1,7 @@
+- name: Pause for 30 seconds for kubernetes ready state
+  pause:
+    seconds: 30
+
+- name: Reboot node
+  reboot:
+    reboot_timeout: 600

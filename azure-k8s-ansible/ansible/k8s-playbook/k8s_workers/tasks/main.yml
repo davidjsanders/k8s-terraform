@@ -8,11 +8,12 @@
   shell: "{{ hostvars['k8s-master']['JOIN_COMMAND'].stdout }}"
   when: node_status is failed
 
-- name: Sleep for 30s to enable workers to ready
+- name: Pause for 30 seconds for kubernetes ready state
   pause:
     seconds: 30
+  when: node_status is failed
 
-- name: Label worker nodes
-  shell: |
-    kubectl label node {{ worker_1 }} role=worker
-    kubectl label node {{ worker_2 }} role=worker
+- name: Reboot worker
+  reboot:
+    reboot_timeout: 600
+  when: node_status is failed

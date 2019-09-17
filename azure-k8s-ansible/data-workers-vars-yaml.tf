@@ -37,6 +37,14 @@ data "template_file" "template-workers-vars-yml" {
         var.environ,
         local.l-random,
       )
+    master = format(
+        "%s-MASTER-%01d-%s-%s%s",
+        var.vm-name,
+        1,
+        var.target,
+        var.environ,
+        local.l-random,
+      )
     admin    = var.vm-adminuser
   }
 }

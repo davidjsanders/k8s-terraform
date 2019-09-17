@@ -1,0 +1,9 @@
+# - name: Sleep for 30s to enable workers to ready
+#   pause:
+#     seconds: 30
+
+- name: Label worker nodes
+  shell: |
+    kubectl label node {{ worker_1 }} role=worker
+    kubectl label node {{ worker_2 }} role=worker
+    kubectl label node {{ master }} role=master

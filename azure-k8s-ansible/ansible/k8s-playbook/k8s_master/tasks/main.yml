@@ -133,6 +133,11 @@
     seconds: 30
   when: kubeadm_config.stat.exists == False
 
+- name: Reboot master
+  reboot:
+    reboot_timeout: 600
+  when: kubeadm_config.stat.exists == False
+
 #
 # TODO
 #

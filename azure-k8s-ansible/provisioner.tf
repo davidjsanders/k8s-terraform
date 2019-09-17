@@ -57,7 +57,7 @@ resource "null_resource" "provisioner" {
 
   provisioner "file" {
     content     = data.template_file.template-workers-vars-yml.rendered
-    destination = "/home/${var.vm-adminuser}/playbooks/k8s_workers/vars/main.yml"
+    destination = "/home/${var.vm-adminuser}/playbooks/k8s_label_nodes/vars/main.yml"
   }
 
   provisioner "file" {
