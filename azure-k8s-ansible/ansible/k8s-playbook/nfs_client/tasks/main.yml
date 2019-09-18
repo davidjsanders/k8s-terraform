@@ -17,4 +17,5 @@
     path: /datadrive
     src: k8s-master:/datadrive/export
     fstype: nfs
+    opts: auto,nofail,noatime,nolock,intr,tcp,actimeo=1800
     state: mounted

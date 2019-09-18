@@ -41,8 +41,9 @@
   - k8s_traefik_ingress_controller
   - k8s_nexus_oss
 
-- hosts:
-  - jumpbox
-  become: true
-  roles:
-  - finalizer
+# Remove jumpbox reboot
+# - hosts:
+#   - jumpbox
+#   become: true
+#   roles:
+#   - finalizer

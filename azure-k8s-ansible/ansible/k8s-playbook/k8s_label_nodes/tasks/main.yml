@@ -2,8 +2,12 @@
 #   pause:
 #     seconds: 30
 
-- name: Label worker nodes
+- name: Label worker 1
   shell: |
-    kubectl label node {{ worker_1 }} role=worker
-    kubectl label node {{ worker_2 }} role=worker
-    kubectl label node {{ master }} role=master
+    echo "Adding label worker to {{ worker_1|lower }}"
+    kubectl label node {{ worker_1|lower }} role=worker
+    echo "Adding label worker to {{ worker_2|lower }}"
+    kubectl label node {{ worker_2|lower }} role=worker
+    echo "Adding label master to {{ master|lower }}"
+    kubectl label node {{ master|lower }} role=master
+  ignore_errors: yes

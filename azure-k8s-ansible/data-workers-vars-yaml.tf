@@ -21,30 +21,30 @@ data "template_file" "template-workers-vars-yml" {
   template = file("template-data/k8s-workers-vars.yml")
 
   vars = {
-    worker_1 = format(
+    worker_1 = lower(format(
         "%s-WORKER-%01d-%s-%s%s",
         var.vm-name,
         1,
         var.target,
         var.environ,
         local.l-random,
-      )
-    worker_2 = format(
+      ))
+    worker_2 = lower(format(
         "%s-WORKER-%01d-%s-%s%s",
         var.vm-name,
         2,
         var.target,
         var.environ,
         local.l-random,
-      )
-    master = format(
+      ))
+    master = lower(format(
         "%s-MASTER-%01d-%s-%s%s",
         var.vm-name,
         1,
         var.target,
         var.environ,
         local.l-random,
-      )
+      ))
     admin    = var.vm-adminuser
   }
 }
