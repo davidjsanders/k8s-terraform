@@ -22,10 +22,6 @@ spec:
     spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
-      volumes:
-      - name: config
-        configMap:
-          name: traefik-configmap
       containers:
       - image: traefik:v1.7.16-alpine
         name: traefik-ingress-lb
@@ -51,6 +47,10 @@ spec:
         - --api
         - --kubernetes
         - --logLevel=INFO
-        - --defaultentrypoints=http,https
-        - --entrypoints=Name:https Address::443 TLS
-        - --entrypoints=Name:http Address::80
+        # - --defaultentrypoints=http,https
+        # - --entrypoints=Name:https Address::443 TLS
+        # - --entrypoints=Name:http Address::80
+      volumes:
+      - name: config
+        configMap:
+          name: traefik-configmap
