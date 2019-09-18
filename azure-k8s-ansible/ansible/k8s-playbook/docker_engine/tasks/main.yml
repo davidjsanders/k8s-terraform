@@ -9,6 +9,16 @@
     path: /usr/bin/docker
   register: docker_local
 
+- name: Check Docker service installed
+  stat:
+    path: /etc/systemd/system/docker.service
+  register: docker_service
+
+- name: Check Docker socket installed
+  stat:
+    path: /etc/systemd/system/docker.socket
+  register: docker_socket
+
 - name: Create Docker install location
   file:
     path: /tmp/docker-install
@@ -23,17 +33,17 @@
     remote_src: yes
   when: docker.stat.exists == False
 
-- name: Download Docker Socket
+- name: Download Docker Service
   get_url:
     url: https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.service
     dest: /tmp/docker-install/docker.service
-  when: docker.stat.exists == False
+  when: docker_service.stat.exists == False
 
-- name: Download Docker Service
+- name: Download Docker Socket
   get_url:
     url: https://raw.githubusercontent.com/moby/moby/master/contrib/init/systemd/docker.socket
     dest: /tmp/docker-install/docker.socket
-  when: docker.stat.exists == False
+  when: docker_socket.stat.exists == False
 
 - name: Copy Docker binaries
   copy:
@@ -69,7 +79,7 @@
     path: /tmp/docker-install/docker.service
     regexp: 'dockerd -H fd://'
     replace: 'dockerd -H unix://'
-  when: docker.stat.exists == False
+  when: docker_service.stat.exists == False
 
 - name: Copy Docker Service
   copy:
@@ -79,7 +89,7 @@
     group: root
     mode: '0655'
     remote_src: yes
-  when: docker.stat.exists == False
+  when: docker_service.stat.exists == False
 
 - name: Copy Docker Socket
   copy:
@@ -89,14 +99,13 @@
     group: root
     mode: '0655'
     remote_src: yes
-  when: docker.stat.exists == False
+  when: docker_socket.stat.exists == False
 
 - name: Create docker group, gid = 10000
   group:
     gid: "10000"
     name: docker
     state: present
-  when: docker.stat.exists == False
 
 - name: Enable Docker services
   systemd:

@@ -6,15 +6,23 @@
     owner: root
     group: root
     mode: '0644'
+
 - name: Update packages
   apt:
     upgrade: full
     force_apt_get: yes
     update_cache: yes
     dpkg_options: 'force-confold,force-confdef'
+
+- name: Ansible fact - ansible_date_time
+  debug:
+    var: ansible_date_time
+
 - name: Set TimeZone to Toronto
   timezone:
     name: America/Toronto
+  when: ansible_date_time.tz in timezones
+
 - name: Disable swap
   shell: |
     swapoff -a

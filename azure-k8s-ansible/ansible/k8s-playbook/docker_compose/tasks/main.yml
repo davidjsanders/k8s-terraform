@@ -1,6 +1,12 @@
 ---
+- name: Check if docker-compose installed
+  stat:
+    path: /usr/local/bin/docker-compose
+  register: docker_compose
+
 - name: Download docker-compose
   get_url:
     url: https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64
     dest: /usr/local/bin/
     mode: '0555'
+  when: docker_compose.stat.exists == False
