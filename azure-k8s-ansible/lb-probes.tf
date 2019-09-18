@@ -15,11 +15,19 @@
 # -------------------------------------------------------------------
 # 16 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 18 Sep 2019  | David Sanders               | Add 443 probe.
+# -------------------------------------------------------------------
 
 resource "azurerm_lb_probe" "k8s-lb-probe" {
   resource_group_name = azurerm_resource_group.k8s-rg.name
   loadbalancer_id     = azurerm_lb.k8s-lb.id
   name                = "http-probe"
-  port                = 80
+  port                = 30888
 }
 
+resource "azurerm_lb_probe" "k8s-lb-probe-443" {
+  resource_group_name = azurerm_resource_group.k8s-rg.name
+  loadbalancer_id     = azurerm_lb.k8s-lb.id
+  name                = "https-probe"
+  port                = 30443
+}

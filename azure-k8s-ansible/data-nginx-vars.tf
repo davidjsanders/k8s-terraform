@@ -17,8 +17,8 @@
 # -------------------------------------------------------------------
 
 # Compute and interpolate the variables required for the hosts file
-data "template_file" "template-traefik-vars" {
-  template = file("template-data/k8s-traefik-vars.yml")
+data "template_file" "template-nginx-vars" {
+  template = file("template-data/k8s-nginx-vars.yml")
 
   vars = {
     admin       = var.vm-adminuser

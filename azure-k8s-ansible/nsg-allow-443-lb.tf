@@ -18,17 +18,17 @@
 
 resource "azurerm_network_security_rule" "k8s-nsgrule-allow-443-lb" {
   name = format(
-    "NSG-ALLOW-443-LB-%s-%s%s",
+    "NSG-ALLOW-30443-LB-%s-%s%s",
     var.target,
     var.environ,
     local.l-random,
   )
-  priority                    = 1020
+  priority                    = 1025
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "443"
+  destination_port_range      = "30443"
   source_address_prefix       = "Internet"
   destination_address_prefix  = azurerm_subnet.k8s-subnet-worker.address_prefix
   resource_group_name         = azurerm_resource_group.k8s-rg.name
