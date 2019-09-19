@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  auth: {{ auth_file }}
+kind: Secret
+metadata:
+  name: basic-auth
+type: Opaque

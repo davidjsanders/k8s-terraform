@@ -1,0 +1,22 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: nexus-tls.dgsd-consulting.com
+  namespace: default
+spec:
+  secretName: example-com-tls
+  issuerRef:
+    name: letsencrypt-staging
+  commonName: nexus-tls.dgsd-consulting.com
+  dnsNames:
+  - nexus-tls.dgsd-consulting.com
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - nexus-tls.dgsd-consulting.com
+    - http01:
+        ingress: nexus-oss-tls
+      domains:
+      - nexus-tls.dgsd-consulting.com
