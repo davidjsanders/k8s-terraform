@@ -10,9 +10,15 @@
     owner: "{{ admin }}"
   when: manifests.stat.exists == False
 
-- name: Copy templated issuer
+- name: Copy templated issuer-staging
   template:
-    src: k8s_letsencrypt/manifests/issuer.yaml
+    src: k8s_letsencrypt/manifests/issuer-staging.yaml
+    dest: "/home/{{ admin }}/k8s/letsencrypt"
+    owner: "{{ admin }}"
+
+- name: Copy templated issuer-prod
+  template:
+    src: k8s_letsencrypt/manifests/issuer-prod.yaml
     dest: "/home/{{ admin }}/k8s/letsencrypt"
     owner: "{{ admin }}"
 
@@ -27,3 +33,8 @@
 - name: Apply CustomResourceDefinitions and cert-manager
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/cert-manager-0.10.0.yaml
+
+- name: Create certificate issuers
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/issuer-staging.yaml
+    kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/issuer-prod.yaml

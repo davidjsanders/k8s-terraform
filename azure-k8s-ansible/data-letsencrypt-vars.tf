@@ -21,7 +21,7 @@ data "template_file" "template-letsencrypt" {
 
   vars = {
     email = var.email
-    admin = var.vm-adminuser
+    domain = var.ddns_domain_name
   }
 }
 

@@ -94,21 +94,16 @@ resource "null_resource" "provisioner" {
     command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-jump.ip_address} --> *.${var.jumpbox_domain_name}'; curl -X POST 'https://${var.jumpbox_username}:${var.jumpbox_password}@domains.google.com/nic/update?hostname=${var.jumpbox_domain_name}&myip=${azurerm_public_ip.k8s-pip-jump.ip_address}&offline=no'; echo"
   }
 
+  provisioner "local-exec" {
+    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} --> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=*${var.ddns_domain_name}&myip=${azurerm_public_ip.k8s-pip-lb.ip_address}&offline=no'; echo"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "chmod +x ~/bootstrap.sh",
       "~/bootstrap.sh",
       "echo 'Done.'",
     ]
-  }
-
-  provisioner "local-exec" {
-    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} --> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=*${var.ddns_domain_name}&myip=${azurerm_public_ip.k8s-pip-lb.ip_address}&offline=no'; echo"
-  }
-
-  # Temporary name for Nexus TLS
-  provisioner "local-exec" {
-    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} --> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=${var.nexus_dns_name}&myip=${azurerm_public_ip.k8s-pip-lb.ip_address}&offline=no'; echo"
   }
 
   provisioner "local-exec" {
@@ -120,12 +115,5 @@ resource "null_resource" "provisioner" {
     command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-jump.ip_address} /-> *.${var.jumpbox_domain_name}'; curl -X POST 'https://${var.jumpbox_username}:${var.jumpbox_password}@domains.google.com/nic/update?hostname=${var.jumpbox_domain_name}&myip=0.0.0.0&offline=no'; echo"
     when    = destroy
   }
-
-  # Temporary name for Nexus TLS
-  provisioner "local-exec" {
-    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} --> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=${var.nexus_dns_name}&myip=0.0.0.0&offline=no'; echo"
-    when    = destroy
-  }
-
 }
 

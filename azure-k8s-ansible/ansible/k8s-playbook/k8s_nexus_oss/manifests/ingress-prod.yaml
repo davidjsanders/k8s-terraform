@@ -4,10 +4,10 @@ metadata:
   name: nexus-oss-tls
   annotations:
     kubernetes.io/ingress.class: "nginx"    
-    certmanager.k8s.io/issuer: "letsencrypt-staging"
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
 spec:
   rules:
-  - host: "nexus-tls{{ domain }}"
+  - host: "nxs{{ domain }}"
     http:
       paths:
       - path: /
@@ -16,5 +16,5 @@ spec:
           servicePort: nexus-port
   tls: # < placing a host in the TLS config will indicate a cert should be created
   - hosts:
-    - "{{ domain }}"
-    secretName: nexus-tls-cert # < cert-manager will store the created certificate in this sec
+    - "nxs{{ domain }}"
+    secretName: nexus-prod-cert # < cert-manager will store the created certificate in this sec

@@ -66,14 +66,14 @@
     owner: "{{ admin }}"
   when: manifests.stat.exists == False
 
-- name: Copy templated ingress
+- name: Copy templated ingress (TLS - Staging)
   template:
     src: k8s_nexus_oss/manifests/ingress.yaml
     dest: "/home/{{ admin }}/k8s/nexus_oss"
     owner: "{{ admin }}"
   when: manifests.stat.exists == False
 
-- name: Copy templated ingress for TLS
+- name: Copy templated ingress (TLS - Production)
   template:
     src: k8s_nexus_oss/manifests/ingress-tls.yaml
     dest: "/home/{{ admin }}/k8s/nexus_oss"
@@ -116,10 +116,10 @@
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/docker-service.yaml
 
-- name: Create Nexus OSS ingress
+- name: Create Nexus OSS TLS ingress (Staging)
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress.yaml
 
-- name: Create Nexus OSS TLS based ingress
-  shell: |
-    kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-tls.yaml
+# - name: Create Nexus OSS TLS ingress (Production)
+#   shell: |
+#     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-tls.yaml
