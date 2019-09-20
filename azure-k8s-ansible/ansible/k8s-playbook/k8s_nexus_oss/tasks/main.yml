@@ -75,51 +75,39 @@
 
 - name: Copy templated ingress (TLS - Production)
   template:
-    src: k8s_nexus_oss/manifests/ingress-tls.yaml
+    src: k8s_nexus_oss/manifests/ingress-prod.yaml
     dest: "/home/{{ admin }}/k8s/nexus_oss"
     owner: "{{ admin }}"
   when: manifests.stat.exists == False
 
-- name: Create data PV
+- name: Create Persistent Volumes
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/data-pv.yaml
-
-- name: Create blobs PV
-  shell: |
+    sleep 2
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/blobs-pv.yaml
-
-- name: Create user-root PV
-  shell: |
+    sleep 2
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/user-root-pv.yaml
 
-- name: Create data PVC
+- name: Create Persistent Volume Claims
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/data-pvc.yaml
-
-- name: Create blobs PVC
-  shell: |
+    sleep 2
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/blobs-pvc.yaml
-
-- name: Create user-root PVC
-  shell: |
+    sleep 2
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/user-root-pvc.yaml
 
-- name: Create Nexus OSS deployment
+- name: Create Nexus deployment
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/deploy.yaml
 
-- name: Create Nexus OSS service
+- name: Create Nexus services
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/service.yaml
-
-- name: Create Nexus OSS Docker services
-  shell: |
+    sleep 2
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/docker-service.yaml
 
-- name: Create Nexus OSS TLS ingress (Staging)
+- name: Create Nexus ingress
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress.yaml
-
-# - name: Create Nexus OSS TLS ingress (Production)
-#   shell: |
-#     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-tls.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-prod.yaml

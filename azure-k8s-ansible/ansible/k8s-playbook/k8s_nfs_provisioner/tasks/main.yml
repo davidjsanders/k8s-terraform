@@ -1,0 +1,26 @@
+- name: Check if NFS Provisioner directory exist
+  stat:
+    path: "/home/{{ admin }}/k8s/nfs_provisioner"
+  register: nfs_provisioner
+
+- name: Make NFS Provisioner directory
+  file:
+    path: "/home/{{ admin }}/k8s/nfs_provisioner"
+    state: directory
+    owner: "{{ admin }}"
+  when: nfs_provisioner.stat.exists == False
+
+- name: Copy manifests
+  copy:
+    src: k8s_nfs_provisioner/manifests/
+    dest: "/home/{{ admin }}/k8s/nfs_provisioner"
+    owner: "{{ admin }}"
+
+- name: Create NFS Provisioner
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/nfs_provisioner/rbac.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/nfs_provisioner/deployment.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/nfs_provisioner/storage-class.yaml
+    sleep 2

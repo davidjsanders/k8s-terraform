@@ -66,6 +66,11 @@ resource "null_resource" "provisioner" {
   }
 
   provisioner "file" {
+    content     = data.template_file.template-nfs-provisioner-vars.rendered
+    destination = "/home/${var.vm-adminuser}/playbooks/k8s_nfs_provisioner/vars/main.yml"
+  }
+
+  provisioner "file" {
     content     = data.template_file.template-nexus-vars.rendered
     destination = "/home/${var.vm-adminuser}/playbooks/k8s_nexus_oss/vars/main.yml"
   }
