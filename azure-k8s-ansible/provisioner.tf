@@ -107,12 +107,12 @@ resource "null_resource" "provisioner" {
   }
 
   provisioner "local-exec" {
-    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} /-> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=*${var.ddns_domain_name}&myip=0.0.0.0&offline=no'; echo"
+    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-lb.ip_address} /-> *.${var.ddns_domain_name}'; curl -X POST 'https://${var.wild_username}:${var.wild_password}@domains.google.com/nic/update?hostname=*${var.ddns_domain_name}&myip=0.0.0.0&offline=yes'; echo"
     when    = destroy
   }
 
   provisioner "local-exec" {
-    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-jump.ip_address} /-> *.${var.jumpbox_domain_name}'; curl -X POST 'https://${var.jumpbox_username}:${var.jumpbox_password}@domains.google.com/nic/update?hostname=${var.jumpbox_domain_name}&myip=0.0.0.0&offline=no'; echo"
+    command = "echo 'DDNS: ${azurerm_public_ip.k8s-pip-jump.ip_address} /-> *.${var.jumpbox_domain_name}'; curl -X POST 'https://${var.jumpbox_username}:${var.jumpbox_password}@domains.google.com/nic/update?hostname=${var.jumpbox_domain_name}&myip=0.0.0.0&offline=yes'; echo"
     when    = destroy
   }
 }
