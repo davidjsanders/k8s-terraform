@@ -17,6 +17,12 @@
 # -------------------------------------------------------------------
 # 10 Sep 2019  | David Sanders               | Add jump pip variables.
 # -------------------------------------------------------------------
+# 19 Sep 2019  | David Sanders               | Add letsencrypt vars.
+# -------------------------------------------------------------------
+
+# Letsencrypt Variables
+variable "email" {}
+variable "nexus_dns_name" {}
 
 # Dynamic DNS Variables
 variable "ddns_domain_name" {

@@ -1,0 +1,29 @@
+- name: Check manifest exists
+  stat:
+    path: "/home/{{ admin }}/k8s/letsencrypt"
+  register: manifests
+
+- name: Copy manifest
+  copy:
+    src: k8s_letsencrypt/manifests/
+    dest: "/home/{{ admin }}/k8s/letsencrypt"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated issuer
+  template:
+    src: k8s_letsencrypt/manifests/issuer.yaml
+    dest: "/home/{{ admin }}/k8s/letsencrypt"
+    owner: "{{ admin }}"
+
+- name: Create namespace
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/namespace.yaml
+
+- name: Disable resource validation on cert-manager
+  shell: |
+    kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+
+- name: Apply CustomResourceDefinitions and cert-manager
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/cert-manager-0.10.0.yaml

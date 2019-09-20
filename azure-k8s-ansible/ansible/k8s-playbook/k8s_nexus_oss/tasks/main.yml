@@ -54,6 +54,11 @@
     mode: '0777'
   when: nexus_user_root.stat.exists == False
 
+- name: Check manifest exists
+  stat:
+    path: "/home/{{ admin }}/k8s/nexus_oss"
+  register: manifests
+
 - name: Copy manifest
   copy:
     src: k8s_nexus_oss/manifests/
@@ -66,6 +71,14 @@
     src: k8s_nexus_oss/manifests/ingress.yaml
     dest: "/home/{{ admin }}/k8s/nexus_oss"
     owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated ingress for TLS
+  template:
+    src: k8s_nexus_oss/manifests/ingress-tls.yaml
+    dest: "/home/{{ admin }}/k8s/nexus_oss"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
 
 - name: Create data PV
   shell: |
@@ -106,3 +119,7 @@
 - name: Create Nexus OSS ingress
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress.yaml
+
+- name: Create Nexus OSS TLS based ingress
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-tls.yaml
