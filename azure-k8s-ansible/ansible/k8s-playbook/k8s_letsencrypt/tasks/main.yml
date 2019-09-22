@@ -34,19 +34,12 @@
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/cert-manager-0.10.0.yaml
 
-- name: Wait for CRD and cert-manager to be ready
-  shell: |
-    while true
-    do
-      out=$(kubectl get pods --namespace cert-manager --field-selector status.phase!="Running")
-      if [ "$out" == "No resources found." ]
-      then
-        echo "CRD and cert-manager are ready."
-        break
-      else
-        echo "$out"
-      fi
-    done
+- name: Make sure cert-manager is running (up to 10min.)
+  shell: kubectl get pods --namespace cert-manager --field-selector status.phase!="Running"
+  register: result
+  until: result.stderr.find("No resources found") != -1
+  retries: 60
+  delay: 10
 
 - name: Create certificate issuers
   shell: |
