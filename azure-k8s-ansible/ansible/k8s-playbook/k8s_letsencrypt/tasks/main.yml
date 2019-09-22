@@ -34,6 +34,13 @@
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/cert-manager-0.10.0.yaml
 
+- name: Make sure cert-manager is running (up to 10min.)
+  shell: kubectl get pods --namespace cert-manager --field-selector status.phase!="Running"
+  register: result
+  until: result.stderr.find("No resources found") != -1
+  retries: 60
+  delay: 10
+
 - name: Create certificate issuers
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/letsencrypt/issuer-staging.yaml
