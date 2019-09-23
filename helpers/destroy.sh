@@ -40,6 +40,6 @@ terraform destroy \
   -force
 end_date=$(date)
 echo
-echo "Apply started at   : "${start_date}
-echo "Apply completed at : "${end_date}
+echo "Destroy started at   : "${start_date}
+echo "Destroy completed at : "${end_date}
 echo
