@@ -19,6 +19,11 @@
 # -------------------------------------------------------------------
 # 19 Sep 2019  | David Sanders               | Add letsencrypt vars.
 # -------------------------------------------------------------------
+# 23 Sep 2019  | David Sanders               | Add map vars for
+#              |                             | workers.
+# -------------------------------------------------------------------
+
+variable "workers" {}
 
 # Letsencrypt Variables
 variable "email" {}

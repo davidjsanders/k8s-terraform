@@ -15,15 +15,13 @@
 # -------------------------------------------------------------------
 # 10 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
-locals {
-  l_nic_worker_ips = {
-    "0" = var.worker-static-ip-1
-    "1" = var.worker-static-ip-2
-  }
-}
+# 23 Sep 2019  | David Sanders               | Add support for
+#              |                             | variable number
+#              |                             | of workers.
+# -------------------------------------------------------------------
 
 resource "azurerm_network_interface" "k8s-nic-workers" {
-  count = length(local.l_nic_worker_ips)
+  count = var.workers.vm-count
 
   location = var.location
   name = format(
@@ -44,15 +42,15 @@ resource "azurerm_network_interface" "k8s-nic-workers" {
       local.l-random,
     )
     private_ip_address_allocation = "Static"
-    private_ip_address = replace(
-      local.l_nic_worker_ips[count.index],
-      "dc-prefix",
-      var.dc-prefix,
-    )
+    # Offset by 5 for Azure reserved devices
+    private_ip_address = cidrhost(
+      azurerm_subnet.k8s-subnet-worker.address_prefix,
+      5 + count.index)
     subnet_id = azurerm_subnet.k8s-subnet-worker.id
   }
 
   tags       = var.tags
-  depends_on = [azurerm_subnet.k8s-subnet-worker]
+  depends_on = [
+    azurerm_subnet.k8s-subnet-worker
+  ]
 }
-
