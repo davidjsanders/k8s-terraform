@@ -128,10 +128,12 @@
     checksum: sha256:4675f1a580b2775d021f3d1777f060ffd44b5f540f956c3b68f092480af9caf4
   when: kompose_command.stat.exists == False
 
-- name: Pause for 30 seconds for kubernetes ready state
-  pause:
-    seconds: 30
-  when: kubeadm_config.stat.exists == False
+- name: Wait for master to be ready
+  shell: kubectl get nodes -o json | jq -r '.items[0].status.conditions[] | select(.reason == "KubeletReady") | .type '
+  register: result
+  until: result.stdout.find("Ready") != -1
+  retries: 60
+  delay: 10
 
 - name: Reboot master
   reboot:

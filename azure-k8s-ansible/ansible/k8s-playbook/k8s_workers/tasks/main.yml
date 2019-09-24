@@ -8,12 +8,21 @@
   shell: "{{ hostvars['k8s-master']['JOIN_COMMAND'].stdout }}"
   when: node_status is failed
 
-- name: Pause for 30 seconds for kubernetes ready state
-  pause:
-    seconds: 30
-  when: node_status is failed
+# - name: Wait for worker to become ready
+#   shell: |
+#     host=$(hostname | tr [A-Z] [a-z])
+#     kubectl get nodes $host -o json | jq -r '.status.conditions[] | select(.reason == "KubeletReady") | .type '
+#   register: result
+#   until: result.stdout.find("Ready") != -1
+#   retries: 60
+#   delay: 10
 
-- name: Reboot worker
-  reboot:
-    reboot_timeout: 600
-  when: node_status is failed
+# - name: Pause for 30 seconds for kubernetes ready state
+#   pause:
+#     seconds: 30
+#   when: node_status is failed
+
+# - name: Reboot worker
+#   reboot:
+#     reboot_timeout: 600
+#   when: node_status is failed

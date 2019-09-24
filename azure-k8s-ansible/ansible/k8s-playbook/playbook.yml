@@ -1,9 +1,18 @@
 ---
+# Setup hosts, update packages, set date & time and
+# disable swap.
 - hosts: all
   become: true
   roles:
   - general_server
 
+# Download Docker, extract it, download socket & service,
+# copy binaries, update service for Ubuntu, copy socket &
+# service, create Docker group, enable Docker service and
+# remove installation files.
+# Prepare for kubernetes by adding the Google signing keys,
+# install kubeadm, kubelet and kubectl and mark packages
+# to hold at version.
 - hosts:
   - master
   - workers
@@ -12,6 +21,14 @@
   - docker_engine
   - prepare_k8s
 
+# Setup the NFS Server, find the UUID for the Azure managed 
+# disk, mount it, configure in fstab, make the NFS share and
+# setup export file.
+# Download docker-compose and install to /usr/local/bin
+# Setup kubernetes, install Kompose, Calico (for policy),
+# Canal (for CNI), generate the k8s token, create the kubeadm
+# config, init the cluster, create the join command and reboot
+# the master.
 - hosts: master
   become: true
   roles:
@@ -24,6 +41,16 @@
   become: true
   roles:
   - k8s_workers
+
+- hosts: master
+  become: true
+  roles:
+  - k8s_workers_check
+
+- hosts: workers
+  become: true
+  roles:
+  - k8s_workers_reboot
 
 - hosts:
   - jumpbox

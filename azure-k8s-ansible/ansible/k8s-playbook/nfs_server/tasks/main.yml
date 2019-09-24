@@ -40,12 +40,9 @@
 - name: Add entry to NFS exports for k8s-master
   lineinfile:
     path: /etc/exports
-    line: /datadrive/export {{ item }}(rw,async,no_root_squash,insecure,fsid=0,crossmnt,no_subtree_check)
+    line: /datadrive/export {{ hostvars[item]['ansible_facts']['eth0']['ipv4']['address'] }}(rw,async,no_root_squash,insecure,fsid=0,crossmnt,no_subtree_check)
   with_items:
-    - "{{ hostvars['k8s-master']['ansible_facts']['eth0']['ipv4']['address'] }}"
-    - "{{ hostvars['k8s-jumpbox']['ansible_facts']['eth0']['ipv4']['address'] }}"
-    - "{{ hostvars['k8s-worker-1']['ansible_facts']['eth0']['ipv4']['address'] }}"
-    - "{{ hostvars['k8s-worker-2']['ansible_facts']['eth0']['ipv4']['address'] }}"
+    - "{{ groups['all'] }}"
 - name: Restart NFS server
   service:
     name: nfs-kernel-server
