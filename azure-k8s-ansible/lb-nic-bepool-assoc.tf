@@ -34,28 +34,3 @@ resource "azurerm_network_interface_backend_address_pool_association" "lb-assoc-
   )
 
 }
-
-# resource "azurerm_network_interface_backend_address_pool_association" "lb-assoc-worker-1" {
-#   network_interface_id    = azurerm_network_interface.k8s-nic-workers[0].id
-#   backend_address_pool_id = azurerm_lb_backend_address_pool.k8s-lb-bepool.id
-#   ip_configuration_name = format(
-#     "NIC-WORKER-%02d-IPCONFIG-%s-%s%s",
-#     1,
-#     var.target,
-#     var.environ,
-#     local.l-random,
-#   )
-# }
-
-# resource "azurerm_network_interface_backend_address_pool_association" "lb-assoc-worker-2" {
-#   network_interface_id    = azurerm_network_interface.k8s-nic-workers[1].id
-#   backend_address_pool_id = azurerm_lb_backend_address_pool.k8s-lb-bepool.id
-#   ip_configuration_name = format(
-#     "NIC-WORKER-%02d-IPCONFIG-%s-%s%s",
-#     2,
-#     var.target,
-#     var.environ,
-#     local.l-random,
-#   )
-# }
-
