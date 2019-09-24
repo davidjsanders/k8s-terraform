@@ -22,20 +22,14 @@ data "template_file" "template-workers-vars-yml" {
 
   vars = {
     worker_1 = lower(format(
-        "%s-WORKER-%01d-%s-%s%s",
-        var.vm-name,
-        1,
-        var.target,
-        var.environ,
-        local.l-random,
+        "%s-%01d",
+        var.workers.prefix,
+        1
       ))
     worker_2 = lower(format(
-        "%s-WORKER-%01d-%s-%s%s",
-        var.vm-name,
-        2,
-        var.target,
-        var.environ,
-        local.l-random,
+        "%s-%01d",
+        var.workers.prefix,
+        2
       ))
     master = lower(format(
         "%s-MASTER-%01d-%s-%s%s",

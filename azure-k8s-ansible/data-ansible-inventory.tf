@@ -19,14 +19,27 @@
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-ansible-inventory" {
-  template = file("ansible/inventory")
+  template = file("ansible/multi-inventory")
 
   vars = {
-    master   = azurerm_network_interface.k8s-nic-master.private_ip_address
-    worker-1 = azurerm_network_interface.k8s-nic-workers[0].private_ip_address
-    worker-2 = azurerm_network_interface.k8s-nic-workers[1].private_ip_address
-    jumpbox  = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
-    admin    = var.vm-adminuser
+    master                   = azurerm_network_interface.k8s-nic-master.private_ip_address
+    masters                  = ""
+    workers                  = "%{ for vm in ["k8s-worker-1", "k8s-worker-2"] ~}${vm}  ansible_host=${vm}\n%{ endfor ~}"
+    jumpbox                  = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
+    admin                    = var.vm-adminuser
+    email                    = var.email
+    domain                   = var.ddns_domain_name
+    domain_name              = var.ddns_domain_name
+    kubeadm_api              = "kubeadm.k8s.io"
+    kubeadm_api_version      = "v1beta1"
+    kubeadm_api_advertise_ip = "10.70.1.6"
+    kubeadm_cert_dir         = "/etc/kubernetes/pki"
+    kubeadm_cluster_name     = "kubernetes"
+    kubeadm_pod_subnet       = "192.168.0.0/16"
+    kubeadm_service_subnet   = "10.96.0.0/12"
+    kubeadm_k8s_version      = "v1.14.3"
+    admin                    = var.vm-adminuser
+    auth_file                = var.auth_file
   }
 }
 
