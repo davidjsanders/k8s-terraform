@@ -15,6 +15,10 @@
 # -------------------------------------------------------------------
 # 08 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 23 Sep 2019  | David Sanders               | Use cidrsubnet to
+#              |                             | generate subnet
+#              |                             | for workers.
+# -------------------------------------------------------------------
 
 resource "azurerm_subnet" "k8s-subnet-worker" {
   # Assumes the first address space is used for the worker subnet
