@@ -23,7 +23,8 @@ data "template_file" "template-ssh-config" {
     hosts = join(
       " ",
       concat(
-        ["k8s-master","jumpbox"],
+        ["k8s-master"],
+        ["jumpbox"],
         [
           for i in range(0, var.workers.vm-count) : 
             format(
