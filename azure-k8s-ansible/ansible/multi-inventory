@@ -21,6 +21,7 @@ masters="${masters}
 workers="${workers}"
 email="${email}"
 domain="${domain}"
+domain_name="${domain}"
 admin="${admin}"
 auth_file="${auth_file}"
 KUBEADM_API="${kubeadm_api}"

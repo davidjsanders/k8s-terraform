@@ -39,7 +39,7 @@ data "template_file" "template-ansible-inventory" {
       "azure_pk" # To be variablized
     )
     domain                       = var.ddns_domain_name
-    domain_name                  = var.ddns_domain_name
+    domain                  = var.ddns_domain_name
     email                        = var.email
     jumpbox                      = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
     kubeadm_api                  = "kubeadm.k8s.io"
