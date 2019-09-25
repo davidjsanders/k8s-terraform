@@ -23,6 +23,7 @@
 #              |                             | Change k8s advertise
 #              |                             | IP to match the IP from
 #              |                             | the NIC automatically.
+#              |                             | Alphabetize variables.
 # -------------------------------------------------------------------
 
 # Compute and interpolate the variables required for the hosts file
