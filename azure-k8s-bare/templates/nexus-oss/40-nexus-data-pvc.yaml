@@ -1,0 +1,31 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/nexus-oss/40-nexus-data-pvc.yaml
+# Environments:   all
+# Purpose:        The persitent volume claim for /nexus-data.
+#
+# Created on:     15 July 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 15 Jul 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nexus-data-claim
+  name: nexus-data-claim
+spec:
+  storageClassName: local-storage
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi

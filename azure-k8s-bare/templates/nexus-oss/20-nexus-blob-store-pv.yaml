@@ -1,0 +1,42 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/nexus-oss/20-nexus-blob-store-pv.yaml
+# Environments:   all
+# Purpose:        The persistent volume for /blob-store
+#
+# Created on:     15 July 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 15 Jul 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    type: local-storage
+  name: nexus-blob-store-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  storageClassName: local-storage
+  local:
+    path: "/datadrive/nexus-oss/blobs"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+         - key: role
+           operator: In
+           values:
+           - "worker"
+        # - key: node-role.kubernetes.io/master
+        #    operator: DoesNotExist
+  persistentVolumeReclaimPolicy: Retain

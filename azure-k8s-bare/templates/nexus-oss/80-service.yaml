@@ -1,0 +1,39 @@
+# -------------------------------------------------------------------
+#
+# Module:         k8s-terraform
+# Submodule:      templates/nexus-oss/80-service.yaml
+# Environments:   all
+# Purpose:        The yaml for the Nexus OSS service.
+#
+# Created on:     15 Jule 2019
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 15 Jul 2019  | David Sanders               | First release.
+# -------------------------------------------------------------------
+# 20 Aug 2019  | David Sanders               | Change port to NodePort
+#              |                             | set to 31000 to allow
+#              |                             | access to other repos,
+#              |                             | e.g. PyPi.
+# -------------------------------------------------------------------
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nexus-frontend
+  name: nexus-frontend
+spec:
+  type: NodePort
+  ports:
+  - name: nexus-port
+    port: 80
+    targetPort: 8081
+    nodePort: 31000
+  selector:
+    app: nexus-oss
+status:
+  loadBalancer: {}

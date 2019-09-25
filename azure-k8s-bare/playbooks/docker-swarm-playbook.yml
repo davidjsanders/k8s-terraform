@@ -1,0 +1,226 @@
+### swarm-playbook.yml
+---
+  - name: Setup Common Elements
+    hosts: all
+    become: true
+    gather_facts: true
+    remote_user: ${remote_user}
+    tasks:
+      - name: Create Node Exporter user
+        user:
+          name: node_exporter
+          create_home: no
+          shell: /bin/false
+          state: present
+
+      - name: Get Node Exporter
+        get_url:
+          url: https://github.com/prometheus/node_exporter/releases/download/v0.17.0-rc.0/node_exporter-0.17.0-rc.0.linux-amd64.tar.gz
+          dest: /tmp/node_exporter-0.17.0-rc.0.linux-amd64.tar.gz
+
+      - name: Unarchive Node Exporter
+        unarchive:
+          src: /tmp/node_exporter-0.17.0-rc.0.linux-amd64.tar.gz
+          dest: /tmp/
+          remote_src: yes
+
+      - name: Copy files
+        copy:
+          src: /tmp/node_exporter-0.17.0-rc.0.linux-amd64/node_exporter
+          dest: /usr/local/bin
+          remote_src: yes
+          owner: node_exporter
+          mode: u+x,g+x,o+x
+
+      - name: Remove temp downloaded file
+        file:
+          path: /tmp/node_exporter-0.17.0-rc.0.linux-amd64.tar.gz
+          state: absent
+
+      - name: Remove temp Prometheus files
+        file:
+          path: /tmp/node_exporter-0.17.0-rc.0.linux-amd64
+          state: absent
+
+  - name: Init Node Exporter on Workers
+    hosts: docker_workers
+    become: true
+    gather_facts: true
+    remote_user: ${remote_user}
+    tasks:
+      - name: Copy node_exporter.service
+        synchronize: src=/etc/systemd/system/node_exporter.service dest=/etc/systemd/system/node_exporter.service
+        delegate_to: "{{ hostvars[groups['docker_first_master'][0]]['inventory_hostname'] }}"
+
+      - name: Start service node_exporter
+        service:
+          name: node_exporter.service
+          state: started
+
+  - name: Init Node Exporter and Swarm Master
+    hosts: docker_first_master
+    become: true
+    gather_facts: false
+    remote_user: ${remote_user}
+    tasks:
+
+#      - name: Wait for Manager 2 Ready
+#        wait_for:
+#          host: "${docker_master_2}"
+#          port: 22
+#          timeout: 300
+#
+#      - name: Wait for Manager 3 Ready
+#        wait_for:
+#          host: "${docker_master_3}"
+#          port: 22
+#          timeout: 300
+
+      - name: Get Prometheus 2.5
+        get_url:
+          url: https://github.com/prometheus/prometheus/releases/download/v2.5.0/prometheus-2.5.0.linux-amd64.tar.gz
+          dest: /tmp/
+
+      - name: Unarchive Prometheus
+        unarchive:
+          src: /tmp/prometheus-2.5.0.linux-amd64.tar.gz
+          dest: /tmp/
+          remote_src: yes
+
+      - name: Create Prometheus user
+        user:
+          name: prometheus
+          create_home: no
+          shell: /bin/false
+          state: present
+
+      - name: Create Prometheus /etc/prometheus directory
+        file:
+          path: /etc/prometheus
+          state: directory
+          mode: 0755
+          owner: prometheus
+
+      - name: Create Prometheus /var/lib/prometheus directory
+        file:
+          path: /var/lib/prometheus
+          state: directory
+          mode: 0755
+          owner: prometheus
+
+      - name: Copy prometheus executable
+        copy:
+          src: /tmp/prometheus-2.5.0.linux-amd64/prometheus
+          dest: /usr/local/bin
+          remote_src: yes
+          owner: prometheus
+          mode: u+x,g+x,o+x
+
+      - name: Copy promtool executable
+        copy:
+          src: /tmp/prometheus-2.5.0.linux-amd64/promtool
+          dest: /usr/local/bin
+          remote_src: yes
+          owner: prometheus
+          mode: u+x,g+x,o+x
+
+      - name: Copy Prometheus consoles
+        command: cp -r /tmp/prometheus-2.5.0.linux-amd64/consoles /etc/prometheus
+
+      - name: Copy Prometheus console_libraries
+        command: cp -r /tmp/prometheus-2.5.0.linux-amd64/console_libraries /etc/prometheus
+
+      - name: Update file ownership
+        file:
+          path: /etc/prometheus
+          state: directory
+          owner: prometheus
+
+      - name: Remove temp downloaded file
+        file:
+          path: /tmp/prometheus-2.5.0.linux-amd64.tar.gz
+          state: absent
+
+      - name: Remove temp Prometheus files
+        file:
+          path: /tmp/prometheus-2.5.0.linux-amd64
+          state: absent
+
+      - name: Wait for Worker 1 Ready
+        wait_for:
+          host: "${docker_worker_1}"
+          port: 22
+          timeout: 300
+
+      - name: Wait for Worker 2 Ready
+        wait_for:
+          host: "${docker_worker_2}"
+          port: 22
+          timeout: 300
+
+      - name: Add ${remote_user} to Docker Group 
+        user:
+          name: ${remote_user}
+          groups: docker
+          append: yes
+
+      - name: Run Swarm Init
+        command: docker swarm init --advertise-addr ${master_ip}
+
+      - name: Get Worker Token
+        command: docker swarm join-token worker -q
+        register: worker_token
+
+      - name: Show Worker Token
+        debug: var=worker_token.stdout
+
+      - name: Get Master Token
+        command: docker swarm join-token manager -q
+        register: master_token
+
+      - name: Show Master Token
+        debug: var=master_token.stdout
+
+  - name: Join Swarm Cluster
+    hosts: docker_masters
+    become: true
+    remote_user: azadmin
+    gather_facts: False
+    vars:
+      token: "{{ hostvars[groups['docker_first_master'][0]]['master_token']['stdout'] }}"
+      master: "{{ hostvars[groups['docker_first_master'][0]]['inventory_hostname'] }}"
+    tasks:
+      - name: Add ${remote_user} to Docker Worker Group
+        command: usermod -aG docker ${remote_user}
+
+      - name: Join Swarm Cluster as Managers
+        command: docker swarm join --token {{ token }} ${master_ip}:2377
+        register: worker
+
+      - name: Show Results
+        debug: var=worker.stdout
+
+      - name: Show Errors
+        debug: var=worker.stderr
+
+  - name: Join Swarm Cluster
+    hosts: docker_workers
+    become: true
+    remote_user: azadmin
+    gather_facts: False
+    vars:
+      token: "{{ hostvars[groups['docker_first_master'][0]]['worker_token']['stdout'] }}"
+      master: "{{ hostvars[groups['docker_first_master'][0]]['inventory_hostname'] }}"
+    tasks:
+      - name: Add ${remote_user} to Docker Worker Group
+        command: usermod -aG docker ${remote_user}
+
+      - name: Join Swarm Cluster as Workers
+        command: docker swarm join --token {{ token }} ${master_ip}:2377
+        register: worker
+
+      - name: Show Results
+        debug: var=worker.stdout
+
+      - name: Show Errors
+        debug: var=worker.stderr

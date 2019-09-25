@@ -1,0 +1,194 @@
+# -------------------------------------------------------------------
+#
+# Module:         terraform-reference-app/green
+# Submodule:      dev.tfvars
+# Purpose:        Sets of values for the variables used in the
+#                 terraform scripts designed for use in development.
+#
+# Created on:     22 August 2018
+# Created by:     David Sanders
+# Creator email:  dsanderscanada@nospam-gmail.com
+#
+# -------------------------------------------------------------------
+# Modifed On   | Modified By                 | Release Notes
+# -------------------------------------------------------------------
+# 22 Aug 2018  | David Sanders               | First release and
+#                                            | valid creation of
+#                                            | sample app.
+# -------------------------------------------------------------------
+
+#
+# Debugging Variables
+#
+verbosity="low"
+
+#
+# Resource Groups
+#
+resource-group-name = "K8S" # The name of the resource group
+
+#
+# Storage Account Variables
+#
+sa-name = "k8s"
+sa-persistent-name = "k8s4x"
+
+#
+# Location and Tags
+#
+# Where to put resources in Azure; in the example below "East US"
+location = "eastus"
+# A target name for the deployment; e.g. DEV, BLUE, GREEN, etc.
+target = "xxx"
+# A label name to represent the location; e.g. EUS == East US
+environ = "EUS"
+
+# Default Tags - these can be set to any key and/or any value
+tags = {
+    tag-description = "K8S Bare metal"
+    tag-billing     = "Some billing code or something descriptive"
+    tag-environment = "DEV"
+    tag-target      = "East US"
+    tag-bg          = "dev"
+}
+
+#
+# Networks
+#
+
+# The name of the Virtual Network to be created
+vnet-name = "k8sbare"
+
+# The CIDR block for the VNET
+vnet-cidr = "10.70.0.0/20"
+
+# Deprecated - DO NOT USE
+vnet-resource-group = "RG-VNETS"
+
+# The prefix for subnets; note, this should match the first part
+# of vnet-cidr
+dc-prefix = "10.70"
+
+# The Management subnet name
+subnet-mgt-name = "K8S-MGT"
+
+# The Worker subnet name
+subnet-wrk-name = "K8S-WRK"
+
+# The CIDR for the Management subnet
+subnet-mgt-cidr = "dc-prefix.1.0/27"
+
+# The CIDR for the Worker subnet
+subnet-wrk-cidr = "dc-prefix.2.0/25"
+
+# The Static IP for the Load Balancer
+lb-static-pip = "dc-prefix.1.50"
+
+# The Static IP for worker 1
+worker-static-ip-1 = "dc-prefix.2.10"
+
+# The Static IP for the worker 2
+worker-static-ip-2 = "dc-prefix.2.11"
+
+# The Static IP for the Master
+master-static-ip-1 = "dc-prefix.1.6"
+
+# The Static IP for Master 2 (Not Used)
+master-static-ip-2 = "dc-prefix.1.7"
+
+# The Static IP for Master 3 (Not Used)
+master-static-ip-3 = "dc-prefix.1.8"
+
+# The Static IP for the jumpbox - NOTE, this is in the 
+# management subnet
+jumpbox-static-ip = "dc-prefix.1.20"
+
+# The name for the Network Security Group
+nsg-name = "K8S"
+
+# The Public DNS name (Not used)
+public-dns-name = ""
+
+# The NIC name prefix
+nic-name = "K8S"
+
+#
+# Load Balancer
+#
+
+# The Frontend port for the load balancer (Not currently used)
+lb-frontend-port = "80"
+
+# The Backend port for the load balancer (Not currently used)
+lb-backend-port = "8080"
+
+#
+# Datadisk
+#
+
+# The resource name of the persistent disk (See README.md)
+disk-master-name = "K8S-MASTER-DATA-DISK"
+
+# The name of the resource group for the persistent disk (See README.md)
+disk-rg-name = "RG-K8S-PERSISTENT"
+
+#
+# VM
+#
+
+# The VM name prefix
+vm-name = "K8S"
+
+# The VM size (Not used)
+vm-size = "Standard_B2s"
+
+# The VM size of the manager
+manager-vm-size = "Standard_A2_v2"
+
+# The VM size of the workers
+worker-vm-size = "Standard_A2_v2"
+
+# The VM size of the jumpbox
+jumpbox-vm-size = "Standard_A1_v2"
+
+# Details when using a prepared image (Not used)
+image-name = "img-ubuntu"
+image-version = "1-0-26-u"
+image-rg = "RG-ENGINEERING"
+
+# The private key (on the provisionning machine) to be used
+# by the Azure VMs - This **WILL** be copied to the machines
+# so it is **NOT** a good idea to use id_rsa; use 
+# `ssh-keygen -b 4096 -t rsa` to generare a unique key used
+# only for this Terraform script
+private-key = "~/.ssh/azure-pk"
+
+# Boolean to instruct delete OS disk on termination; default 
+# to true to keep at true to avoid incurring costs.
+delete-osdisk-on-termination = true
+
+# Boolean to instruct delete data disk on termination; default 
+# false is you want to persist data between sessions; set to true
+# to delete it and avoid incurring costs, although you will need
+# to recreate it each time.
+delete-datadisk-on-termination = false
+
+# Disable password auth on the VMs
+vm-disable-password-auth = true
+
+# Set the name of the Azure VM admin
+vm-adminuser = "azadmin"
+
+# Set the password of the Azure VM admin (Not used)
+vm-adminpass = "Password1234!"
+
+# Set the VM disk type
+vm-osdisk-type = "Standard_LRS"
+
+
+#
+# Helm
+#
+# Set the service account name for the tiller rbac role
+#
+helm_service_account_name = "tiller"
