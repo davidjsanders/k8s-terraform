@@ -58,12 +58,9 @@ resource "azurerm_virtual_machine" "vm-master" {
   os_profile {
     computer_name = upper(
       format(
-        "%s-MASTER-%01d-%s-%s%s",
-        var.vm-name,
-        1,
-        var.target,
-        var.environ,
-        local.l-random,
+        "%s-%01d",
+        "K8S-MASTER",
+        1
       ),
     )
     admin_username = var.vm-adminuser

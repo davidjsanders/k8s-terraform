@@ -1,13 +1,13 @@
-# - name: Sleep for 30s to enable workers to ready
-#   pause:
-#     seconds: 30
-
-- name: Label worker 1
+- name: Label workers
   shell: |
-    echo "Adding label worker to {{ worker_1|lower }}"
-    kubectl label node {{ worker_1|lower }} role=worker
-    echo "Adding label worker to {{ worker_2|lower }}"
-    kubectl label node {{ worker_2|lower }} role=worker
-    echo "Adding label master to {{ master|lower }}"
-    kubectl label node {{ master|lower }} role=master
+    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} role=worker
+  with_items:
+  - "{{ groups['workers'] }}"
+  ignore_errors: yes
+
+- name: Label Masters
+  shell: |
+    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} role=master
+  with_items:
+  - "{{ groups['masters'] }}"
   ignore_errors: yes

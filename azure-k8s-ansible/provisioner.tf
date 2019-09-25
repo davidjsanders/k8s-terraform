@@ -51,36 +51,6 @@ resource "null_resource" "provisioner" {
   }
 
   provisioner "file" {
-    content     = data.template_file.template-master-vars-yml.rendered
-    destination = "/home/${var.vm-adminuser}/playbooks/k8s_master/vars/main.yml"
-  }
-
-  provisioner "file" {
-    content     = data.template_file.template-workers-vars-yml.rendered
-    destination = "/home/${var.vm-adminuser}/playbooks/k8s_label_nodes/vars/main.yml"
-  }
-
-  provisioner "file" {
-    content     = data.template_file.template-nginx-vars.rendered
-    destination = "/home/${var.vm-adminuser}/playbooks/k8s_nginx_ingress_controller/vars/main.yml"
-  }
-
-  provisioner "file" {
-    content     = data.template_file.template-nfs-provisioner-vars.rendered
-    destination = "/home/${var.vm-adminuser}/playbooks/k8s_nfs_provisioner/vars/main.yml"
-  }
-
-  provisioner "file" {
-    content     = data.template_file.template-nexus-vars.rendered
-    destination = "/home/${var.vm-adminuser}/playbooks/k8s_nexus_oss/vars/main.yml"
-  }
-
-  provisioner "file" {
-    content     = data.template_file.template-letsencrypt.rendered
-    destination = "/home/${var.vm-adminuser}/playbooks/k8s_letsencrypt/vars/main.yml"
-  }
-
-  provisioner "file" {
     content     = data.template_file.template-hosts-file.rendered
     destination = "/home/${var.vm-adminuser}/hosts"
   }

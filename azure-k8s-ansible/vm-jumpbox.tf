@@ -54,11 +54,8 @@ resource "azurerm_virtual_machine" "vm-jumpbox" {
 
   os_profile {
     computer_name = format(
-      "%s-JUMPBOX-%s-%s%s",
-      var.vm-name,
-      var.target,
-      var.environ,
-      local.l-random,
+      "%s",
+      "jumpbox"
     )
     admin_username = var.vm-adminuser
     admin_password = var.vm-adminpass

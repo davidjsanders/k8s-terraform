@@ -21,8 +21,6 @@ data "template_file" "template-hosts-file" {
 
   vars = {
     master  = azurerm_network_interface.k8s-nic-master.private_ip_address
-    worker1 = azurerm_network_interface.k8s-nic-workers[0].private_ip_address
-    worker2 = azurerm_network_interface.k8s-nic-workers[1].private_ip_address
     jumpbox = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
   }
 }

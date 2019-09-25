@@ -19,6 +19,8 @@
 data "template_file" "template-ssh-config" {
   template = file("template-data/config")
 
-  vars = {}
+  vars = {
+    hosts = "k8s-master %{ for i in range(1, var.workers.vm-count+1) ~}${var.workers.prefix}-${i} %{ endfor ~} jumpbox"
+  }
 }
 

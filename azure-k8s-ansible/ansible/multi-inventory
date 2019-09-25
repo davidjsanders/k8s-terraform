@@ -5,6 +5,7 @@ k8s-jumpbox ansible_host=${jumpbox}
 k8s-master ansible_host=${master}
 
 [masters]
+k8s-master ansible_host=${master}
 ${masters}
 
 [workers]

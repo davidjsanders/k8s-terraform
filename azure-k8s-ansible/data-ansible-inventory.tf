@@ -24,7 +24,18 @@ data "template_file" "template-ansible-inventory" {
   vars = {
     master                   = azurerm_network_interface.k8s-nic-master.private_ip_address
     masters                  = ""
-    workers                  = "%{ for vm in ["k8s-worker-1", "k8s-worker-2"] ~}${vm}  ansible_host=${vm}\n%{ endfor ~}"
+    workers = join(
+      "\n",
+      [
+        for i in range(0, var.workers.vm-count) : 
+          format(
+            "%s-%01d    ansible_host=%s",
+            var.workers.prefix,
+            i+1,
+            azurerm_network_interface.k8s-nic-workers.*.private_ip_address[i]
+          )
+      ]
+    )
     jumpbox                  = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
     admin                    = var.vm-adminuser
     email                    = var.email
