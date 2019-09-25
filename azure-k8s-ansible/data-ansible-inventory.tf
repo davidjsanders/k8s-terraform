@@ -16,6 +16,14 @@
 # -------------------------------------------------------------------
 # 11 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 24 Sep 2019  | David Sanders               | Update to place all
+#              |                             | variables in inventory
+#              |                             | and populate through a
+#              |                             | single template_file.
+#              |                             | Change k8s advertise
+#              |                             | IP to match the IP from
+#              |                             | the NIC automatically.
+# -------------------------------------------------------------------
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-ansible-inventory" {
@@ -43,7 +51,7 @@ data "template_file" "template-ansible-inventory" {
     domain_name              = var.ddns_domain_name
     kubeadm_api              = "kubeadm.k8s.io"
     kubeadm_api_version      = "v1beta1"
-    kubeadm_api_advertise_ip = "10.70.1.6"
+    kubeadm_api_advertise_ip = "${azurerm_network_interface.k8s-nic-master.private_ip_address}"
     kubeadm_cert_dir         = "/etc/kubernetes/pki"
     kubeadm_cluster_name     = "kubernetes"
     kubeadm_pod_subnet       = "192.168.0.0/16"
