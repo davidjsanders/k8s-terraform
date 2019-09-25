@@ -15,6 +15,8 @@
 # -------------------------------------------------------------------
 # 10 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 24 Sep 2019  | David Sanders               | Rename master hostname
+# -------------------------------------------------------------------
 
 resource "azurerm_virtual_machine" "vm-master" {
   availability_set_id              = azurerm_availability_set.k8s-avset-mgr.id
@@ -58,9 +60,8 @@ resource "azurerm_virtual_machine" "vm-master" {
   os_profile {
     computer_name = upper(
       format(
-        "%s-%01d",
-        "K8S-MASTER",
-        1
+        "%s",
+        "K8S-MASTER"
       ),
     )
     admin_username = var.vm-adminuser
