@@ -71,6 +71,7 @@
   - k8s_letsencrypt
   - k8s_nexus_oss
   - app_helm
+  - app_jenkins
 
 # Remove jumpbox reboot
 # - hosts:

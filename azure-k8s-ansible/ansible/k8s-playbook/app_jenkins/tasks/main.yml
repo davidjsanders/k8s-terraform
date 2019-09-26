@@ -1,0 +1,17 @@
+- name: Fetch k8s-jenkins from GitHub
+  git:
+    repo: 'https://github.com/dsandersAzure/k8s-jenkins.git'
+    path: "/home/{{ admin }}/jenkins"
+    update: yes
+    force: yes
+
+- name: Execute k8s-jenkins command script
+  shell: |
+    /home/{{ admin }}/jenkins/load-jenkins.sh
+    sleep 2
+  environment:
+    datapath: "/home/{{ admin }}/jenkins"
+    storageclass: "local-storage"
+    selectorkey: "role"
+    selectorvalue: "worker"
+    registry: "k8s-master:32080"

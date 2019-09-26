@@ -22,7 +22,7 @@
 
 - name: Fetch Helm 2.14.1
   unarchive:
-    path: https://get.helm.sh/helm-v2.14.1-linux-amd64.tar.gz
+    src: https://get.helm.sh/helm-v2.14.1-linux-amd64.tar.gz
     dest: /tmp/
     remote_src: true
   when: helm.stat.exists == False or tiller.stat.exists == False
@@ -31,6 +31,7 @@
   copy:
     src: /tmp/linux-amd64/helm
     dest: /usr/local/bin/helm
+    remote_src: yes
     mode: '0755'
   when: helm.stat.exists == False
 
@@ -38,6 +39,7 @@
   copy:
     src: /tmp/linux-amd64/tiller
     dest: /usr/local/bin/tiller
+    remote_src: yes
     mode: '0755'
   when: helm.stat.exists == False
 
