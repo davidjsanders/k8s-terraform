@@ -15,6 +15,10 @@
 # -------------------------------------------------------------------
 # 08 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 25 Sep 2019  | David Sanders               | Use cidrsubnet to
+#              |                             | generate subnet
+#              |                             | for master.
+# -------------------------------------------------------------------
 
 resource "azurerm_subnet" "k8s-subnet-master" {
   # address_prefix = replace(var.subnet-master-cidr, "dc-prefix", var.dc-prefix)
