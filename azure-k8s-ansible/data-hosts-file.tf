@@ -20,10 +20,28 @@ data "template_file" "template-hosts-file" {
   template = file("template-data/hosts")
 
   vars = {
-    master  = azurerm_network_interface.k8s-nic-master.private_ip_address
-    worker1 = azurerm_network_interface.k8s-nic-workers[0].private_ip_address
-    worker2 = azurerm_network_interface.k8s-nic-workers[1].private_ip_address
-    jumpbox = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
+    jumpbox = format(
+      "%s    %s",
+      azurerm_network_interface.k8s-nic-jumpbox.private_ip_address,
+      "jumpbox"
+    )
+    master  = format(
+      "%s    %s",
+      azurerm_network_interface.k8s-nic-master.private_ip_address,
+      "k8s-master"
+    )
+    workers = join(
+      "\n",
+      [
+        for i in range(0, var.workers.vm-count) : 
+          format(
+            "%s    %s-%01d",
+            azurerm_network_interface.k8s-nic-workers.*.private_ip_address[i],
+            var.workers.prefix,
+            i+1
+          )
+      ]
+    )
   }
 }
 

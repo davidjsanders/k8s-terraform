@@ -16,7 +16,7 @@
 # -------------------------------------------------------------------
 
 provider "azurerm" {
-  version         = "1.28.0"
+  version         = "1.34.0"
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id

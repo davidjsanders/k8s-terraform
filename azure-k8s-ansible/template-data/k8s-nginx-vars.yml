@@ -1,3 +1,0 @@
-admin: "${admin}"
-auth_file: "${auth_file}"
-domain_name: "${domain_name}"

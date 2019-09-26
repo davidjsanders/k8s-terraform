@@ -34,7 +34,9 @@ resource "azurerm_network_interface" "k8s-nic-master" {
       local.l-random,
     )
     private_ip_address_allocation = "Static"
-    private_ip_address            = replace(var.master-static-ip-1, "dc-prefix", var.dc-prefix)
+    private_ip_address = cidrhost(
+      azurerm_subnet.k8s-subnet-master.address_prefix,
+      5)
     subnet_id                     = azurerm_subnet.k8s-subnet-master.id
   }
 

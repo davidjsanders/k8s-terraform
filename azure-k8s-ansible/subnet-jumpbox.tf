@@ -17,7 +17,12 @@
 # -------------------------------------------------------------------
 
 resource "azurerm_subnet" "k8s-subnet-jumpbox" {
-  address_prefix = replace(var.subnet-jump-cidr, "dc-prefix", var.dc-prefix)
+  # address_prefix = replace(var.subnet-jump-cidr, "dc-prefix", var.dc-prefix)
+  address_prefix = cidrsubnet(
+    azurerm_virtual_network.k8s-vnet.address_space[0], 
+    8, 
+    48
+  )
   name = format(
     "SNET-%s-%s-%s-%s%s",
     var.vnet-name,

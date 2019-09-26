@@ -15,13 +15,22 @@
 # -------------------------------------------------------------------
 # 08 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
+# 23 Sep 2019  | David Sanders               | Use cidrsubnet to
+#              |                             | generate subnet
+#              |                             | for workers.
+# -------------------------------------------------------------------
 
 resource "azurerm_subnet" "k8s-subnet-worker" {
-  address_prefix = replace(var.subnet-wrk-cidr, "dc-prefix", var.dc-prefix)
+  # Assumes the first address space is used for the worker subnet
+  address_prefix = cidrsubnet(
+    azurerm_virtual_network.k8s-vnet.address_space[0], 
+    8, 
+    32
+  )
   name = format(
     "SNET-%s-%s-%s-%s%s",
     var.vnet-name,
-    var.subnet-wrk-name,
+    var.subnet-worker-name,
     var.target,
     var.environ,
     local.l-random,

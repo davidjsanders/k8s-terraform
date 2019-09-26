@@ -34,7 +34,9 @@ resource "azurerm_network_interface" "k8s-nic-jumpbox" {
       local.l-random,
     )
     private_ip_address_allocation = "Static"
-    private_ip_address            = replace(var.jumpbox-static-ip, "dc-prefix", var.dc-prefix)
+    private_ip_address = cidrhost(
+      azurerm_subnet.k8s-subnet-jumpbox.address_prefix,
+      5)
     public_ip_address_id          = azurerm_public_ip.k8s-pip-jump.id
     subnet_id                     = azurerm_subnet.k8s-subnet-jumpbox.id
   }

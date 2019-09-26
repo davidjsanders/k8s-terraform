@@ -10,7 +10,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: "traefik{{ domain_name }}"
+  - host: "traefik{{ domain }}"
     http:
       paths:
       - path: /

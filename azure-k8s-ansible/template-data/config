@@ -16,7 +16,11 @@
 # -------------------------------------------------------------------
 # 10 Sep 2019  | David Sanders               | First release.
 # -------------------------------------------------------------------
-Host k8s-master k8s-worker-1 k8s-worker-2
+# 24 Sep 2019  | David Sanders               | Handle dynamic masters
+#              |                             | and workers.
+# -------------------------------------------------------------------
+
+Host ${hosts}
   StrictHostKeyChecking no
   IdentitiesOnly yes
   IdentityFile ~/.ssh/azure_pk
