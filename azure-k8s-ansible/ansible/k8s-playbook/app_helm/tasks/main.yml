@@ -1,4 +1,4 @@
-- name: Check manifest exists
+- name: Check manifests exist
   stat:
     path: "/home/{{ admin }}/k8s/helm"
   register: manifests
