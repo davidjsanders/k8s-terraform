@@ -64,12 +64,6 @@ masters = {
 }
 
 #
-# Letsencrypt variables
-#
-email="dsanderscanada@gmail.com"
-nexus_dns_name="nexus-tls.dgsd-consulting.com"
-
-#
 # Kubernetes Variables
 #
 os_k8s_version="1.14.3-00"
