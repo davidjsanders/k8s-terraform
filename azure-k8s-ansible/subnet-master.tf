@@ -17,11 +17,16 @@
 # -------------------------------------------------------------------
 
 resource "azurerm_subnet" "k8s-subnet-master" {
-  address_prefix = replace(var.subnet-mgt-cidr, "dc-prefix", var.dc-prefix)
+  # address_prefix = replace(var.subnet-master-cidr, "dc-prefix", var.dc-prefix)
+  address_prefix = cidrsubnet(
+    azurerm_virtual_network.k8s-vnet.address_space[0], 
+    8, 
+    16
+  )
   name = format(
     "SNET-%s-%s-%s-%s%s",
     var.vnet-name,
-    var.subnet-mgt-name,
+    var.subnet-master-name,
     var.target,
     var.environ,
     local.l-random,

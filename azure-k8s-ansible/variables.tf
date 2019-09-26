@@ -22,8 +22,38 @@
 # 23 Sep 2019  | David Sanders               | Add map vars for
 #              |                             | workers.
 # -------------------------------------------------------------------
+# 25 Sep 2019  | David Sanders               | Add new kubernetes
+#              |                             | variable for kubeadm.
+#              |                             | Tidy up variables and
+#              |                             | naming conventions.
+# -------------------------------------------------------------------
 
-variable "workers" {}
+variable "workers" {
+  default = {
+    vm-count    = 2
+    prefix      = "k8s-worker"
+    vm-size     = "Standard_DS3_v2"
+    publisher   = "Canonical"
+    offer       = "UbuntuServer"
+    sku         = "18.04-LTS"
+    version     = "latest"
+    delete_os   = true
+    delete_data = true
+  }
+}
+variable "masters" {
+  default = {
+    vm-count    = 1
+    prefix      = "k8s-master"
+    vm-size     = "Standard_DS2_v2"
+    publisher   = "Canonical"
+    offer       = "UbuntuServer"
+    sku         = "18.04-LTS"
+    version     = "latest"
+    delete_os   = true
+    delete_data = true
+  }
+}
 
 # Letsencrypt Variables
 variable "email" {}
@@ -70,7 +100,28 @@ variable "auth_file" {
 #
 # Kubernetes Variables
 #
-variable "k8s_version" {
+variable "kubeadm_api" {
+  default = "kubeadm.k8s.io"
+}
+variable "kubeadm_api_version" {
+  default = "v1beta1"
+}
+variable "kubeadm_cert_dir" {
+  default = "/etc/kubernetes/pki"
+}
+variable "kubeadm_cluster_name" {
+  default = "kubernetes"
+}
+variable "kubeadm_pod_subnet" {
+  default = "192.168.0.0/16"
+}
+variable "kubeadm_service_subnet" {
+  default = "10.96.0.0/12"
+}
+variable "kubeadm_k8s_version" {
+  default = "v1.14.3"
+}
+variable "os_k8s_version" {
   default = "1.14.3-00"
 }
 
@@ -122,88 +173,81 @@ variable "disk-master-name" {
 variable "vnet-name" {
 }
 
-variable "vnet-resource-group" {
-}
-
 variable "vnet-cidr" {
 }
 
-variable "subnet-mgt-name" {
+variable "subnet-master-name" {
 }
 
-variable "subnet-mgt-cidr" {
-}
-
-variable "subnet-wrk-name" {
-}
-
-variable "subnet-wrk-cidr" {
+variable "subnet-worker-name" {
 }
 
 variable "subnet-jump-name" {
 }
 
-variable "subnet-jump-cidr" {
-}
-
-variable "subnet-lb-name" {
-}
-
-variable "subnet-lb-cidr" {
-}
-
 variable "nsg-name" {
-}
-
-variable "dc-prefix" {
-}
-
-variable "public-dns-name" {
-}
-
-variable "lb-static-pip" {
-}
-
-variable "lb-prefix" {
 }
 
 variable "lb-name" {
 }
 
-variable "jump-name" {
-}
-
-variable "jump-prefix" {
-}
-
-variable "worker-static-ip-1" {
-}
-
-variable "worker-static-ip-2" {
-}
-
-variable "master-static-ip-1" {
-}
-
-variable "master-static-ip-2" {
-}
-
-variable "master-static-ip-3" {
-}
-
-variable "jumpbox-static-ip" {
-}
-
-variable "nic-name" {
-}
-
 #
 # Load Balancer Variables
 #
-variable "lb-frontend-port" {
+variable "lb-ports" {
+  default = [
+    {
+        name = "http-port80"
+        protocol = "Tcp"
+        frontend-port = "80"
+        backend-port = "30888"
+    },
+    {
+        name = "https-port443"
+        protocol = "Tcp"
+        frontend-port = "443"
+        backend-port = "30443"
+    }
+  ]
 }
 
-variable "lb-backend-port" {
+#
+# NSG Rules
+#
+variable "nsg-rules-jumpbox" {
+  default = [
+    {
+        name                        = "NSG-ALLOW-22-JUMPBOX"
+        direction                   = "Inbound"
+        access                      = "Allow"
+        protocol                    = "Tcp"
+        source_port_range           = "*"
+        destination_port_range      = "22"
+        source_address_prefix       = "Internet"
+    }
+  ]
+}
+variable "nsg-rules-workers" {
+  default = [
+    {
+        name                        = "NSG-ALLOW-80-WORKERS"
+        direction                   = "Inbound"
+        access                      = "Allow"
+        protocol                    = "Tcp"
+        source_port_range           = "*"
+        destination_port_range      = "30888"
+        source_address_prefix       = "Internet"
+    },
+    {
+        name                        = "NSG-ALLOW-443-WORKERS"
+        direction                   = "Inbound"
+        access                      = "Allow"
+        protocol                    = "Tcp"
+        source_port_range           = "*"
+        destination_port_range      = "30443"
+        source_address_prefix       = "Internet"
+    }
+  ]
 }
 
 #
@@ -230,7 +274,13 @@ variable "tags" {
 #
 # VM Variables
 #
-variable "vm-name" {
+variable "vm-jumpbox-name" {
+}
+
+variable "vm-master-name" {
+}
+
+variable "image-rg" {
 }
 
 variable "image-name" {
@@ -239,19 +289,13 @@ variable "image-name" {
 variable "image-version" {
 }
 
-variable "vm-size" {
-}
-
-variable "manager-vm-size" {
+variable "master-vm-size" {
 }
 
 variable "worker-vm-size" {
 }
 
 variable "jumpbox-vm-size" {
-}
-
-variable "image-rg" {
 }
 
 variable "private-key" {
@@ -273,24 +317,6 @@ variable "vm-adminuser" {
 }
 
 variable "vm-osdisk-type" {
-}
-
-#
-# Docker Variables
-#
-variable "docker_username" {
-}
-
-variable "docker_password" {
-}
-
-variable "docker_registry" {
-}
-
-variable "docker_image" {
-}
-
-variable "docker_tag" {
 }
 
 #

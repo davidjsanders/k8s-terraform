@@ -30,7 +30,7 @@ resource "azurerm_subnet" "k8s-subnet-worker" {
   name = format(
     "SNET-%s-%s-%s-%s%s",
     var.vnet-name,
-    var.subnet-wrk-name,
+    var.subnet-worker-name,
     var.target,
     var.environ,
     local.l-random,

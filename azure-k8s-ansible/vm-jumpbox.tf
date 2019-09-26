@@ -22,7 +22,12 @@ resource "azurerm_virtual_machine" "vm-jumpbox" {
   delete_data_disks_on_termination = "true"
   location                         = var.location
   name = upper(
-    format("VM-JUMP-%s-%s%s", var.target, var.environ, local.l-random),
+    format(
+      "VM-JUMP-%s-%s%s", 
+      var.target, 
+      var.environ, 
+      local.l-random
+      )
   )
   network_interface_ids = [azurerm_network_interface.k8s-nic-jumpbox.id]
   resource_group_name   = azurerm_resource_group.k8s-rg.name
@@ -53,10 +58,10 @@ resource "azurerm_virtual_machine" "vm-jumpbox" {
   }
 
   os_profile {
-    computer_name = format(
+    computer_name = upper(format(
       "%s",
-      "jumpbox"
-    )
+      var.vm-jumpbox-name
+    ))
     admin_username = var.vm-adminuser
     admin_password = var.vm-adminpass
     custom_data    = ""

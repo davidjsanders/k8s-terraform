@@ -31,7 +31,7 @@ data "template_file" "template-hosts-file" {
       "k8s-master"
     )
     workers = join(
-      " ",
+      "\n",
       [
         for i in range(0, var.workers.vm-count) : 
           format(

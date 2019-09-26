@@ -23,11 +23,11 @@
   vars:
     packages:
     - jq
-    - kubeadm=1.14.3-00
-    - kubelet=1.14.3-00
-    - kubectl=1.14.3-00
+    - kubeadm={{ os_k8s_version }}
+    - kubelet={{ os_k8s_version }}
+    - kubectl={{ os_k8s_version }}
 
-- name: Mark kube packages at 1.14.3-00
+- name: Mark kube packages at {{ os_k8s_version }}
   dpkg_selections:
     name: "{{ item }}"
     selection: hold

@@ -2,7 +2,8 @@
 **/.terraform/*
 **/targets/*.secret
 **/targets/*-run
-**/targets/*.tfvars
+**/targets/beconf.tfvars
+azure-k8s-bare/targets/*.tfvars
 **/.DS_Store
 **/*.old
 **/*.json

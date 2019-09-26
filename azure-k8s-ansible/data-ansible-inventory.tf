@@ -34,22 +34,21 @@ data "template_file" "template-ansible-inventory" {
     admin                        = var.vm-adminuser
     auth_file                    = var.auth_file
     ansible_ssh_private_key_file = format(
-      "/home/%s/.ssh/%s",
-      var.vm-adminuser,
-      "azure_pk" # To be variablized
+      "/home/%s/.ssh/azure_pk",
+      var.vm-adminuser
     )
     domain                       = var.ddns_domain_name
-    domain                  = var.ddns_domain_name
     email                        = var.email
     jumpbox                      = azurerm_network_interface.k8s-nic-jumpbox.private_ip_address
-    kubeadm_api                  = "kubeadm.k8s.io"
-    kubeadm_api_version          = "v1beta1"
-    kubeadm_api_advertise_ip     = "${azurerm_network_interface.k8s-nic-master.private_ip_address}"
-    kubeadm_cert_dir             = "/etc/kubernetes/pki"
-    kubeadm_cluster_name         = "kubernetes"
-    kubeadm_pod_subnet           = "192.168.0.0/16"
-    kubeadm_service_subnet       = "10.96.0.0/12"
-    kubeadm_k8s_version          = "v1.14.3"
+    kubeadm_api                  = var.kubeadm_api
+    kubeadm_api_version          = var.kubeadm_api_version
+    kubeadm_api_advertise_ip     = azurerm_network_interface.k8s-nic-master.private_ip_address
+    kubeadm_cert_dir             = var.kubeadm_cert_dir
+    kubeadm_cluster_name         = var.kubeadm_cluster_name
+    kubeadm_pod_subnet           = var.kubeadm_pod_subnet
+    kubeadm_service_subnet       = var.kubeadm_service_subnet
+    kubeadm_k8s_version          = var.kubeadm_k8s_version
+    os_k8s_version               = var.os_k8s_version
     master                       = azurerm_network_interface.k8s-nic-master.private_ip_address
     masters                      = ""
     workers = join(

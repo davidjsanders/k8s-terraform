@@ -28,7 +28,7 @@ resource "azurerm_virtual_machine" "vm-master" {
   )
   network_interface_ids = [azurerm_network_interface.k8s-nic-master.id]
   resource_group_name   = azurerm_resource_group.k8s-rg.name
-  vm_size               = var.manager-vm-size
+  vm_size               = var.master-vm-size
 
   boot_diagnostics {
     storage_uri = azurerm_storage_account.k8s-sa-boot-diag.primary_blob_endpoint
@@ -61,7 +61,7 @@ resource "azurerm_virtual_machine" "vm-master" {
     computer_name = upper(
       format(
         "%s",
-        "K8S-MASTER"
+        var.vm-master-name
       ),
     )
     admin_username = var.vm-adminuser
