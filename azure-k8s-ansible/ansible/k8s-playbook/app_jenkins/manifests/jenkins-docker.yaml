@@ -1,0 +1,100 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  labels:
+    app: jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        role: master
+    spec:
+      hostAliases:
+      - ip: "{{ master }}"
+        hostnames:
+        - "{{ master_name }}"
+      containers:
+      - name: docker-in-docker
+        args: ["-H", "tcp://0.0.0.0:2375", "--config-file", "/etc/docker/config/daemon.json"]
+        command: ["dockerd"]
+        env:
+        - name: DOCKER_HOST
+          value: tcp://localhost:2375
+        image: "{{ registry }}docker:19.03.1-dind"
+        ports:
+        - containerPort: 2375
+        resources:
+          limits:
+            cpu: .5
+            memory: 3000Mi
+          requests:
+            cpu: .25
+            memory: 2000Mi
+        securityContext:
+          privileged: true
+          runAsUser: 0
+          allowPrivilegeEscalation: true
+        volumeMounts:
+        - mountPath: /var/lib/docker
+          name: docker
+        - mountPath: /etc/docker/config
+          name: daemon-json
+      - name: jenkins
+        env:
+        - name: DOCKER_HOST
+          value: tcp://localhost:2375
+        - name: JAVA_OPTS
+          value: '-Xmx4000m'
+        # - name: JENKINS_OPTS
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: jenkins
+        #       key: options
+        image: "{{ registry }}jenkins/jenkins:2.192-alpine"
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 8080
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 2
+          failureThreshold: 5
+          initialDelaySeconds: 60
+        securityContext:
+          runAsUser: 1000
+        volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: jenkins-home
+        resources:
+          limits:
+            cpu: 2
+            memory: 4500Mi
+          requests:
+            cpu: .5
+            memory: 4000Mi
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+      - name: jenkins-home
+        persistentVolumeClaim:
+          claimName: jenkins-pvc
+      - name: docker
+        persistentVolumeClaim:
+          claimName: docker-pvc
+      - name: daemon-json
+        configMap:
+          name: docker-daemon
+          items:
+          - key: daemon.json
+            path: daemon.json

@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  daemon.json: |
+    {
+        "insecure-registries": [
+            "{{ master_name }}:32000",
+            "{{ master_name }}:32080",
+            "{{ master_name }}:32081",
+            "{{ master_name }}:32082",
+            "{{ master_name }}:32083",
+            "{{ master_name }}:32084",
+            "nexus-docker.default.svc.cluster.local:18080",
+            "nexus-docker.default.svc.cluster.local:18081",
+            "nexus-docker.default.svc.cluster.local:18082",
+            "nexus-docker.default.svc.cluster.local:18083",
+            "nexus-docker.default.svc.cluster.local:18084"
+        ]
+    }
+kind: ConfigMap
+metadata:
+  name: docker-daemon
+  namespace: jenkins

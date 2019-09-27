@@ -1,17 +1,178 @@
-- name: Fetch k8s-jenkins from GitHub
-  git:
-    repo: 'https://github.com/dsandersAzure/k8s-jenkins.git'
-    path: "/home/{{ admin }}/jenkins"
-    update: yes
-    force: yes
+- name: Check manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/jenkins"
+  register: manifests
 
-- name: Execute k8s-jenkins command script
+- name: Copy manifests
+  copy:
+    src: app_jenkins/manifests/
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated namespace
+  template:
+    src: app_jenkins/manifests/namespace.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated Docker config
+  template:
+    src: app_jenkins/manifests/docker-daemon.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated jenkins-docker deploy
+  template:
+    src: app_jenkins/manifests/jenkins-docker.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated sonarqube deploy
+  template:
+    src: app_jenkins/manifests/sonarqube.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated jenkins ingress
+  template:
+    src: app_jenkins/manifests/jenkins-ingress.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated sonarqube ingress
+  template:
+    src: app_jenkins/manifests/sonarqube-ingress.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Check if Jenkins data share exists
+  stat:
+    path: "/datadrive/export/jenkins-data"
+  register: jenkins_data
+
+- name: Make jenkins data directory
+  file:
+    path: "/datadrive/export/jenkins-data"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: jenkins_data.stat.exists == False
+
+- name: Check if Sonarqube conf share exists
+  stat:
+    path: "/datadrive/export/sonarqube/conf"
+  register: sonar_conf
+
+- name: Make Sonarqube conf directory
+  file:
+    path: "/datadrive/export/sonarqube/conf"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: sonar_conf.stat.exists == False
+
+- name: Check if Sonarqube data share exists
+  stat:
+    path: "/datadrive/export/sonarqube/data"
+  register: sonar_data
+
+- name: Make Sonarqube conf directory
+  file:
+    path: "/datadrive/export/sonarqube/data"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: sonar_data.stat.exists == False
+
+- name: Check if Sonarqube logs share exists
+  stat:
+    path: "/datadrive/export/sonarqube/logs"
+  register: sonar_logs
+
+- name: Make Sonarqube logs directory
+  file:
+    path: "/datadrive/export/sonarqube/logs"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: sonar_logs.stat.exists == False
+
+- name: Check if Docker share exists
+  stat:
+    path: "/datadrive/export/root/docker"
+  register: docker_root
+
+- name: Make Docker root directory
+  file:
+    path: "/datadrive/export/root/docker"
+    state: directory
+    owner: "root"
+  when: docker_root.stat.exists == False
+
+- name: Apply Jenkins namespace
   shell: |
-    /home/{{ admin }}/jenkins/load-jenkins.sh
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/namespace.yaml
     sleep 2
-  environment:
-    datapath: "/home/{{ admin }}/jenkins"
-    storageclass: "local-storage"
-    selectorkey: "role"
-    selectorvalue: "worker"
-    registry: "k8s-master:32080"
+
+- name: Apply Docker config
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/docker-daemon.yaml
+    sleep 2
+
+- name: Apply Peristent Volumes
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/pv.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-conf-pv.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-data-pv.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-logs-pv.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/docker-pv.yaml
+    sleep 2
+
+- name: Apply Peristent Volume Claims
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/pvc.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-conf-pvc.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-data-pvc.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-logs-pvc.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/docker-pvc.yaml
+    sleep 2
+
+- name: Apply Deployments
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/jenkins-docker.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube.yaml
+    sleep 2
+
+- name: Apply Services
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/jenkins-service.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-service.yaml
+    sleep 2
+
+- name: Apply Ingresses
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/jenkins-ingress.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/jenkins/sonarqube-ingress.yaml
+    sleep 2

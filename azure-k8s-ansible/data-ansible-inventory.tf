@@ -49,9 +49,13 @@ data "template_file" "template-ansible-inventory" {
     kubeadm_pod_subnet           = var.kubeadm_pod_subnet
     kubeadm_service_subnet       = var.kubeadm_service_subnet
     kubeadm_k8s_version          = var.kubeadm_k8s_version
-    os_k8s_version               = var.os_k8s_version
     master                       = azurerm_network_interface.k8s-nic-master.private_ip_address
+    master_name                  = var.vm-master-name
     masters                      = ""
+    nexus_username               = var.nexus_username
+    nexus_password               = var.nexus_password
+    os_k8s_version               = var.os_k8s_version
+    registry                     = format("%s:32080/", var.vm-master-name)
     workers = join(
       "\n",
       [
