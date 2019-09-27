@@ -109,5 +109,15 @@
 - name: Create Nexus ingress
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress.yaml
-    # sleep 2
-    # kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-prod.yaml
+    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-prod.yaml
+
+- name: Fetch credentials (if exist)
+  shell: kubectl get secret regcreds
+  register: docker_registry_secret
+  ignore_errors: yes
+
+- name: Create nexus credentials (pre-defined) in regcreds
+  shell: |
+    kubectl create secret docker-registry regcreds --docker-server=http://{{ registry }} --docker-username={{ nexus_username }} --docker-password="{{ nexus_password }}"
+  when: docker_registry_secret.stdout == ""

@@ -1,13 +1,13 @@
 - name: Label workers
   shell: |
-    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} role=worker
+    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} --overwrite role=worker
   with_items:
   - "{{ groups['workers'] }}"
   ignore_errors: yes
 
 - name: Label Masters
   shell: |
-    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} role=master
+    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} --overwrite role=master
   with_items:
   - "{{ groups['masters'] }}"
   ignore_errors: yes

@@ -55,6 +55,10 @@ variable "masters" {
   }
 }
 
+# Nexus Variables
+variable "nexus_username" {}
+variable "nexus_password" {}
+
 # Letsencrypt Variables
 variable "email" {}
 variable "nexus_dns_name" {}

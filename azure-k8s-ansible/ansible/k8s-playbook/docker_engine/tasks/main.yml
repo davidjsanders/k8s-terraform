@@ -107,6 +107,19 @@
     name: docker
     state: present
 
+- name: Make /etc/docker
+  file:
+    path: /etc/docker
+    state: directory
+    owner: "root"
+
+- name: Copy daemon.json
+  template:
+    src: docker_engine/templates/daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+
 - name: Enable Docker services
   systemd:
     name: docker.service

@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: sonarqube-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
+spec:
+  rules:
+  - host: "sonarqube{{ domain }}"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sonarqube-service
+          servicePort: sonarqube-ui
+  tls: # < placing a host in the TLS config will indicate a cert should be created
+  - hosts:
+    - "sonarqube{{ domain }}"
+    secretName: sonarqube-cert # < cert-manager will store the created certificate in this sec
