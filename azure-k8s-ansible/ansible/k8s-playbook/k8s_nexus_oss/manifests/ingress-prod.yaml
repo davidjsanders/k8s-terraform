@@ -4,7 +4,7 @@ metadata:
   name: nexus-oss-tls
   annotations:
     kubernetes.io/ingress.class: "nginx"    
-    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
   - host: "nxs{{ domain }}"
