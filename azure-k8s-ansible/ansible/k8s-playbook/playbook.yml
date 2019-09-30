@@ -72,6 +72,7 @@
   - app_nexus_oss
   - app_helm
   - app_jenkins
+  - app_postgres
 
 # Remove jumpbox reboot
 # - hosts:
