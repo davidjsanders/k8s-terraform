@@ -7,3 +7,4 @@ The to do list:
 * Add Postgres to the cluster
 * Add anchore to the cluster
 * Add dashboard
+* Add Vault and Jenkins/Vault integration
