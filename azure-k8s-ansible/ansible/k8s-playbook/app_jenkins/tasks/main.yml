@@ -10,6 +10,14 @@
     owner: "{{ admin }}"
   when: manifests.stat.exists == False
 
+- name: Copy getcreds script
+  copy:
+    src: app_jenkins/scripts/getcreds.sh
+    dest: "/home/{{ admin }}/k8s/jenkins/"
+    owner: "{{ admin }}"
+    mode: '0755'
+  when: manifests.stat.exists == False
+
 - name: Copy templated namespace
   template:
     src: app_jenkins/manifests/namespace.yaml

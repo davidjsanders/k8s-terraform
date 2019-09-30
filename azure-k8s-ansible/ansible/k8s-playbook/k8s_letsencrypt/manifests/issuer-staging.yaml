@@ -1,8 +1,8 @@
 apiVersion: certmanager.k8s.io/v1alpha1
-kind: Issuer
+kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
-  namespace: default
+  certmanager.k8s.io/cluster-issuer: "letsencrypt-staging"
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
