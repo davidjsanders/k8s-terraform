@@ -70,9 +70,10 @@
   - k8s_nginx_ingress_controller
   - k8s_letsencrypt
   - app_nexus_oss
+  - app_postgres
   - app_helm
   - app_jenkins
-  - app_postgres
+  - app_anchore
 
 # Remove jumpbox reboot
 # - hosts:

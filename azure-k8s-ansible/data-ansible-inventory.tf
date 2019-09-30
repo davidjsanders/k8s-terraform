@@ -58,6 +58,8 @@ data "template_file" "template-ansible-inventory" {
     postgres_db                  = var.postgres_db
     postgres_user                = var.postgres_user
     postgres_password            = var.postgres_password
+    postgres_endpoint            = var.postgres_endpoint
+    postgres_port                = var.postgres_port
     registry                     = format("%s:32080/", var.vm-master-name)
     workers = join(
       "\n",

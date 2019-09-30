@@ -67,6 +67,8 @@ variable "nexus_dns_name" {}
 variable "postgres_db" {}
 variable "postgres_user" {}
 variable "postgres_password" {}
+variable "postgres_endpoint" {}
+variable "postgres_port" {}
 
 # Dynamic DNS Variables
 variable "ddns_domain_name" {
