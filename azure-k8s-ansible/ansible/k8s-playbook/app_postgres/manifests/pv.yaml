@@ -1,0 +1,27 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  labels:
+    type: local-storage
+    app: postgres
+    role: postgres-data
+  name: postgres-pv
+  namespace: postgres
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: /datadrive/postgres-data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: "role"
+          operator: In
+          values:
+          - "worker"
+  persistentVolumeReclaimPolicy: Retain
