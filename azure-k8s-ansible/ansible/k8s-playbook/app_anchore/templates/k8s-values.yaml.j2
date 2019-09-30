@@ -1,0 +1,154 @@
+postgresql:
+  enabled: false
+  externalEndpoint: {{ postgress_endpoint }}:{{ postgres_port }}
+  postgresUser: {{ postgres_user }}
+  postgresPassword: {{ postgres_password }}
+  postgresDatabase: {{ postgres_db }}
+
+anchoreGlobal:
+  # Specifies an existing secret to be used for admin and db passwords
+  existingSecret: ""
+
+  # The scratchVolume controls the mounting of an external volume for scratch space for image analysis. Generally speaking
+  # you need to provision 3x the size of the largest image (uncompressed) that you want to analyze for this space.
+  scratchVolume:
+    mountPath: /analysis_scratch
+    details:
+      # Specify volume configuration here
+      emptyDir: {}
+
+  ###
+  # Start of General Anchore Engine Configurations (populates /config/config.yaml)
+  ###
+  # Set where default configs are placed at startup. This must be a writable location for the pod.
+  serviceDir: /anchore_service
+  logLevel: INFO
+
+  # Enable prometheus metrics
+  enableMetrics: true
+
+  # Sets the password & email address for the default anchore-engine admin user.
+  defaultAdminPassword: {{ postgres_user }}
+  defaultAdminEmail: {{ email }}
+
+  # To enable webhooks, set webhooksEnabled: true
+  webhooksEnabled: false
+
+  # Configure webhook outputs here. The service provides these webhooks for notifying external systems of updates
+  webhooks:
+    # User and password to be set (using HTTP basic auth) on all webhook calls if necessary
+    webhook_user: Null
+    webhook_password: Null
+    ssl_verify: true
+
+    # Endpoint for general notification delivery. These events are image/tag updates etc. This is globally configured
+    # and updates for all users are sent to the same host but with a different path for each user.
+    # <notification_type>/<userId> are required as documented at end of URI - only hostname:port should be configured.
+    general: {}
+      # url: "http://somehost:9090/<notification_type>/<userId>"
+
+# Configuration for the analyzer pods that perform image analysis
+# There may be many of these analyzers but best practice is to not have more than one per node since analysis
+# is very IO intensive. Use of affinity/anti-affinity rules for scheduling the analyzers is future work.
+anchoreAnalyzer:
+  replicaCount: 1
+  containerPort: 8084
+
+# Pod configuration for the anchore engine api service.
+anchoreApi:
+  replicaCount: 1
+
+anchoreCatalog:
+  replicaCount: 1
+
+  # Event log configuration for webhooks
+  events:
+    notification:
+      enabled: false
+      # Send notifications for events with severity level that matches items in this list
+      level:
+        - error
+        # - info
+
+  archive:
+    compression:
+      enabled: true
+      min_size_kbytes: 100
+    storage_driver:
+      # Valid storage driver names: 'db', 's3', 'swift'
+      name: db
+      config: {}
+
+  # kubernetes service configuration for anchore catalog api
+  service:
+    type: ClusterIP
+    port: 8082
+    annotations: {}
+    labels: {}
+
+# Pod configuration for the anchore engine policy service.
+anchorePolicyEngine:
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    port: 8087
+    annotations: {}
+    labels: {}
+
+# Pod configuration for the anchore engine simplequeue service.
+anchoreSimpleQueue:
+  replicaCount: 1
+
+# This section is used for configuring anchore enterprise.
+anchoreEnterpriseGlobal:
+  enabled: false
+
+# Configure the second postgres database instance for the enterprise feeds service.
+# Only utilized if anchoreEnterpriseGlobal.enabled: true
+anchore-feeds-db:
+  enabled: false
+
+  # Specify an external (already existing) postgres deployment for use.
+  # Set to the host and port. eg. mypostgres.myserver.io:5432
+  externalEndpoint: {{ postgress_endpoint }}:{{ postgres_port }}
+
+  # Configure size of the persitant volume used with helm managed chart.
+  # This should be commented out if using an external endpoint.
+  persistence:
+    resourcePolicy: nil
+    size: 20Gi
+
+anchoreEnterpriseFeeds:
+  enabled: false
+
+  # Set extra environment variables. These will be set on all feeds containers.
+  extraEnv: []
+    # - name: foo
+    #   value: bar
+
+  # Time delay in seconds between consecutive driver runs for processing data
+  cycleTimers:
+    driver_sync: 7200
+
+  # Configure the database connection within anchore-engine & enterprise-ui. This may get split into 2 different configurations based on service utilized.
+  dbConfig:
+    timeout: 120
+    # Use ssl, but the default postgresql config in helm's stable repo does not support ssl on server side, so this should be set for external dbs only for the time being
+    ssl: false
+    connectionPoolSize: 30
+    connectionPoolMaxOverflow: 100
+
+# Configure the Anchore Enterprise role based access control component.
+# This component consists of 2 containers that run as side-cars in the anchore engine api pod.
+anchoreEnterpriseRbac:
+  enabled: false
+
+# Configure the Anchore Enterprise reporting component.
+anchoreEnterpriseReports:
+  enabled: false
+
+# Configure the Anchore Enterprise UI.
+anchoreEnterpriseUi:
+  # If enabled is set to false, set anchore-ui-redis.enabled to false to ensure that helm doesn't stand up a unneccessary redis instance.
+  enabled: false
