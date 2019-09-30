@@ -69,7 +69,7 @@
   - k8s_traefik_ingress_controller
   - k8s_nginx_ingress_controller
   - k8s_letsencrypt
-  - k8s_nexus_oss
+  - app_nexus_oss
   - app_helm
   - app_jenkins
 
