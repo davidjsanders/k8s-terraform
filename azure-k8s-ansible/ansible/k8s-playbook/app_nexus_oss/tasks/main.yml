@@ -66,16 +66,9 @@
     owner: "{{ admin }}"
   when: manifests.stat.exists == False
 
-- name: Copy templated ingress (TLS - Staging)
-  template:
-    src: app_nexus_oss/manifests/ingress.yaml
-    dest: "/home/{{ admin }}/k8s/nexus_oss"
-    owner: "{{ admin }}"
-  when: manifests.stat.exists == False
-
 - name: Copy templated ingress (TLS - Production)
   template:
-    src: app_nexus_oss/manifests/ingress-prod.yaml
+    src: app_nexus_oss/manifests/ingress.yaml
     dest: "/home/{{ admin }}/k8s/nexus_oss"
     owner: "{{ admin }}"
   when: manifests.stat.exists == False

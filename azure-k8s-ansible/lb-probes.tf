@@ -17,17 +17,20 @@
 # -------------------------------------------------------------------
 # 18 Sep 2019  | David Sanders               | Add 443 probe.
 # -------------------------------------------------------------------
+# 01 Oct 2019  | David Sanders               | Fix probes to 
+#              |                             | assign to correct probe
+#              |                             | to rule and base on
+#              |                             | variables.
+# -------------------------------------------------------------------
 
-resource "azurerm_lb_probe" "k8s-lb-probe" {
+resource "azurerm_lb_probe" "k8s-lb-probes" {
+  count = length(var.lb-ports)
+
   resource_group_name = azurerm_resource_group.k8s-rg.name
   loadbalancer_id     = azurerm_lb.k8s-lb.id
-  name                = "http-probe"
-  port                = 30888
-}
-
-resource "azurerm_lb_probe" "k8s-lb-probe-443" {
-  resource_group_name = azurerm_resource_group.k8s-rg.name
-  loadbalancer_id     = azurerm_lb.k8s-lb.id
-  name                = "https-probe"
-  port                = 30443
+  name                = format(
+                          "%s-probe", 
+                          var.lb-ports.*.name[count.index]
+                        )
+  port                = var.lb-ports.*.backend-port[count.index]
 }
