@@ -1,0 +1,12 @@
+- hosts: workers
+  become: true
+  roles:
+  - k8s_workers
+- hosts: master
+  become: true
+  roles:
+  - k8s_workers_check
+- hosts: workers
+  become: true
+  roles:
+  - k8s_workers_reboot

@@ -1,0 +1,8 @@
+---
+- hosts:
+  - master
+  - workers
+  become: true
+  roles:
+  - docker_engine
+  - docker_compose

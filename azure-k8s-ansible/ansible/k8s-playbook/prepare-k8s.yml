@@ -1,0 +1,11 @@
+---
+# Prepare for kubernetes by adding the Google signing keys,
+# install kubeadm, kubelet and kubectl and mark packages
+# to hold at version.
+- hosts:
+  - master
+  - workers
+  become: true
+  roles:
+  - prepare_k8s
+

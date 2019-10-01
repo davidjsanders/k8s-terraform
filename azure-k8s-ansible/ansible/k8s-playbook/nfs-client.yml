@@ -1,0 +1,6 @@
+- hosts:
+  - jumpbox
+  - workers
+  become: true
+  roles:
+  - nfs_client

@@ -9,4 +9,4 @@ The to do list:
 * ~~Add prod/staging flag for certificates~~
 * Add dashboard
 * Add Vault and Jenkins/Vault integration
-* Add check for Nexus OSS being ready
+* ~~Add check for Nexus OSS being ready~~

@@ -1,0 +1,9 @@
+- hosts:
+  - master
+  become: true
+  roles:
+  - k8s_label_nodes
+  - k8s_local_storage
+  - k8s_nfs_provisioner
+  - k8s_nginx_ingress_controller
+  - k8s_letsencrypt

@@ -1,0 +1,9 @@
+- hosts:
+  - master
+  become: true
+  roles:
+  - app_nexus_oss
+  - app_helm
+  - app_jenkins
+  - app_postgres
+  - app_anchore

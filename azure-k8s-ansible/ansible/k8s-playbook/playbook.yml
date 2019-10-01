@@ -1,84 +1,10 @@
 ---
-# Setup hosts, update packages, set date & time and
-# disable swap.
-- hosts: all
-  become: true
-  roles:
-  - general_server
-
-# Download Docker, extract it, download socket & service,
-# copy binaries, update service for Ubuntu, copy socket &
-# service, create Docker group, enable Docker service and
-# remove installation files.
-# Prepare for kubernetes by adding the Google signing keys,
-# install kubeadm, kubelet and kubectl and mark packages
-# to hold at version.
-- hosts:
-  - master
-  - workers
-  become: true
-  roles:
-  - docker_engine
-  - prepare_k8s
-
-# Setup the NFS Server, find the UUID for the Azure managed 
-# disk, mount it, configure in fstab, make the NFS share and
-# setup export file.
-# Download docker-compose and install to /usr/local/bin
-# Setup kubernetes, install Kompose, Calico (for policy),
-# Canal (for CNI), generate the k8s token, create the kubeadm
-# config, init the cluster, create the join command and reboot
-# the master.
-- hosts: master
-  become: true
-  roles:
-  - nfs_server
-  - docker_compose
-  - k8s_master
-
-- hosts:
-  - workers
-  become: true
-  roles:
-  - k8s_workers
-
-- hosts: master
-  become: true
-  roles:
-  - k8s_workers_check
-
-- hosts: workers
-  become: true
-  roles:
-  - k8s_workers_reboot
-
-- hosts:
-  - jumpbox
-  - workers
-  become: true
-  roles:
-  - nfs_client
-
-- hosts:
-  - master
-  become: true
-  roles:
-  - k8s_label_nodes
-  - k8s_local_storage
-  - k8s_nfs_provisioner
-  - k8s_nginx_ingress_controller
-  - k8s_letsencrypt
-  - app_nexus_oss
-  - app_helm
-  - app_jenkins
-  - app_postgres
-  - app_anchore
-
-#  - k8s_traefik_ingress_controller
-
-# Remove jumpbox reboot
-# - hosts:
-#   - jumpbox
-#   become: true
-#   roles:
-#   - finalizer
+- import_playbook: general_server.yml
+- import_playbook: docker.yml
+- import_playbook: nfs-server.yml
+- import_playbook: prepare-k8s.yml
+- import_playbook: master-k8s.yml
+- import_playbook: workers-k8s.yml
+- import_playbook: nfs-client.yml
+- import_playbook: setup-k8s.yml
+- import_playbook: preload-apps-k8s.yml

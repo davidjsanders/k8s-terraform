@@ -1,0 +1,7 @@
+---
+# Setup hosts, update packages, set date & time and
+# disable swap.
+- hosts: all
+  become: true
+  roles:
+  - general_server
