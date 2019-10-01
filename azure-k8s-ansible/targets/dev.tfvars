@@ -36,6 +36,16 @@
 #              |                             | tfvars to enable config
 #              |                             | to reside on GitHub.
 # -------------------------------------------------------------------
+# 01 Oct 2019  | David Sanders               | Add prod_staging_flag
+#              |                             | to indicate production
+#              |                             | or staging Let's
+#              |                             | Encrypt server.
+# -------------------------------------------------------------------
+
+#
+# Prod or staging?
+#
+prod_staging_flag = "staging"
 
 #
 # New VM variables

@@ -25,6 +25,11 @@
 #              |                             | the NIC automatically.
 #              |                             | Alphabetize variables.
 # -------------------------------------------------------------------
+# 01 Oct 2019  | David Sanders               | Add prod_staging_flag
+#              |                             | to indicate production
+#              |                             | or staging Let's
+#              |                             | Encrypt server.
+# -------------------------------------------------------------------
 
 # Compute and interpolate the variables required for the hosts file
 data "template_file" "template-ansible-inventory" {
@@ -60,6 +65,7 @@ data "template_file" "template-ansible-inventory" {
     postgres_password            = var.postgres_password
     postgres_endpoint            = var.postgres_endpoint
     postgres_port                = var.postgres_port
+    prod_staging_flag            = var.prod_staging_flag
     registry                     = format("%s:32080/", var.vm-master-name)
     workers = join(
       "\n",

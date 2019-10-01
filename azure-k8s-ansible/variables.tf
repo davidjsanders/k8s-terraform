@@ -27,6 +27,15 @@
 #              |                             | Tidy up variables and
 #              |                             | naming conventions.
 # -------------------------------------------------------------------
+# 01 Oct 2019  | David Sanders               | Add prod_staging_flag
+#              |                             | to indicate production
+#              |                             | or staging Let's
+#              |                             | Encrypt server.
+# -------------------------------------------------------------------
+
+variable "prod_staging_flag" {
+  default = "staging"
+}
 
 variable "workers" {
   default = {
