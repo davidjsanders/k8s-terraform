@@ -118,7 +118,7 @@
     kubectl get pod -l app={{ item }} -o json | jq -r '.items[].status.conditions[] | select(.type=="Ready" and .status=="True")'
   register: result
   until: result.stdout.find("True") != -1
-  retries: 60
-  delay: 10
+  retries: 20
+  delay: 30
   with_items:
   - "nexus-oss"
