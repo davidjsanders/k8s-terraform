@@ -108,10 +108,7 @@
 
 - name: Create Nexus ingress
   shell: |
-    kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress-prod.yaml
-
-#    kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress.yaml
-#    sleep 2
+    kubectl apply -f /home/{{ admin }}/k8s/nexus_oss/ingress.yaml
 
 - name: Fetch credentials (if exist)
   shell: kubectl get secret regcreds

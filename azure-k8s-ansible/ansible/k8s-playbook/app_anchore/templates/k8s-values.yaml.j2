@@ -1,6 +1,6 @@
 postgresql:
   enabled: false
-  externalEndpoint: {{ postgress_endpoint }}:{{ postgres_port }}
+  externalEndpoint: {{ postgres_endpoint }}:{{ postgres_port }}
   postgresUser: {{ postgres_user }}
   postgresPassword: {{ postgres_password }}
   postgresDatabase: {{ postgres_db }}
@@ -111,7 +111,7 @@ anchore-feeds-db:
 
   # Specify an external (already existing) postgres deployment for use.
   # Set to the host and port. eg. mypostgres.myserver.io:5432
-  externalEndpoint: {{ postgress_endpoint }}:{{ postgres_port }}
+  externalEndpoint: {{ postgres_endpoint }}:{{ postgres_port }}
 
   # Configure size of the persitant volume used with helm managed chart.
   # This should be commented out if using an external endpoint.
