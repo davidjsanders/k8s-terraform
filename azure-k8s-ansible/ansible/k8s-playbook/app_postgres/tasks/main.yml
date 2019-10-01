@@ -1,0 +1,62 @@
+- name: Check manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/postgres"
+  register: manifests
+
+- name: Copy manifests
+  copy:
+    src: app_postgres/manifests/
+    dest: "/home/{{ admin }}/k8s/postgres"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated configmap
+  template:
+    src: app_postgres/manifests/configmap.yaml
+    dest: "/home/{{ admin }}/k8s/postgres"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Check if postgres data share exists
+  stat:
+    path: "/datadrive/export/postgres-data"
+  register: postgres_data
+
+- name: Make postgres data directory
+  file:
+    path: "/datadrive/export/postgres-data"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: postgres_data.stat.exists == False
+
+- name: Apply postgres namespace
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/postgres/namespace.yaml
+    sleep 2
+
+- name: Apply configmap
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/postgres/configmap.yaml
+    sleep 2
+
+- name: Apply Peristent Volumes
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/postgres/pv.yaml
+    sleep 2
+
+- name: Apply Peristent Volume Claims
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/postgres/pvc.yaml
+    sleep 2
+
+- name: Apply Deployments
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/postgres/postgres.yaml
+    sleep 2
+
+- name: Apply Services
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/postgres/service.yaml
+    sleep 2

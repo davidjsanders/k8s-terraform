@@ -1,9 +1,3 @@
-- name: Check node status
-  uri: 
-    url: http://localhost:10248/healthz
-  ignore_errors: yes
-  register: node_status
-
 - name: Reboot worker
   reboot:
     reboot_timeout: 600
