@@ -112,3 +112,13 @@
   shell: |
     kubectl create secret docker-registry regcreds --docker-server=http://{{ registry }} --docker-username={{ nexus_username }} --docker-password="{{ nexus_password }}"
   when: docker_registry_secret.stdout == ""
+
+- name: Wait for Nexus to become ready (for image dependencies)
+  shell: |
+    kubectl get pod -l app={{ item }} -o json | jq -r '.items[].status.conditions[] | select(.type=="Ready" and .status=="True")'
+  register: result
+  until: result.stdout.find("True") != -1
+  retries: 60
+  delay: 10
+  with_items:
+  - "nexus-oss"
