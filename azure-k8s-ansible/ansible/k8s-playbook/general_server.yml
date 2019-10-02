@@ -3,5 +3,7 @@
 # disable swap.
 - hosts: all
   become: true
-  roles:
-  - general_server
+  tasks:
+    - import_role:
+        name: general_server
+      tags: general_server

@@ -1,4 +1,6 @@
----
+- import_tasks: checks.yml
+- import_tasks: debug.yml
+
 - name: Copy hosts
   copy:
     src: /etc/hosts
@@ -14,10 +16,6 @@
     update_cache: yes
     dpkg_options: 'force-confold,force-confdef'
 
-- name: Ansible fact - ansible_date_time
-  debug:
-    var: ansible_date_time
-
 - name: Set TimeZone to Toronto
   timezone:
     name: America/Toronto
@@ -26,6 +24,8 @@
 - name: Disable swap
   shell: |
     swapoff -a
+  when: swap_status.stdout != "0B"
+
 - name: Disable SWAP in fstab
   replace:
     path: /etc/fstab

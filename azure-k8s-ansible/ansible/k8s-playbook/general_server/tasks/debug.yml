@@ -1,0 +1,4 @@
+- name: Status of swap
+  debug:
+    var: swap_status
+    verbosity: 2

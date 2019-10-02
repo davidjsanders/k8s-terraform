@@ -1,0 +1,4 @@
+- name: Check swap status
+  shell: free -h | grep Swap | awk '{print $2}'
+  register: swap_status
+  ignore_errors: true
