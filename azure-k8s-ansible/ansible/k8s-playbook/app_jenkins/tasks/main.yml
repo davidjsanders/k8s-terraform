@@ -1,4 +1,5 @@
 - import_tasks: checks.yml
 - import_tasks: copy.yml
 - import_tasks: volumes.yml
+- import_tasks: debug.yml
 - import_tasks: kubectl.yml

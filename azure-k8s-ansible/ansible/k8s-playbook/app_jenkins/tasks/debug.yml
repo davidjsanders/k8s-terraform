@@ -1,0 +1,124 @@
+- name: Status of manifests
+  debug:
+    var: manifests
+    verbosity: 2
+
+- name: Status of jenkins_data
+  debug:
+    var: jenkins_data
+    verbosity: 2
+
+- name: Status of sonar_conf
+  debug:
+    var: sonar_conf
+    verbosity: 2
+
+- name: Status of sonar_data
+  debug:
+    var: sonar_data
+    verbosity: 2
+
+- name: Status of sonar_logs
+  debug:
+    var: sonar_logs
+    verbosity: 2
+
+- name: Status of docker_root
+  debug:
+    var: docker_root
+    verbosity: 2
+
+- name: Status of jenkins_ns_status
+  debug:
+    var: jenkins_ns_status
+    verbosity: 2
+
+- name: Status of jenkins_ns_status
+  debug:
+    var: docker_daemon_status
+    verbosity: 2
+
+- name: Status of jenkins_pv_status
+  debug:
+    var: jenkins_pv_status
+    verbosity: 2
+
+- name: Status of jenkins_pvc_status
+  debug:
+    var: jenkins_pvc_status
+    verbosity: 2
+
+- name: Status of sonarqube_data_pv_status
+  debug:
+    var: sonarqube_data_pv_status
+    verbosity: 2
+
+- name: Status of sonarqube_data_pvc_status
+  debug:
+    var: sonarqube_data_pvc_status
+    verbosity: 2
+
+- name: Status of sonarqube_conf_pv_status
+  debug:
+    var: sonarqube_conf_pv_status
+    verbosity: 2
+
+- name: Status of sonarqube_conf_pvc_status
+  debug:
+    var: sonarqube_conf_pvc_status
+    verbosity: 2
+
+- name: Status of sonarqube_logs_pv_status
+  debug:
+    var: sonarqube_logs_pv_status
+    verbosity: 2
+
+- name: Status of sonarqube_logs_pvc_status
+  debug:
+    var: sonarqube_logs_pvc_status
+    verbosity: 2
+
+- name: Status of docker_pv_status
+  debug:
+    var: docker_pv_status
+    verbosity: 2
+
+- name: Status of docker_pvc_status
+  debug:
+    var: docker_pvc_status
+    verbosity: 2
+
+- name: Status of jenkins_pod_status
+  debug:
+    var: jenkins_pod_status
+    verbosity: 2
+
+- name: Status of sonarqube_pod_status
+  debug:
+    var: sonarqube_pod_status
+    verbosity: 2
+
+- name: Status of jenkins_svc_status
+  debug:
+    var: jenkins_svc_status
+    verbosity: 2
+
+- name: Status of jenkins_node_svc_status
+  debug:
+    var: jenkins_node_svc_status
+    verbosity: 2
+
+- name: Status of sonarqube_svc_status
+  debug:
+    var: sonarqube_svc_status
+    verbosity: 2
+
+- name: Status of jenkins_ing_status
+  debug:
+    var: jenkins_ing_status
+    verbosity: 2
+
+- name: Status of sonarqube_ing_status
+  debug:
+    var: sonarqube_ing_status
+    verbosity: 2
