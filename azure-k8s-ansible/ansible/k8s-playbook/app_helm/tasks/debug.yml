@@ -1,0 +1,29 @@
+- name: Status of manifests
+  debug:
+    var: manifests
+    verbosity: 2
+
+- name: Status of helm executable
+  debug:
+    var: helm
+    verbosity: 2
+
+- name: Status of tiller executable
+  debug:
+    var: tiller
+    verbosity: 2
+
+- name: Status of Helm service account
+  debug:
+    var: helm_sa
+    verbosity: 2
+
+- name: Status of Helm cluster role binding
+  debug:
+    var: helm_crb
+    verbosity: 2
+
+- name: Status of Helm Init
+  debug:
+    var: helm_init
+    verbosity: 2

@@ -1,0 +1,29 @@
+- name: Copy manifest
+  copy:
+    src: app_helm/manifests/
+    dest: "/home/{{ admin }}/k8s/helm"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False or (force is defined and force | lower == "yes")
+
+- name: Fetch Helm 2.14.1
+  unarchive:
+    src: https://get.helm.sh/helm-v2.14.1-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: true
+  when: helm.stat.exists == False or tiller.stat.exists == False or (force is defined and force | lower == "yes")
+
+- name: Copy Helm
+  copy:
+    src: /tmp/linux-amd64/helm
+    dest: /usr/local/bin/helm
+    remote_src: yes
+    mode: '0755'
+  when: helm.stat.exists == False or (force is defined and force | lower == "yes")
+
+- name: Copy Tiller
+  copy:
+    src: /tmp/linux-amd64/tiller
+    dest: /usr/local/bin/tiller
+    remote_src: yes
+    mode: '0755'
+  when: helm.stat.exists == False or (force is defined and force | lower == "yes")

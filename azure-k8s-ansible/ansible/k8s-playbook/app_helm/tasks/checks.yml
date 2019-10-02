@@ -1,0 +1,29 @@
+- name: Check manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/helm"
+  register: manifests
+
+- name: Check helm exists
+  stat:
+    path: "/usr/local/bin/helm"
+  register: helm
+
+- name: Check tiller exists
+  stat:
+    path: "/usr/local/bin/tiller"
+  register: tiller
+
+- name: Check Helm service account
+  shell: kubectl -n kube-system get serviceaccounts tiller
+  register: helm_sa
+  ignore_errors: true
+
+- name: Check Helm cluster role binding
+  shell: kubectl -n kube-system get clusterrolebinding tiller
+  register: helm_crb
+  ignore_errors: true
+
+- name: Is Helm Init in the cluster
+  shell: helm init
+  register: helm_init
+  ignore_errors: true

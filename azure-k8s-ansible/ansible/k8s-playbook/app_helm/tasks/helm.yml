@@ -1,0 +1,15 @@
+- name: Install helm (Fresh)
+  shell: |
+    helm init --service-account {{ helm_service_account_name }} --history-max 200
+  when: helm_init.stdout.find("Tiller is already installed in the cluster") == -1
+
+- name: Install helm (Upgrade)
+  shell: |
+    helm init --upgrade --service-account {{ helm_service_account_name }} --history-max 200
+  when: force is defined and force | lower == "yes"
+
+- name: Remove Helm installation medis
+  file:
+    path: /tmp/linux-amd64
+    state: absent
+  when: helm.stat.exists == False or tiller.stat.exists == False or (force is defined and force | lower == "yes")

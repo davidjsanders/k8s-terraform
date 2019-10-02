@@ -1,0 +1,11 @@
+- name: Apply Helm service account
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/helm/service-account.yaml
+    sleep 2
+  when: helm_sa is failed or (force is defined and force | lower == "yes")
+
+- name: Apply Helm cluster role binding
+  shell: |
+    kubectl apply -f /home/{{ admin }}/k8s/helm/cluster-role-binding.yaml
+    sleep 2
+  when: helm_crb is failed or (force is defined and force | lower == "yes")
