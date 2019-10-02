@@ -1,0 +1,4 @@
+- name: Check if docker-compose installed
+  stat:
+    path: /usr/local/bin/docker-compose
+  register: docker_compose

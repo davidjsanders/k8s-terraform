@@ -3,6 +3,10 @@
   - master
   - workers
   become: true
-  roles:
-  - docker_engine
-  - docker_compose
+  tasks:
+    - import_role:
+        name: docker_engine
+      tags: docker_engine
+    - import_role:
+        name: docker_compose
+      tags: docker_compose

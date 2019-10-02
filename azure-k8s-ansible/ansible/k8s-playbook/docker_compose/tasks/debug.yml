@@ -1,0 +1,4 @@
+- name: Status of docker-compose installed
+  debug:
+    var: docker_compose
+    verbosity: 2

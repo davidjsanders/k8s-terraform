@@ -1,0 +1,29 @@
+- name: Status of Docker install /usr/bin
+  debug:
+    var: docker
+    verbosity: 2
+
+- name: Status of Docker installed /usr/local/bin/
+  debug:
+    var: docker_local
+    verbosity: 2
+
+- name: Status of Docker service installed
+  debug:
+    var: docker_service
+    verbosity: 2
+
+- name: Status of Docker socket installed
+  debug:
+    var: docker_socket
+    verbosity: 2
+
+- name: Status of /etc/docker
+  debug:
+    var: docker_etc
+    verbosity: 2
+
+- name: Status of /etc/docker/daemon.json
+  debug:
+    var: daemon_json
+    verbosity: 2

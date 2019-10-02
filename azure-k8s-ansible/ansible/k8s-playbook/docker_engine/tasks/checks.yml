@@ -1,0 +1,29 @@
+- name: Check Docker install /usr/bin
+  stat:
+    path: /usr/bin/docker
+  register: docker
+
+- name: Check Docker installed /usr/local/bin/
+  stat:
+    path: /usr/bin/docker
+  register: docker_local
+
+- name: Check Docker service installed
+  stat:
+    path: /etc/systemd/system/docker.service
+  register: docker_service
+
+- name: Check Docker socket installed
+  stat:
+    path: /etc/systemd/system/docker.socket
+  register: docker_socket
+
+- name: Check /etc/docker exists
+  stat:
+    path: /etc/docker
+  register: docker_etc
+
+- name: Check /etc/docker/daemon_json exists
+  stat:
+    path: /etc/docker/daemon.json
+  register: daemon_json
