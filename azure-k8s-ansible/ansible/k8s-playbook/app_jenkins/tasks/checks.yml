@@ -1,0 +1,162 @@
+- name: Check manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/jenkins"
+  register: manifests
+
+- name: Check if Jenkins data share exists
+  stat:
+    path: "/datadrive/export/jenkins-data"
+  register: jenkins_data
+
+- name: Check if Sonarqube conf share exists
+  stat:
+    path: "/datadrive/export/sonarqube/conf"
+  register: sonar_conf
+
+- name: Check if Sonarqube data share exists
+  stat:
+    path: "/datadrive/export/sonarqube/data"
+  register: sonar_data
+
+- name: Check if Sonarqube logs share exists
+  stat:
+    path: "/datadrive/export/sonarqube/logs"
+  register: sonar_logs
+
+- name: Check if Docker share exists
+  stat:
+    path: "/datadrive/export/root/docker"
+  register: docker_root
+
+- name: Check if Jenkins namespace exists
+  shell: kubectl get ns {{ item }}
+  register: jenkins_ns_status
+  ignore_errors: true
+  with_items:
+  - "jenkins"
+
+- name: Check if Docker Daemon configmap exists
+  shell: kubectl -n jenkins get configmap {{ item }}
+  register: docker_daemon_status
+  ignore_errors: true
+  with_items:
+  - "docker-daemon"
+
+- name: Check if jenkins pv exists
+  shell: kubectl -n jenkins get pv {{ item }}
+  register: jenkins_pv_status
+  ignore_errors: true
+  with_items:
+  - "jenkins-pv"
+
+- name: Check if jenkins pvc exists
+  shell: kubectl -n jenkins get pvc {{ item }}
+  register: jenkins_pvc_status
+  ignore_errors: true
+  with_items:
+  - "jenkins-pvc"
+
+- name: Check if Sonarqube data pv exists
+  shell: kubectl -n jenkins get pv {{ item }}
+  register: sonarqube_data_pv_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-data-pv"
+
+- name: Check if Sonarqube data pvc exists
+  shell: kubectl -n jenkins get pvc {{ item }}
+  register: sonarqube_data_pvc_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-data-pvc"
+
+- name: Check if Sonarqube conf pv exists
+  shell: kubectl -n jenkins get pv {{ item }}
+  register: sonarqube_conf_pv_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-conf-pv"
+
+- name: Check if Sonarqube conf pvc exists
+  shell: kubectl -n jenkins get pvc {{ item }}
+  register: sonarqube_conf_pvc_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-conf-pvc"
+
+- name: Check if Sonarqube logs pv exists
+  shell: kubectl -n jenkins get pv {{ item }}
+  register: sonarqube_logs_pv_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-logs-pv"
+
+- name: Check if Sonarqube logs pvc exists
+  shell: kubectl -n jenkins get pvc {{ item }}
+  register: sonarqube_logs_pvc_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-logs-pvc"
+
+- name: Check if docker pv exists
+  shell: kubectl -n jenkins get pv {{ item }}
+  register: docker_pv_status
+  ignore_errors: true
+  with_items:
+  - "docker-pv"
+
+- name: Check if jenkins pvc exists
+  shell: kubectl -n jenkins get pvc {{ item }}
+  register: docker_pvc_status
+  ignore_errors: true
+  with_items:
+  - "docker-pvc"
+
+- name: Is Jenkins running?
+  shell: kubectl -n jenkins get pod -l app={{ item }}
+  register: jenkins_pod_status
+  ignore_errors: true
+  with_items:
+  - "jenkins"
+
+- name: Is Sonarqube running?
+  shell: kubectl get pod -l app={{ item }}
+  register: sonarqube_pod_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube"
+
+- name: Is Jenkins primary service defined?
+  shell: kubectl get svc {{ item }}
+  register: jenkins_svc_status
+  ignore_errors: true
+  with_items:
+  - "jenkins-service"
+
+- name: Is Jenkins JNLP service defined?
+  shell: kubectl get svc {{ item }}
+  register: jenkins_node_svc_status
+  ignore_errors: true
+  with_items:
+  - "jenkins-node-service"
+
+- name: Is Sonarqube service defined?
+  shell: kubectl get svc {{ item }}
+  register: sonarqube_svc_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-service"
+
+- name: Is Jenkins Ingress defined?
+  shell: kubectl get ing {{ item }}
+  register: jenkins_ing_status
+  ignore_errors: true
+  with_items:
+  - "jenkins-ingress"
+
+- name: Is Sonarqube Ingress defined?
+  shell: kubectl get ing {{ item }}
+  register: sonarqube_ing_status
+  ignore_errors: true
+  with_items:
+  - "sonarqube-ingress"

@@ -1,0 +1,56 @@
+- name: Copy manifests
+  copy:
+    src: app_jenkins/manifests/
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy getcreds script
+  copy:
+    src: app_jenkins/scripts/getcreds.sh
+    dest: "/home/{{ admin }}/k8s/jenkins/"
+    owner: "{{ admin }}"
+    mode: '0755'
+  when: manifests.stat.exists == False
+
+- name: Copy templated namespace
+  template:
+    src: app_jenkins/manifests/namespace.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated Docker config
+  template:
+    src: app_jenkins/manifests/docker-daemon.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated jenkins-docker deploy
+  template:
+    src: app_jenkins/manifests/jenkins-docker.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated sonarqube deploy
+  template:
+    src: app_jenkins/manifests/sonarqube.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated jenkins ingress
+  template:
+    src: app_jenkins/manifests/jenkins-ingress.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False
+
+- name: Copy templated sonarqube ingress
+  template:
+    src: app_jenkins/manifests/sonarqube-ingress.yaml
+    dest: "/home/{{ admin }}/k8s/jenkins"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False

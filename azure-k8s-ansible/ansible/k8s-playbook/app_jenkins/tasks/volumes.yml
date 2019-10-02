@@ -1,0 +1,42 @@
+- name: Make jenkins data directory
+  file:
+    path: "/datadrive/export/jenkins-data"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: jenkins_data.stat.exists == False
+
+- name: Make Sonarqube conf directory
+  file:
+    path: "/datadrive/export/sonarqube/conf"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: sonar_conf.stat.exists == False
+
+- name: Make Sonarqube conf directory
+  file:
+    path: "/datadrive/export/sonarqube/data"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: sonar_data.stat.exists == False
+
+- name: Make Sonarqube logs directory
+  file:
+    path: "/datadrive/export/sonarqube/logs"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: sonar_logs.stat.exists == False
+
+- name: Make Docker root directory
+  file:
+    path: "/datadrive/export/root/docker"
+    state: directory
+    owner: "root"
+  when: docker_root.stat.exists == False
