@@ -1,9 +1,10 @@
 # app_jenkins task
-**Purpose:** To install and setup Jenkins 2.x and Sonarqube as containerized Kubernetes services (non-HA).
+| Information | Description |
+| --- | --- |
+| **Purpose** | To install and setup Jenkins 2.x and Sonarqube as containerized Kubernetes services (non-HA). |
+| **Parent** | `preload-apps-k8s.yml` |
+| **Dependencies** | The task expects and depends upon an NFS Server (*not* an NFS Provisioner) that shares `/datadrive` as a local volume on the worker, so it can be used to provision persistent volumes and claims using local-storage against the path.|
 
-**Parent** `preload-apps-k8s.yml`
-
-**Dependencies:** The task expects and depends upon an NFS Server (*not* an NFS Provisioner) that shares `/datadrive` as a local volume on the worker, so it can be used to provision persistent volumes and claims using local-storage against the path.
 > The task **will** create the paths as long as /datadrive exists on the node where the workload is deployed.
 
 ## Structure
