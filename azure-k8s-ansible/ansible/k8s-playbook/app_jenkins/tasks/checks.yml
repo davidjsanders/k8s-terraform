@@ -89,36 +89,36 @@
   ignore_errors: true
 
 - name: Is Jenkins running?
-  shell: kubectl -n jenkins get pod -l app=jenkins
+  shell: kubectl -n jenkins get deploy jenkins-deployment
   register: jenkins_pod_status
   ignore_errors: true
 
 - name: Is Sonarqube running?
-  shell: kubectl get pod -l app=sonarqube
+  shell: kubectl -n jenkins get deploy sonarqube-deployment
   register: sonarqube_pod_status
   ignore_errors: true
 
 - name: Is Jenkins primary service defined?
-  shell: kubectl get svc jenkins-service
+  shell: kubectl -n jenkins get svc jenkins-service
   register: jenkins_svc_status
   ignore_errors: true
 
 - name: Is Jenkins JNLP service defined?
-  shell: kubectl get svc jenkins-node-service
+  shell: kubectl -n jenkins get svc jenkins-node-service
   register: jenkins_node_svc_status
   ignore_errors: true
 
 - name: Is Sonarqube service defined?
-  shell: kubectl get svc sonarqube-service
+  shell: kubectl -n jenkins get svc sonarqube-service
   register: sonarqube_svc_status
   ignore_errors: true
 
 - name: Is Jenkins Ingress defined?
-  shell: kubectl get ing jenkins-ingress
+  shell: kubectl -n jenkins get ing jenkins-ingress
   register: jenkins_ing_status
   ignore_errors: true
 
 - name: Is Sonarqube Ingress defined?
-  shell: kubectl get ing sonarqube-ingress
+  shell: kubectl -n jenkins get ing sonarqube-ingress
   register: sonarqube_ing_status
   ignore_errors: true

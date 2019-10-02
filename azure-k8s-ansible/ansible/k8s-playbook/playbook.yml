@@ -2,9 +2,9 @@
 - import_playbook: general_server.yml
 - import_playbook: docker.yml
 - import_playbook: nfs-server.yml
+- import_playbook: nfs-clients.yml
 - import_playbook: prepare-k8s.yml
 - import_playbook: master-k8s.yml
 - import_playbook: workers-k8s.yml
-- import_playbook: nfs-client.yml
 - import_playbook: setup-k8s.yml
 - import_playbook: preload-apps-k8s.yml
