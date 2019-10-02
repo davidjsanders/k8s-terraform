@@ -29,134 +29,96 @@
   register: docker_root
 
 - name: Check if Jenkins namespace exists
-  shell: kubectl get ns {{ item }}
+  shell: kubectl get ns jenkins
   register: jenkins_ns_status
   ignore_errors: true
-  with_items:
-  - "jenkins"
 
 - name: Check if Docker Daemon configmap exists
-  shell: kubectl -n jenkins get configmap {{ item }}
+  shell: kubectl -n jenkins get configmap docker-daemon
   register: docker_daemon_status
   ignore_errors: true
-  with_items:
-  - "docker-daemon"
 
 - name: Check if jenkins pv exists
-  shell: kubectl -n jenkins get pv {{ item }}
+  shell: kubectl -n jenkins get pv jenkins-pv
   register: jenkins_pv_status
   ignore_errors: true
-  with_items:
-  - "jenkins-pv"
 
 - name: Check if jenkins pvc exists
-  shell: kubectl -n jenkins get pvc {{ item }}
+  shell: kubectl -n jenkins get pvc jenkins-pvc
   register: jenkins_pvc_status
   ignore_errors: true
-  with_items:
-  - "jenkins-pvc"
 
 - name: Check if Sonarqube data pv exists
-  shell: kubectl -n jenkins get pv {{ item }}
+  shell: kubectl -n jenkins get pv sonarqube-data-pv
   register: sonarqube_data_pv_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-data-pv"
 
 - name: Check if Sonarqube data pvc exists
-  shell: kubectl -n jenkins get pvc {{ item }}
+  shell: kubectl -n jenkins get pvc sonarqube-data-pvc
   register: sonarqube_data_pvc_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-data-pvc"
 
 - name: Check if Sonarqube conf pv exists
-  shell: kubectl -n jenkins get pv {{ item }}
+  shell: kubectl -n jenkins get pv sonarqube-conf-pv
   register: sonarqube_conf_pv_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-conf-pv"
 
 - name: Check if Sonarqube conf pvc exists
-  shell: kubectl -n jenkins get pvc {{ item }}
+  shell: kubectl -n jenkins get pvc sonarqube-conf-pvc
   register: sonarqube_conf_pvc_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-conf-pvc"
 
 - name: Check if Sonarqube logs pv exists
-  shell: kubectl -n jenkins get pv {{ item }}
+  shell: kubectl -n jenkins get pv sonarqube-logs-pv
   register: sonarqube_logs_pv_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-logs-pv"
 
 - name: Check if Sonarqube logs pvc exists
-  shell: kubectl -n jenkins get pvc {{ item }}
+  shell: kubectl -n jenkins get pvc sonarqube-logs-pvc
   register: sonarqube_logs_pvc_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-logs-pvc"
 
 - name: Check if docker pv exists
-  shell: kubectl -n jenkins get pv {{ item }}
+  shell: kubectl -n jenkins get pv docker-pv
   register: docker_pv_status
   ignore_errors: true
-  with_items:
-  - "docker-pv"
 
 - name: Check if jenkins pvc exists
-  shell: kubectl -n jenkins get pvc {{ item }}
+  shell: kubectl -n jenkins get pvc docker-pvc
   register: docker_pvc_status
   ignore_errors: true
-  with_items:
-  - "docker-pvc"
 
 - name: Is Jenkins running?
-  shell: kubectl -n jenkins get pod -l app={{ item }}
+  shell: kubectl -n jenkins get pod -l app=jenkins
   register: jenkins_pod_status
   ignore_errors: true
-  with_items:
-  - "jenkins"
 
 - name: Is Sonarqube running?
-  shell: kubectl get pod -l app={{ item }}
+  shell: kubectl get pod -l app=sonarqube
   register: sonarqube_pod_status
   ignore_errors: true
-  with_items:
-  - "sonarqube"
 
 - name: Is Jenkins primary service defined?
-  shell: kubectl get svc {{ item }}
+  shell: kubectl get svc jenkins-service
   register: jenkins_svc_status
   ignore_errors: true
-  with_items:
-  - "jenkins-service"
 
 - name: Is Jenkins JNLP service defined?
-  shell: kubectl get svc {{ item }}
+  shell: kubectl get svc jenkins-node-service
   register: jenkins_node_svc_status
   ignore_errors: true
-  with_items:
-  - "jenkins-node-service"
 
 - name: Is Sonarqube service defined?
-  shell: kubectl get svc {{ item }}
+  shell: kubectl get svc sonarqube-service
   register: sonarqube_svc_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-service"
 
 - name: Is Jenkins Ingress defined?
-  shell: kubectl get ing {{ item }}
+  shell: kubectl get ing jenkins-ingress
   register: jenkins_ing_status
   ignore_errors: true
-  with_items:
-  - "jenkins-ingress"
 
 - name: Is Sonarqube Ingress defined?
-  shell: kubectl get ing {{ item }}
+  shell: kubectl get ing sonarqube-ingress
   register: sonarqube_ing_status
   ignore_errors: true
-  with_items:
-  - "sonarqube-ingress"
