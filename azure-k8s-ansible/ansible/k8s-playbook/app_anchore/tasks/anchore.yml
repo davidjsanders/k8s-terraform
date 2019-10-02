@@ -1,0 +1,11 @@
+- name: Helm install anchore-engine (Fresh)
+  shell: |
+    helm install --name anchore -f /home/{{ admin }}/k8s/anchore/k8s-values.yaml stable/anchore-engine
+    sleep 2
+  when: helm_status.stdout == ""
+
+- name: Helm install anchore-engine (Upgrade)
+  shell: |
+    helm upgrade anchore -f /home/{{ admin }}/k8s/anchore/k8s-values.yaml stable/anchore-engine
+    sleep 2
+  when: helm_status.stdout != "" and (force is defined and force | lower == "yes")

@@ -1,27 +1,4 @@
-- name: Check manifests exist
-  stat:
-    path: "/home/{{ admin }}/k8s/anchore"
-  register: manifests
-
-- name: Make manifests folder
-  file:
-    path: "/home/{{ admin }}/k8s/anchore"
-    state: directory
-    owner: "{{ admin }}"
-  when: manifests.stat.exists == False
-
-- name: Copy templated k8s-values.yaml
-  template:
-    src: app_anchore/templates/k8s-values.yaml.j2
-    dest: "/home/{{ admin }}/k8s/anchore/k8s-values.yaml"
-    owner: "{{ admin }}"
-
-- name: Check anchore-engine helm status
-  shell: helm list anchore
-  register: helm_status
-
-- name: Helm install anchore-engine
-  shell: |
-    helm install --name anchore -f /home/{{ admin }}/k8s/anchore/k8s-values.yaml stable/anchore-engine
-    sleep 2
-  when: helm_status.stdout == ""
+- import_tasks: checks.yml
+- import_tasks: copy.yml
+- import_tasks: debug.yml
+- import_tasks: anchore.yml

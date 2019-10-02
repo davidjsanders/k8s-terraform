@@ -1,0 +1,8 @@
+- name: Check manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/anchore"
+  register: manifests
+
+- name: Check anchore-engine helm status
+  shell: helm list anchore
+  register: helm_status

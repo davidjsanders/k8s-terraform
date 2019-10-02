@@ -1,0 +1,9 @@
+- name: Status of manifests exist
+  debug:
+    var: manifests
+    verbosity: 2
+
+- name: Status of Anchore installation
+  debug:
+    var: helm_status
+    verbosity: 2
