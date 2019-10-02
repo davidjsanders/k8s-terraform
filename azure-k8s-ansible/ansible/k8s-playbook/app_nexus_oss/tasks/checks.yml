@@ -1,0 +1,79 @@
+- name: Check if Nexus OSS NFS Share exists
+  stat:
+    path: "/datadrive/export/nexus-oss"
+  register: nexus
+
+- name: Check if Nexus OSS data exists
+  stat:
+    path: "/datadrive/export/nexus-oss/data"
+  register: nexus_data
+
+- name: Check if Nexus OSS blob store exists
+  stat:
+    path: "/datadrive/export/nexus-oss/blobs"
+  register: nexus_blob
+
+- name: Check if Nexus OSS user root exists
+  stat:
+    path: "/datadrive/export/nexus-oss/user-root"
+  register: nexus_user_root
+
+- name: Check manifest exists
+  stat:
+    path: "/home/{{ admin }}/k8s/nexus_oss"
+  register: manifests
+
+- name: Check if blob store pv exists
+  shell: kubectl get pv nexus-blob-store-pv
+  register: nexus_blob_store_pv_status
+  ignore_errors: true
+
+- name: Check if data pv exists
+  shell: kubectl get pv nexus-data-pv
+  register: nexus_data_pv_status
+  ignore_errors: true
+
+- name: Check if user root pv exists
+  shell: kubectl get pv nexus-user-root-pv
+  register: nexus_user_root_pv_status
+  ignore_errors: true
+
+- name: Check if blob store pvc exists
+  shell: kubectl get pvc nexus-blob-store-claim
+  register: nexus_blob_store_pvc_status
+  ignore_errors: true
+
+- name: Check if data pvc exists
+  shell: kubectl get pvc nexus-data-claim
+  register: nexus_data_pvc_status
+  ignore_errors: true
+
+- name: Check if user root pvc exists
+  shell: kubectl get pvc nexus-user-root-claim
+  register: nexus_user_root_pvc_status
+  ignore_errors: true
+
+- name: Is Nexus running?
+  shell: kubectl get deploy nexus-oss
+  register: nexus_deploy_status
+  ignore_errors: true
+
+- name: Is Nexus frontend service defined?
+  shell: kubectl get svc nexus-frontend
+  register: nexus_svc_status
+  ignore_errors: true
+
+- name: Is Nexus Docker service defined?
+  shell: kubectl get svc nexus-docker
+  register: nexus_docker_svc_status
+  ignore_errors: true
+
+- name: Is Nexus Ingress defined?
+  shell: kubectl get ing nexus-oss-tls
+  register: nexus_ing_status
+  ignore_errors: true
+
+- name: Fetch credentials (if exist)
+  shell: kubectl get secret regcreds
+  register: docker_registry_secret
+  ignore_errors: yes

@@ -1,0 +1,13 @@
+- name: Copy manifest
+  copy:
+    src: app_nexus_oss/manifests/
+    dest: "/home/{{ admin }}/k8s/nexus_oss"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False or (force is defined and force | lower == "yes")
+
+- name: Copy templated ingress
+  template:
+    src: app_nexus_oss/manifests/ingress.yaml
+    dest: "/home/{{ admin }}/k8s/nexus_oss"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False or (force is defined and force | lower == "yes")

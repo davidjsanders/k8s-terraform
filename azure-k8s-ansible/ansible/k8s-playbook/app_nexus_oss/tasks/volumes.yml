@@ -1,0 +1,35 @@
+- name: Make manifest directory
+  file:
+    path: "/datadrive/export/nexus-oss"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: nexus.stat.exists == False
+
+- name: Make manifest directory
+  file:
+    path: "/datadrive/export/nexus-oss/data"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: nexus_data.stat.exists == False
+
+- name: Make manifest directory
+  file:
+    path: "/datadrive/export/nexus-oss/blobs"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: nexus_blob.stat.exists == False
+
+- name: Make manifest directory
+  file:
+    path: "/datadrive/export/nexus-oss/user-root"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: nexus_user_root.stat.exists == False

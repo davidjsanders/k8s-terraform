@@ -1,0 +1,74 @@
+- name: Status of Nexus OSS NFS Share exists
+  debug:
+    var: nexus
+    verbosity: 2
+
+- name: Status of Nexus data NFS Share exists
+  debug:
+    var: nexus_data
+    verbosity: 2
+
+- name: Status of Nexus blob NFS Share exists
+  debug:
+    var: nexus_blob
+    verbosity: 2
+
+- name: Status of Nexus user root NFS Share exists
+  debug:
+    var: nexus_user_root
+    verbosity: 2
+
+- name: Status of Nexus manifests exists
+  debug:
+    var: manifests
+    verbosity: 2
+
+- name: Status of Nexus blob store pv
+  debug:
+    var: nexus_blob_store_pv_status
+    verbosity: 2
+
+- name: Status of Nexus data pv
+  debug:
+    var: nexus_data_pv_status
+    verbosity: 2
+
+- name: Status of Nexus user root pv
+  debug:
+    var: nexus_user_root_pv_status
+    verbosity: 2
+
+- name: Status of Nexus blob pvc
+  debug:
+    var: nexus_blob_store_pvc_status
+    verbosity: 2
+
+- name: Status of Nexus data pvc
+  debug:
+    var: nexus_data_pvc_status
+    verbosity: 2
+
+- name: Status of Nexus user root pvc
+  debug:
+    var: nexus_user_root_pvc_status
+    verbosity: 2
+
+- name: Status of Nexus deployment
+  debug:
+    var: nexus_deploy_status
+    verbosity: 2
+
+- name: Status of Nexus service
+  debug:
+    var: nexus_svc_status
+    verbosity: 2
+
+- name: Status of Nexus docker service
+  debug:
+    var: nexus_docker_svc_status
+    verbosity: 2
+
+- name: Status of Nexus ingress
+  debug:
+    var: nexus_ing_status
+    verbosity: 2
