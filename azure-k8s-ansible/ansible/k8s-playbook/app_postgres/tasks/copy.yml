@@ -1,0 +1,22 @@
+- name: Copy manifests
+  copy:
+    src: app_postgres/manifests/
+    dest: "/home/{{ admin }}/k8s/postgres"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False or (force is defined and force | lower == "yes")
+
+- name: Copy templated configmap
+  template:
+    src: app_postgres/manifests/configmap.yaml
+    dest: "/home/{{ admin }}/k8s/postgres"
+    owner: "{{ admin }}"
+  when: manifests.stat.exists == False or (force is defined and force | lower == "yes")
+
+- name: Make postgres data directory
+  file:
+    path: "/datadrive/export/postgres-data"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: '0777'
+  when: postgres_data.stat.exists == False or (force is defined and force | lower == "yes")

@@ -1,0 +1,39 @@
+- name: Status of manifests exist
+  debug:
+    var: manifests
+    verbosity: 2
+
+- name: Status of postgres data share exists
+  debug:
+    var: postgres_data
+    verbosity: 2
+
+- name: Status of postgres namespace exists
+  debug:
+    var: postgres_ns_status
+    verbosity: 2
+
+- name: Status of configmap exists
+  debug:
+    var: postgres_config_status
+    verbosity: 2
+
+- name: Status of postgres pv exists
+  debug:
+    var: postgres_pv_status
+    verbosity: 2
+
+- name: Status of postgres pvc exists
+  debug:
+    var: postgres_pvc_status
+    verbosity: 2
+
+- name: Status of postgres deploy
+  debug:
+    var: postgres_deploy_status
+    verbosity: 2
+
+- name: Status of postgres service
+  debug:
+    var: postgres_svc_status
+    verbosity: 2

@@ -1,0 +1,39 @@
+- name: Check manifests exist
+  stat:
+    path: "/home/{{ admin }}/k8s/postgres"
+  register: manifests
+
+- name: Check if postgres data share exists
+  stat:
+    path: "/datadrive/export/postgres-data"
+  register: postgres_data
+
+- name: Check if postgres namespace exists
+  shell: kubectl get ns postgres
+  register: postgres_ns_status
+  ignore_errors: true
+
+- name: Check if configmap exists
+  shell: kubectl -n postgres get configmap postgres-config
+  register: postgres_config_status
+  ignore_errors: true
+
+- name: Check if postgres pv exists
+  shell: kubectl get pv postgres-pv
+  register: postgres_pv_status
+  ignore_errors: true
+
+- name: Check if postgres pvc exists
+  shell: kubectl -n postgres get pvc postgres-pvc
+  register: postgres_pvc_status
+  ignore_errors: true
+
+- name: Is postgres running?
+  shell: kubectl -n postgres get deploy postgres
+  register: postgres_deploy_status
+  ignore_errors: true
+
+- name: Is postgres service defined?
+  shell: kubectl -n postgres get svc postgres
+  register: postgres_svc_status
+  ignore_errors: true
