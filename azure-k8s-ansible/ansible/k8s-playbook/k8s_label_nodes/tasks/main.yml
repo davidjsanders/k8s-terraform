@@ -1,13 +1,22 @@
-- name: Label workers
-  shell: |
-    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} --overwrite role=worker
+- name: Gather worker and master facts
+  tags: ['apps']
+  setup: {}
+  delegate_to: "{{item}}"
+  delegate_facts: True
   with_items:
   - "{{ groups['workers'] }}"
-  ignore_errors: yes
+  - "{{ groups['masters'] }}"
 
 - name: Label Masters
   shell: |
     kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} --overwrite role=master
   with_items:
-  - "{{ groups['masters'] }}"
+  - "{{ groups['master'] }}"
+  ignore_errors: yes
+
+- name: Label workers
+  shell: |
+    kubectl label node {{ hostvars[item]['ansible_facts']['nodename'] | lower }} --overwrite role=worker
+  with_items:
+  - "{{ groups['workers'] }}"
   ignore_errors: yes

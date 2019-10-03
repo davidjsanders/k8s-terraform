@@ -1,9 +1,19 @@
 - hosts:
   - master
   become: true
-  roles:
-  - k8s_label_nodes
-  - k8s_local_storage
-  - k8s_nfs_provisioner
-  - k8s_nginx_ingress_controller
-  - k8s_letsencrypt
+  tasks:
+  - import_role:
+      name: k8s_label_nodes
+    tags: label_nodes
+  - import_role:
+      name: k8s_local_storage
+    tags: local_storage
+  - import_role:
+      name: k8s_nfs_provisioner
+    tags: nfs_provisioner
+  - import_role:
+      name: k8s_nginx_ingress_controller
+    tags: ingress_controller
+  - import_role:
+      name: k8s_letsencrypt
+    tags: letsencrypt
