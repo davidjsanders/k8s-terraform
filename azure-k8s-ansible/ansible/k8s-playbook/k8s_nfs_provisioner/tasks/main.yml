@@ -16,11 +16,17 @@
     dest: "/home/{{ admin }}/k8s/nfs_provisioner"
     owner: "{{ admin }}"
 
-- name: Create NFS Provisioner
+- name: Create NFS Provisioner RBAC
   shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nfs_provisioner/rbac.yaml
     sleep 2
+
+- name: Create NFS Provisioner Deployment
+  shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nfs_provisioner/deployment.yaml
     sleep 2
+
+- name: Create NFS Provisioner Storage Class
+  shell: |
     kubectl apply -f /home/{{ admin }}/k8s/nfs_provisioner/storage-class.yaml
     sleep 2
