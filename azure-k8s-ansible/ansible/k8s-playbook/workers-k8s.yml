@@ -1,12 +1,18 @@
 - hosts: workers
   become: true
-  roles:
-  - k8s_workers
+  tasks:
+    - import_role:
+        name: k8s_workers
+      tags: k8s_workers
 - hosts: master
   become: true
-  roles:
-  - k8s_workers_check
+  tasks:
+    - import_role:
+        name: k8s_workers_check
+      tags: k8s_workers_check
 - hosts: workers
   become: true
-  roles:
-  - k8s_workers_reboot
+  tasks:
+    - import_role:
+        name: k8s_workers_reboot
+      tags: k8s_workers_reboot

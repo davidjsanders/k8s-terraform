@@ -1,4 +1,6 @@
 - hosts: master
   become: true
-  roles:
-  - k8s_master
+  tasks:
+    - import_role:
+        name: k8s_master
+      tags: k8s_master

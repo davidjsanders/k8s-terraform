@@ -6,6 +6,7 @@
   - master
   - workers
   become: true
-  roles:
-  - prepare_k8s
-
+  tasks:
+    - import_role:
+        name: prepare_k8s
+      tags: prepare_k8s

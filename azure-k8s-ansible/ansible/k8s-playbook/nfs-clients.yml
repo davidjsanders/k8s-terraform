@@ -2,5 +2,7 @@
   - jumpbox
   - workers
   become: true
-  roles:
-  - nfs_client
+  tasks:
+    - import_role:
+        name: nfs_client
+      tags: nfs_client
